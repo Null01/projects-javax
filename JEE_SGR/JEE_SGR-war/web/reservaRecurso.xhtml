@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>GestionRecursos</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <h:form id="formReserva">  
+
+                <p:dataTable id="dataTable1" var="recurso" value="#{beanReservaRecurso.listaRecursos}"  rowKey="#{recurso.idRecurso}"  
+                             selection="#{beanReservaRecurso.recursoSelected}" selectionMode="single" >   
+                    <f:facet name="header">  
+                        RECURSOS DISPONIBLES
+                    </f:facet>  
+
+                    <p:column sortBy="idRecurso" headerText="ID">
+                        <div align="center">
+                            <h:outputText value="#{recurso.idRecurso}" />
+                        </div>
+                    </p:column>  
+
+                    <p:column sortBy="nombre" headerText="OBJETO">
+                        <div align="center">
+                            <h:outputText value="#{recurso.nombre}" />  
+                        </div>
+                    </p:column>
+
+                    <p:column headerText="CANTIDAD">  
+                        <h:outputText value="cantidad" />  
+                    </p:column>
+                    <!-- <p:column >  
+                         <p:commandButton id="modalDialogButton" value="Reservar" actionListener="#{beanReserveResource.asignarRecursoEvaluar(recurso)}" oncomplete="dlg2.show();
+                                          return false;" update=":modalDialog" />
+                     </p:column>-->
+                </p:dataTable>
+
+            </h:form> 
+
+
+            <!--    <p:dialog id="modalDialog" header="ELEMENTOS DISPONIBLES" widgetVar="dlg2" modal="true" showEffect="explode" resizable="false" width="600">
+                    <h:form id="formDialogReserva">
+                        <p:messages id="messages2" />
+                        <p:dataTable id="dataTable2" var="articulo" value="#{beanReserveResource.listaArticulos}"  rowKey="#{articulo}"  
+                                     selection="#{beanReserveResource.articuloSelected}" selectionMode="single" >  
+                            <f:facet name="header">  
+                                ARTICULOS
+                            </f:facet>
+                            <f:facet name="header">  
+                                <p:messages />  
+                            </f:facet>  
+    
+                            <p:column  headerText="ID">  
+                                <h:outputText value="#{articulo.articuloPK.idArticulo}" />  
+                            </p:column>  
+    
+                            <p:column headerText="OBJETIVO">
+                                <p:selectManyCheckbox id="pageDirection" value="#{beanReserveResource.selectedOptions}">  
+                                    <f:selectItem itemLabel="#{articulo.marca}" itemValue="#{articulo.marca}" />
+                                </p:selectManyCheckbox>  
+    
+                            </p:column>
+                        </p:dataTable>
+                        <p/>
+    
+                        <div align="center">
+                            <h:panelGrid columns="3">
+                                <h:outputLabel for="calendar" value="FECHA RESERVA: *" style="font-weight:bold"/>
+                                <p:calendar id="calendar" value="#{beanReserveResource.dateSelected}" pattern="MM/dd/yyyy" />
+                                <p:commandButton id="modalDialogButton" value="Reservar" actionListener="#{beanReserveResource.registrarPrestamo}" update="messages2"/>
+                            </h:panelGrid>
+                        </div>
+                    </h:form>
+                </p:dialog>-->
+        </h:body>
+    </f:view>
+</html>
