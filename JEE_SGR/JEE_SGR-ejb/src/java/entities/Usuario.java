@@ -8,12 +8,13 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -22,7 +23,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -67,8 +67,9 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 40)
     @Column(name = "correo")
     private String correo;
-    @ManyToMany(mappedBy = "usuarioList")
-    private List<Funcion> funcionList;
+    @JoinColumn(name = "id_perfil", referencedColumnName = "id_perfil")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private Perfil idPerfil;
 
     public Usuario() {
     }
@@ -125,13 +126,12 @@ public class Usuario implements Serializable {
         this.correo = correo;
     }
 
-    @XmlTransient
-    public List<Funcion> getFuncionList() {
-        return funcionList;
+    public Perfil getIdPerfil() {
+        return idPerfil;
     }
 
-    public void setFuncionList(List<Funcion> funcionList) {
-        this.funcionList = funcionList;
+    public void setIdPerfil(Perfil idPerfil) {
+        this.idPerfil = idPerfil;
     }
 
     @Override

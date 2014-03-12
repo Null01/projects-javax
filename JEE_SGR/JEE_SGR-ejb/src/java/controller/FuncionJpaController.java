@@ -14,7 +14,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entities.Usuario;
+import entities.Perfil;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -40,23 +40,23 @@ public class FuncionJpaController implements Serializable {
     }
 
     public void create(Funcion funcion) throws RollbackFailureException, Exception {
-        if (funcion.getUsuarioList() == null) {
-            funcion.setUsuarioList(new ArrayList<Usuario>());
+        if (funcion.getPerfilList() == null) {
+            funcion.setPerfilList(new ArrayList<Perfil>());
         }
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            List<Usuario> attachedUsuarioList = new ArrayList<Usuario>();
-            for (Usuario usuarioListUsuarioToAttach : funcion.getUsuarioList()) {
-                usuarioListUsuarioToAttach = em.getReference(usuarioListUsuarioToAttach.getClass(), usuarioListUsuarioToAttach.getNameUser());
-                attachedUsuarioList.add(usuarioListUsuarioToAttach);
+            List<Perfil> attachedPerfilList = new ArrayList<Perfil>();
+            for (Perfil perfilListPerfilToAttach : funcion.getPerfilList()) {
+                perfilListPerfilToAttach = em.getReference(perfilListPerfilToAttach.getClass(), perfilListPerfilToAttach.getIdPerfil());
+                attachedPerfilList.add(perfilListPerfilToAttach);
             }
-            funcion.setUsuarioList(attachedUsuarioList);
+            funcion.setPerfilList(attachedPerfilList);
             em.persist(funcion);
-            for (Usuario usuarioListUsuario : funcion.getUsuarioList()) {
-                usuarioListUsuario.getFuncionList().add(funcion);
-                usuarioListUsuario = em.merge(usuarioListUsuario);
+            for (Perfil perfilListPerfil : funcion.getPerfilList()) {
+                perfilListPerfil.getFuncionList().add(funcion);
+                perfilListPerfil = em.merge(perfilListPerfil);
             }
             utx.commit();
         } catch (Exception ex) {
@@ -79,26 +79,26 @@ public class FuncionJpaController implements Serializable {
             utx.begin();
             em = getEntityManager();
             Funcion persistentFuncion = em.find(Funcion.class, funcion.getIdFuncion());
-            List<Usuario> usuarioListOld = persistentFuncion.getUsuarioList();
-            List<Usuario> usuarioListNew = funcion.getUsuarioList();
-            List<Usuario> attachedUsuarioListNew = new ArrayList<Usuario>();
-            for (Usuario usuarioListNewUsuarioToAttach : usuarioListNew) {
-                usuarioListNewUsuarioToAttach = em.getReference(usuarioListNewUsuarioToAttach.getClass(), usuarioListNewUsuarioToAttach.getNameUser());
-                attachedUsuarioListNew.add(usuarioListNewUsuarioToAttach);
+            List<Perfil> perfilListOld = persistentFuncion.getPerfilList();
+            List<Perfil> perfilListNew = funcion.getPerfilList();
+            List<Perfil> attachedPerfilListNew = new ArrayList<Perfil>();
+            for (Perfil perfilListNewPerfilToAttach : perfilListNew) {
+                perfilListNewPerfilToAttach = em.getReference(perfilListNewPerfilToAttach.getClass(), perfilListNewPerfilToAttach.getIdPerfil());
+                attachedPerfilListNew.add(perfilListNewPerfilToAttach);
             }
-            usuarioListNew = attachedUsuarioListNew;
-            funcion.setUsuarioList(usuarioListNew);
+            perfilListNew = attachedPerfilListNew;
+            funcion.setPerfilList(perfilListNew);
             funcion = em.merge(funcion);
-            for (Usuario usuarioListOldUsuario : usuarioListOld) {
-                if (!usuarioListNew.contains(usuarioListOldUsuario)) {
-                    usuarioListOldUsuario.getFuncionList().remove(funcion);
-                    usuarioListOldUsuario = em.merge(usuarioListOldUsuario);
+            for (Perfil perfilListOldPerfil : perfilListOld) {
+                if (!perfilListNew.contains(perfilListOldPerfil)) {
+                    perfilListOldPerfil.getFuncionList().remove(funcion);
+                    perfilListOldPerfil = em.merge(perfilListOldPerfil);
                 }
             }
-            for (Usuario usuarioListNewUsuario : usuarioListNew) {
-                if (!usuarioListOld.contains(usuarioListNewUsuario)) {
-                    usuarioListNewUsuario.getFuncionList().add(funcion);
-                    usuarioListNewUsuario = em.merge(usuarioListNewUsuario);
+            for (Perfil perfilListNewPerfil : perfilListNew) {
+                if (!perfilListOld.contains(perfilListNewPerfil)) {
+                    perfilListNewPerfil.getFuncionList().add(funcion);
+                    perfilListNewPerfil = em.merge(perfilListNewPerfil);
                 }
             }
             utx.commit();
@@ -135,10 +135,10 @@ public class FuncionJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The funcion with id " + id + " no longer exists.", enfe);
             }
-            List<Usuario> usuarioList = funcion.getUsuarioList();
-            for (Usuario usuarioListUsuario : usuarioList) {
-                usuarioListUsuario.getFuncionList().remove(funcion);
-                usuarioListUsuario = em.merge(usuarioListUsuario);
+            List<Perfil> perfilList = funcion.getPerfilList();
+            for (Perfil perfilListPerfil : perfilList) {
+                perfilListPerfil.getFuncionList().remove(funcion);
+                perfilListPerfil = em.merge(perfilListPerfil);
             }
             em.remove(funcion);
             utx.commit();

@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package session;
 
-import entities.Login;
-import entities.LoginPK;
+import entities.Perfil;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,8 +17,7 @@ import javax.persistence.PersistenceContext;
  * @version 1.0
  */
 @Stateless
-public class LoginFacade extends AbstractFacade<Login> implements LoginFacadeLocal {
-
+public class PerfilFacade extends AbstractFacade<Perfil> implements PerfilFacadeLocal {
     @PersistenceContext(unitName = "JEE_SGR-ejbPU")
     private EntityManager em;
 
@@ -27,14 +26,8 @@ public class LoginFacade extends AbstractFacade<Login> implements LoginFacadeLoc
         return em;
     }
 
-    public LoginFacade() {
-        super(Login.class);
-    }
-
-    @Override
-    public boolean autenticarUsuario(LoginPK loginPK) {
-        Login find = em.find(Login.class, loginPK);
-        return (find != null);
+    public PerfilFacade() {
+        super(Perfil.class);
     }
 
 }

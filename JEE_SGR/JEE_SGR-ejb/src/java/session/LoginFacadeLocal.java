@@ -33,6 +33,5 @@ public interface LoginFacadeLocal {
     int count();
 
     public boolean autenticarUsuario(LoginPK loginPK);
-
     
 }

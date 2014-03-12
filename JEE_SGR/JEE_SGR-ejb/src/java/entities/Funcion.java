@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -53,7 +54,7 @@ public class Funcion implements Serializable {
     private String nameFuncion;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 30)
+    @Size(min = 1, max = 50)
     @Column(name = "url_funcion")
     private String urlFuncion;
     @Basic(optional = false)
@@ -61,9 +62,9 @@ public class Funcion implements Serializable {
     private int idFuncionPadre;
     @JoinTable(name = "funcion_usuario", joinColumns = {
         @JoinColumn(name = "id_funcion", referencedColumnName = "id_funcion")}, inverseJoinColumns = {
-        @JoinColumn(name = "name_user", referencedColumnName = "name_user")})
-    @ManyToMany
-    private List<Usuario> usuarioList;
+        @JoinColumn(name = "id_perfil", referencedColumnName = "id_perfil")})
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Perfil> perfilList;
 
     public Funcion() {
     }
@@ -112,12 +113,12 @@ public class Funcion implements Serializable {
     }
 
     @XmlTransient
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
+    public List<Perfil> getPerfilList() {
+        return perfilList;
     }
 
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
+    public void setPerfilList(List<Perfil> perfilList) {
+        this.perfilList = perfilList;
     }
 
     @Override

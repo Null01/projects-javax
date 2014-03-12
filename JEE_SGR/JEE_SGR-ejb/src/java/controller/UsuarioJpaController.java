@@ -14,9 +14,8 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import entities.Funcion;
+import entities.Perfil;
 import entities.Usuario;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -41,23 +40,19 @@ public class UsuarioJpaController implements Serializable {
     }
 
     public void create(Usuario usuario) throws PreexistingEntityException, RollbackFailureException, Exception {
-        if (usuario.getFuncionList() == null) {
-            usuario.setFuncionList(new ArrayList<Funcion>());
-        }
         EntityManager em = null;
         try {
             utx.begin();
             em = getEntityManager();
-            List<Funcion> attachedFuncionList = new ArrayList<Funcion>();
-            for (Funcion funcionListFuncionToAttach : usuario.getFuncionList()) {
-                funcionListFuncionToAttach = em.getReference(funcionListFuncionToAttach.getClass(), funcionListFuncionToAttach.getIdFuncion());
-                attachedFuncionList.add(funcionListFuncionToAttach);
+            Perfil idPerfil = usuario.getIdPerfil();
+            if (idPerfil != null) {
+                idPerfil = em.getReference(idPerfil.getClass(), idPerfil.getIdPerfil());
+                usuario.setIdPerfil(idPerfil);
             }
-            usuario.setFuncionList(attachedFuncionList);
             em.persist(usuario);
-            for (Funcion funcionListFuncion : usuario.getFuncionList()) {
-                funcionListFuncion.getUsuarioList().add(usuario);
-                funcionListFuncion = em.merge(funcionListFuncion);
+            if (idPerfil != null) {
+                idPerfil.getUsuarioList().add(usuario);
+                idPerfil = em.merge(idPerfil);
             }
             utx.commit();
         } catch (Exception ex) {
@@ -83,27 +78,20 @@ public class UsuarioJpaController implements Serializable {
             utx.begin();
             em = getEntityManager();
             Usuario persistentUsuario = em.find(Usuario.class, usuario.getNameUser());
-            List<Funcion> funcionListOld = persistentUsuario.getFuncionList();
-            List<Funcion> funcionListNew = usuario.getFuncionList();
-            List<Funcion> attachedFuncionListNew = new ArrayList<Funcion>();
-            for (Funcion funcionListNewFuncionToAttach : funcionListNew) {
-                funcionListNewFuncionToAttach = em.getReference(funcionListNewFuncionToAttach.getClass(), funcionListNewFuncionToAttach.getIdFuncion());
-                attachedFuncionListNew.add(funcionListNewFuncionToAttach);
+            Perfil idPerfilOld = persistentUsuario.getIdPerfil();
+            Perfil idPerfilNew = usuario.getIdPerfil();
+            if (idPerfilNew != null) {
+                idPerfilNew = em.getReference(idPerfilNew.getClass(), idPerfilNew.getIdPerfil());
+                usuario.setIdPerfil(idPerfilNew);
             }
-            funcionListNew = attachedFuncionListNew;
-            usuario.setFuncionList(funcionListNew);
             usuario = em.merge(usuario);
-            for (Funcion funcionListOldFuncion : funcionListOld) {
-                if (!funcionListNew.contains(funcionListOldFuncion)) {
-                    funcionListOldFuncion.getUsuarioList().remove(usuario);
-                    funcionListOldFuncion = em.merge(funcionListOldFuncion);
-                }
+            if (idPerfilOld != null && !idPerfilOld.equals(idPerfilNew)) {
+                idPerfilOld.getUsuarioList().remove(usuario);
+                idPerfilOld = em.merge(idPerfilOld);
             }
-            for (Funcion funcionListNewFuncion : funcionListNew) {
-                if (!funcionListOld.contains(funcionListNewFuncion)) {
-                    funcionListNewFuncion.getUsuarioList().add(usuario);
-                    funcionListNewFuncion = em.merge(funcionListNewFuncion);
-                }
+            if (idPerfilNew != null && !idPerfilNew.equals(idPerfilOld)) {
+                idPerfilNew.getUsuarioList().add(usuario);
+                idPerfilNew = em.merge(idPerfilNew);
             }
             utx.commit();
         } catch (Exception ex) {
@@ -139,10 +127,10 @@ public class UsuarioJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The usuario with id " + id + " no longer exists.", enfe);
             }
-            List<Funcion> funcionList = usuario.getFuncionList();
-            for (Funcion funcionListFuncion : funcionList) {
-                funcionListFuncion.getUsuarioList().remove(usuario);
-                funcionListFuncion = em.merge(funcionListFuncion);
+            Perfil idPerfil = usuario.getIdPerfil();
+            if (idPerfil != null) {
+                idPerfil.getUsuarioList().remove(usuario);
+                idPerfil = em.merge(idPerfil);
             }
             em.remove(usuario);
             utx.commit();

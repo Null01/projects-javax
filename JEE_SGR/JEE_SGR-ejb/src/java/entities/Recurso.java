@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,7 +50,7 @@ public class Recurso implements Serializable {
     @Size(max = 80)
     @Column(name = "descripcion")
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recurso")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recurso", fetch = FetchType.EAGER)
     private List<Articulo> articuloList;
 
     public Recurso() {
