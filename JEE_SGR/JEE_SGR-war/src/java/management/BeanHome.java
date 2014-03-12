@@ -7,8 +7,9 @@ package management;
 
 import entities.Funcion;
 import entities.Usuario;
+import java.io.Serializable;
+import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.servlet.http.HttpSession;
 import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.model.DefaultTreeNode;
@@ -19,7 +20,7 @@ import util.FacesUtil;
  *
  * @author duran
  */
-public class BeanHome {
+public class BeanHome implements Serializable {
 
     private TreeNode menu;
     private TreeNode selectedNode;
@@ -32,8 +33,9 @@ public class BeanHome {
     public void initialize() {
         HttpSession session = FacesUtil.getFacesUtil().getSession();
         Usuario usuario = (Usuario) session.getAttribute("session");
+        List<Funcion> funcionList = usuario.getIdPerfil().getFuncionList();
         menu = new DefaultTreeNode("root", null);
-        for (Funcion f : usuario.getFuncionList()) {
+        for (Funcion f : funcionList) {
             DefaultTreeNode defaultTreeNode = new DefaultTreeNode(f, menu);
             System.out.println(f.getNameFuncion());
         }
@@ -42,7 +44,7 @@ public class BeanHome {
     public void onNodeSelect(NodeSelectEvent event) {
         Funcion funcion = (Funcion) event.getTreeNode().getData();
         if (funcion != null) {
-            System.out.println(funcion.getUrlFuncion());
+            System.out.println("-> " + funcion.getUrlFuncion());
             setPathForward(funcion.getUrlFuncion());
         }
     }

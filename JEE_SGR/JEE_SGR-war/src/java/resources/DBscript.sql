@@ -1,7 +1,49 @@
+
+DROP TABLE funcion CASCADE;
+DROP TABLE funcion_usuario CASCADE;
+DROP TABLE PERFIL CASCADE;
+
+CREATE TABLE FUNCION(
+  id_funcion     serial not null,
+  name_funcion   character varying(30) not null,
+  url_funcion    character varying(50) not null,
+  id_funcion_padre serial not null,
+  primary key(id_funcion)  
+);
+
+CREATE TABLE PERFIL(
+  id_perfil     serial not null,
+  name_perfil   character varying(30) not null,
+  primary key (id_perfil)
+);
+
+-- RELACION MANYTOMANY
+CREATE TABLE FUNCION_USUARIO(
+  id_perfil    serial not null,
+  foreign key (id_perfil) references PERFIL(id_perfil), 
+  id_funcion   serial not null,
+  foreign key (id_funcion) references FUNCION(id_funcion),
+  primary key (id_perfil,id_funcion)
+);
+
+
+INSERT INTO funcion VALUES (1,'Admin perfiles','/adminPerfiles/adminPerfiles.xhtml',1);
+INSERT INTO funcion VALUES (2,'Admin prestamos','/adminPrestamo/adminPrestamo.xhtml',1);
+
+INSERT INTO perfil VALUES (1,'ADMINISTRADOR');
+INSERT INTO perfil VALUES (2,'CLIENTE');
+
+INSERT INTO funcion_usuario VALUES (1,1);
+INSERT INTO funcion_usuario VALUES (1,2);
+INSERT INTO funcion_usuario VALUES (2,1);
+
+
 DROP TABLE login CASCADE;
 DROP TABLE usuario CASCADE;
 
 CREATE TABLE USUARIO(
+  id_perfil     serial not null,
+  foreign key (id_perfil)  references PERFIL(id_perfil),
   name_user     character varying(30) not null,
   nombre        character varying(30) not null,
   apellido      character varying(30) not null,
@@ -15,6 +57,13 @@ CREATE TABLE USUARIO(
   pass_user character varying(30) not null,
   primary key(name_user,pass_user)
 );
+
+INSERT INTO usuario VALUES (2,'usuario','pedro','pedraza','01-01-2000','pedropedraza@correo.com');
+INSERT INTO usuario VALUES (1,'admin','admin','super','26-03-1992','superadmin@correo.com');
+
+INSERT INTO login VALUES ('usuario','usuario');
+INSERT INTO login VALUES ('admin','admin');
+
 
 
 DROP TABLE recurso CASCADE;
@@ -36,13 +85,6 @@ CREATE TABLE ARTICULO(
   primary key (id_articulo, id_recurso),
   foreign key (id_recurso) references RECURSO(id_recurso)  
 );
-
-
-INSERT INTO usuario VALUES ('usuario','pedro','pedraza','01-01-2000','pedropedraza@correo.com');
-INSERT INTO usuario VALUES ('admin','admin','super','26-03-1992','superadmin@correo.com');
-
-INSERT INTO login VALUES ('usuario','usuario');
-INSERT INTO login VALUES ('admin','admin');
 
 
 INSERT INTO recurso VALUES (1,'CAMARA','');
@@ -75,30 +117,3 @@ INSERT INTO prestamo VALUES (1,2,'usuario','28-02-2014','02-03-2014');
 INSERT INTO prestamo VALUES (2,2,'usuario','28-02-2014','02-03-2014');
 INSERT INTO prestamo VALUES (2,3,'usuario','28-02-2014','02-03-2014');
 
-
-DROP TABLE funcion CASCADE;
-DROP TABLE funcion_usuario CASCADE;
-
-CREATE TABLE FUNCION(
-  id_funcion     serial not null,
-  name_funcion   character varying(30) not null,
-  url_funcion    character varying(30) not null,
-  id_funcion_padre serial not null,
-  primary key(id_funcion)  
-);
-
--- RELACION MANYTOMANY
-CREATE TABLE FUNCION_USUARIO(
-  id_funcion     serial not null,
-  foreign key (id_funcion) references FUNCION(id_funcion), 
-  name_user     character varying(30) not null,  
-  foreign key (name_user) references USUARIO(name_user),
-  primary key (name_user,id_funcion)
-);
-
-INSERT INTO funcion VALUES (1,'Admin usuarios','/adminUsuarios.xhtml',1);
-INSERT INTO funcion VALUES (2,'Admin prestamos','/reservaRecurso.xhtml',1);
-
-INSERT INTO funcion_usuario VALUES (1,'admin');
-INSERT INTO funcion_usuario VALUES (1,'usuario');
-INSERT INTO funcion_usuario VALUES(2,'admin');

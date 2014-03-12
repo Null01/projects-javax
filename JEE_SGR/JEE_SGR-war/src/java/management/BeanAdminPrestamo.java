@@ -7,6 +7,7 @@ package management;
 
 import entities.Articulo;
 import entities.Recurso;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +17,7 @@ import javax.annotation.PostConstruct;
  *
  * @author duran
  */
-public class BeanReservaRecurso {
+public class BeanAdminPrestamo implements Serializable {
 
     private List<Recurso> listaRecursos;
     private List<Articulo> listaArticulos;
@@ -29,7 +30,7 @@ public class BeanReservaRecurso {
     private Articulo articuloSelected;
     private Date dateSelected;
 
-    public BeanReservaRecurso() {
+    public BeanAdminPrestamo() {
         listaArticulos = new ArrayList<>();
         listaRecursos = new ArrayList<>();
     }

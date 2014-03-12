@@ -14,8 +14,13 @@
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>beanReservaRecurso</managed-bean-name>
-        <managed-bean-class>management.BeanReservaRecurso</managed-bean-class>
+        <managed-bean-name>beanAdminPrestamo</managed-bean-name>
+        <managed-bean-class>management.BeanAdminPrestamo</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>beanAdminPerfiles</managed-bean-name>
+        <managed-bean-class>management.BeanAdminPerfiles</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 </faces-config>

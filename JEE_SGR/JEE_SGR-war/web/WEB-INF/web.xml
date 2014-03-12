@@ -4,14 +4,6 @@
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
-    <filter>
-        <filter-name>FilterUtil</filter-name>
-        <filter-class>util.FilterUtil</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>FilterUtil</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
