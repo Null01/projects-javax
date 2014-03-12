@@ -14,6 +14,7 @@ CREATE TABLE FUNCION(
 CREATE TABLE PERFIL(
   id_perfil     serial not null,
   name_perfil   character varying(30) not null,
+  desc_perfil   character varying(256) not null,
   primary key (id_perfil)
 );
 
@@ -30,8 +31,8 @@ CREATE TABLE FUNCION_USUARIO(
 INSERT INTO funcion VALUES (1,'Admin perfiles','/adminPerfiles/adminPerfiles.xhtml',1);
 INSERT INTO funcion VALUES (2,'Admin prestamos','/adminPrestamo/adminPrestamo.xhtml',1);
 
-INSERT INTO perfil VALUES (1,'ADMINISTRADOR');
-INSERT INTO perfil VALUES (2,'CLIENTE');
+INSERT INTO perfil VALUES (1,'ADMINISTRADOR','PERFIL QUE POSEE TODOS LOS PERMISOS DE LA APLICACION.');
+INSERT INTO perfil VALUES (2,'CLIENTE','PERFIL USUARIO FINAL.');
 
 INSERT INTO funcion_usuario VALUES (1,1);
 INSERT INTO funcion_usuario VALUES (1,2);

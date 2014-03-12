@@ -5,11 +5,12 @@
  */
 package management;
 
-import entities.Articulo;
-import entities.Recurso;
+import entities.Perfil;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import session.PerfilFacadeLocal;
 
 /**
  *
@@ -17,17 +18,28 @@ import javax.annotation.PostConstruct;
  */
 public class BeanAdminPerfiles {
 
-    private List<Recurso> listaPerfiles;
-    private List<Articulo> listaArticulos;
+    @EJB
+    private PerfilFacadeLocal perfilFacade;
+
+    private List<Perfil> listaPerfiles;
 
     public BeanAdminPerfiles() {
-        listaArticulos = new ArrayList<>();
-        listaPerfiles = new ArrayList<>();
     }
 
     @PostConstruct
     public void initialize() {
+        List<Perfil> findAll = perfilFacade.findAll();
+        if (findAll != null) {
+            listaPerfiles = new ArrayList<>(findAll);
+        }
+    }
 
+    public List<Perfil> getListaPerfiles() {
+        return listaPerfiles;
+    }
+
+    public void setListaPerfiles(List<Perfil> listaPerfiles) {
+        this.listaPerfiles = listaPerfiles;
     }
 
 }

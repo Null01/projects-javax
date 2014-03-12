@@ -12,25 +12,28 @@
         <h:body>
 
             <h:form id="formReserva">
-                <p:dataTable id="dataTable1" var="recurso" value="#{beanReservaRecurso.listaRecursos}"  rowKey="#{recurso.idRecurso}"  
+                <p:dataTable id="dataTable1" var="perfil" value="#{beanAdminPerfiles.listaPerfiles}"  rowKey="#{perfil.idPerfil}"  
                              selection="#{beanReservaRecurso.recursoSelected}" selectionMode="single" >   
                     <f:facet name="header">  
                         PERFILES
                     </f:facet>  
 
-                    <p:column sortBy="idRecurso" headerText="ID">
+                    <p:column sortBy="idPerfil" headerText="ID">
                         <div align="center">
-                            <h:outputText value="#{recurso.idRecurso}" />
-                        </div>
-                    </p:column>  
-
-                    <p:column sortBy="nombre" headerText="OBJETO">
-                        <div align="center">
-                            <h:outputText value="#{recurso.nombre}" />  
+                            <h:outputText value="#{perfil.idPerfil}" />
                         </div>
                     </p:column>
-
-                    <p:column headerText="CANTIDAD">  
+                    <p:column  headerText="ALIAS">
+                        <div align="center">
+                            <h:outputText value="#{perfil.namePerfil}" />  
+                        </div>
+                    </p:column>
+                    <p:column headerText="DESCRIPCION">
+                        <div align="center">
+                            <h:outputText value="#{perfil.descPerfil}" />  
+                        </div>
+                    </p:column>
+                    <p:column headerText="USUARIOS">  
                         <h:outputText value="cantidad" />  
                     </p:column>
                 </p:dataTable>

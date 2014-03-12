@@ -27,6 +27,7 @@ public class BeanHome implements Serializable {
     private String pathForward;
 
     public BeanHome() {
+        menu = new DefaultTreeNode("root", null);
     }
 
     @PostConstruct
@@ -34,10 +35,11 @@ public class BeanHome implements Serializable {
         HttpSession session = FacesUtil.getFacesUtil().getSession();
         Usuario usuario = (Usuario) session.getAttribute("session");
         List<Funcion> funcionList = usuario.getIdPerfil().getFuncionList();
-        menu = new DefaultTreeNode("root", null);
-        for (Funcion f : funcionList) {
-            DefaultTreeNode defaultTreeNode = new DefaultTreeNode(f, menu);
-            System.out.println(f.getNameFuncion());
+        if (funcionList != null) {
+            for (Funcion f : funcionList) {
+                DefaultTreeNode defaultTreeNode = new DefaultTreeNode(f, menu);
+                System.out.println(f.getNameFuncion());
+            }
         }
     }
 
