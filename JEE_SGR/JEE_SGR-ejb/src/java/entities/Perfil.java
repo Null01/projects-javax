@@ -37,7 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Perfil.findAll", query = "SELECT p FROM Perfil p"),
     @NamedQuery(name = "Perfil.findByIdPerfil", query = "SELECT p FROM Perfil p WHERE p.idPerfil = :idPerfil"),
-    @NamedQuery(name = "Perfil.findByNamePerfil", query = "SELECT p FROM Perfil p WHERE p.namePerfil = :namePerfil")})
+    @NamedQuery(name = "Perfil.findByNamePerfil", query = "SELECT p FROM Perfil p WHERE p.namePerfil = :namePerfil"),
+    @NamedQuery(name = "Perfil.findByDescPerfil", query = "SELECT p FROM Perfil p WHERE p.descPerfil = :descPerfil")})
 public class Perfil implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,6 +51,11 @@ public class Perfil implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "name_perfil")
     private String namePerfil;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 256)
+    @Column(name = "desc_perfil")
+    private String descPerfil;
     @ManyToMany(mappedBy = "perfilList", fetch = FetchType.EAGER)
     private List<Funcion> funcionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPerfil", fetch = FetchType.EAGER)
@@ -62,9 +68,10 @@ public class Perfil implements Serializable {
         this.idPerfil = idPerfil;
     }
 
-    public Perfil(Integer idPerfil, String namePerfil) {
+    public Perfil(Integer idPerfil, String namePerfil, String descPerfil) {
         this.idPerfil = idPerfil;
         this.namePerfil = namePerfil;
+        this.descPerfil = descPerfil;
     }
 
     public Integer getIdPerfil() {
@@ -81,6 +88,14 @@ public class Perfil implements Serializable {
 
     public void setNamePerfil(String namePerfil) {
         this.namePerfil = namePerfil;
+    }
+
+    public String getDescPerfil() {
+        return descPerfil;
+    }
+
+    public void setDescPerfil(String descPerfil) {
+        this.descPerfil = descPerfil;
     }
 
     @XmlTransient
