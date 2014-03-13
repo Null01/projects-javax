@@ -13,7 +13,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author duran
+ * @author AGarcia
  */
 @Local
 public interface LoginFacadeLocal {

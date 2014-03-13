@@ -20,11 +20,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author duran
- * @version 1.0
+ * @author AGarcia
  */
 @Entity
-@Table(name = "prestamo")
+@Table(name = "PRESTAMO")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Prestamo.findAll", query = "SELECT p FROM Prestamo p"),
@@ -37,7 +36,7 @@ public class Prestamo implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected PrestamoPK prestamoPK;
-    @Column(name = "fecha_entrega")
+    @Column(name = "FECHA_ENTREGA")
     @Temporal(TemporalType.DATE)
     private Date fechaEntrega;
 
@@ -92,5 +91,5 @@ public class Prestamo implements Serializable {
     public String toString() {
         return "entities.Prestamo[ prestamoPK=" + prestamoPK + " ]";
     }
-
+    
 }

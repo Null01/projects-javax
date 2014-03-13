@@ -10,19 +10,20 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author duran
- * @version 1.0
+ * @author AGarcia
  */
 @Embeddable
 public class ArticuloPK implements Serializable {
     @Basic(optional = false)
-    @Column(name = "id_articulo")
+    @Column(name = "ID_ARTICULO")
     private int idArticulo;
     @Basic(optional = false)
-    @Column(name = "id_recurso")
+    @NotNull
+    @Column(name = "ID_RECURSO")
     private int idRecurso;
 
     public ArticuloPK() {
@@ -77,5 +78,5 @@ public class ArticuloPK implements Serializable {
     public String toString() {
         return "entities.ArticuloPK[ idArticulo=" + idArticulo + ", idRecurso=" + idRecurso + " ]";
     }
-
+    
 }

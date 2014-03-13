@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package session;
 
 import entities.Recurso;
@@ -12,7 +11,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author duran
+ * @author AGarcia
  */
 @Local
 public interface RecursoFacadeLocal {
@@ -30,5 +29,7 @@ public interface RecursoFacadeLocal {
     List<Recurso> findRange(int[] range);
 
     int count();
-    
+
+
+
 }

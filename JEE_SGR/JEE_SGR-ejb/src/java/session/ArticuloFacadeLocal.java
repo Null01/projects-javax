@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package session;
 
 import entities.Articulo;
+import entities.Recurso;
 import java.util.List;
 import javax.ejb.Local;
 
 /**
  *
- * @author duran
+ * @author AGarcia
  */
 @Local
 public interface ArticuloFacadeLocal {
@@ -30,5 +30,11 @@ public interface ArticuloFacadeLocal {
     List<Articulo> findRange(int[] range);
 
     int count();
-    
+
+    public int countArticlesEnable(Recurso recurso);
+
+    public List<Articulo> getArticlesEnable(Recurso recurso);
+
+    public int countArticle(Recurso recurso);
+
 }

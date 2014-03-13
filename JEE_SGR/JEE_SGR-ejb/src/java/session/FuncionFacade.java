@@ -13,12 +13,11 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author duran
- * @version 1.0
+ * @author AGarcia
  */
 @Stateless
 public class FuncionFacade extends AbstractFacade<Funcion> implements FuncionFacadeLocal {
-    @PersistenceContext(unitName = "JEE_SGR-ejbPU")
+    @PersistenceContext(unitName = "JEE_SGR-ejbPU2")
     private EntityManager em;
 
     @Override
@@ -29,5 +28,5 @@ public class FuncionFacade extends AbstractFacade<Funcion> implements FuncionFac
     public FuncionFacade() {
         super(Funcion.class);
     }
-
+    
 }

@@ -28,11 +28,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author duran
- * @version 1.0
+ * @author AGarcia
  */
 @Entity
-@Table(name = "funcion")
+@Table(name = "FUNCION")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Funcion.findAll", query = "SELECT f FROM Funcion f"),
@@ -45,24 +44,25 @@ public class Funcion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_funcion")
+    @Column(name = "ID_FUNCION")
     private Integer idFuncion;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "name_funcion")
+    @Column(name = "NAME_FUNCION")
     private String nameFuncion;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
-    @Column(name = "url_funcion")
+    @Column(name = "URL_FUNCION")
     private String urlFuncion;
     @Basic(optional = false)
-    @Column(name = "id_funcion_padre")
+    @NotNull
+    @Column(name = "ID_FUNCION_PADRE")
     private int idFuncionPadre;
-    @JoinTable(name = "funcion_usuario", joinColumns = {
-        @JoinColumn(name = "id_funcion", referencedColumnName = "id_funcion")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_perfil", referencedColumnName = "id_perfil")})
+    @JoinTable(name = "FUNCION_USUARIO", joinColumns = {
+        @JoinColumn(name = "ID_FUNCION", referencedColumnName = "ID_FUNCION")}, inverseJoinColumns = {
+        @JoinColumn(name = "ID_PERFIL", referencedColumnName = "ID_PERFIL")})
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Perfil> perfilList;
 
@@ -145,5 +145,5 @@ public class Funcion implements Serializable {
     public String toString() {
         return "entities.Funcion[ idFuncion=" + idFuncion + " ]";
     }
-
+    
 }

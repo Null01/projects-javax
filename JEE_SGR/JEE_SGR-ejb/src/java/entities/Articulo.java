@@ -21,28 +21,31 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author duran
- * @version 1.0
+ * @author AGarcia
  */
 @Entity
-@Table(name = "articulo")
+@Table(name = "ARTICULO")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Articulo.findAll", query = "SELECT a FROM Articulo a"),
     @NamedQuery(name = "Articulo.findByIdArticulo", query = "SELECT a FROM Articulo a WHERE a.articuloPK.idArticulo = :idArticulo"),
     @NamedQuery(name = "Articulo.findByIdRecurso", query = "SELECT a FROM Articulo a WHERE a.articuloPK.idRecurso = :idRecurso"),
     @NamedQuery(name = "Articulo.findByMarca", query = "SELECT a FROM Articulo a WHERE a.marca = :marca"),
-    @NamedQuery(name = "Articulo.findByDisponible", query = "SELECT a FROM Articulo a WHERE a.disponible = :disponible")})
+    @NamedQuery(name = "Articulo.findByDisponible", query = "SELECT a FROM Articulo a WHERE a.disponible = :disponible"),
+    @NamedQuery(name = "Articulo.findByNotes", query = "SELECT a FROM Articulo a WHERE a.notes = :notes")})
 public class Articulo implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ArticuloPK articuloPK;
     @Size(max = 30)
-    @Column(name = "marca")
+    @Column(name = "MARCA")
     private String marca;
-    @Column(name = "disponible")
-    private Boolean disponible;
-    @JoinColumn(name = "id_recurso", referencedColumnName = "id_recurso", insertable = false, updatable = false)
+    @Column(name = "DISPONIBLE")
+    private Short disponible;
+    @Size(max = 256)
+    @Column(name = "NOTES")
+    private String notes;
+    @JoinColumn(name = "ID_RECURSO", referencedColumnName = "ID_RECURSO", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Recurso recurso;
 
@@ -73,12 +76,20 @@ public class Articulo implements Serializable {
         this.marca = marca;
     }
 
-    public Boolean getDisponible() {
+    public Short getDisponible() {
         return disponible;
     }
 
-    public void setDisponible(Boolean disponible) {
+    public void setDisponible(Short disponible) {
         this.disponible = disponible;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public Recurso getRecurso() {
@@ -113,5 +124,5 @@ public class Articulo implements Serializable {
     public String toString() {
         return "entities.Articulo[ articuloPK=" + articuloPK + " ]";
     }
-
+    
 }

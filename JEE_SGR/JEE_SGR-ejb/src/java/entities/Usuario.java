@@ -26,11 +26,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author duran
- * @version 1.0
+ * @author AGarcia
  */
 @Entity
-@Table(name = "usuario")
+@Table(name = "USUARIO")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
@@ -45,29 +44,29 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "name_user")
+    @Column(name = "NAME_USER")
     private String nameUser;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "nombre")
+    @Column(name = "NOMBRE")
     private String nombre;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "apellido")
+    @Column(name = "APELLIDO")
     private String apellido;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "edad")
+    @Column(name = "EDAD")
     @Temporal(TemporalType.DATE)
     private Date edad;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 40)
-    @Column(name = "correo")
+    @Column(name = "CORREO")
     private String correo;
-    @JoinColumn(name = "id_perfil", referencedColumnName = "id_perfil")
+    @JoinColumn(name = "ID_PERFIL", referencedColumnName = "ID_PERFIL")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Perfil idPerfil;
 
@@ -158,5 +157,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "entities.Usuario[ nameUser=" + nameUser + " ]";
     }
-
+    
 }

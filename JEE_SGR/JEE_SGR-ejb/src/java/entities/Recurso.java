@@ -26,11 +26,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author duran
- * @version 1.0
+ * @author AGarcia
  */
 @Entity
-@Table(name = "recurso")
+@Table(name = "RECURSO")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Recurso.findAll", query = "SELECT r FROM Recurso r"),
@@ -42,13 +41,13 @@ public class Recurso implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_recurso")
+    @Column(name = "ID_RECURSO")
     private Integer idRecurso;
     @Size(max = 30)
-    @Column(name = "nombre")
+    @Column(name = "NOMBRE")
     private String nombre;
-    @Size(max = 80)
-    @Column(name = "descripcion")
+    @Size(max = 256)
+    @Column(name = "DESCRIPCION")
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recurso", fetch = FetchType.EAGER)
     private List<Articulo> articuloList;
@@ -117,5 +116,5 @@ public class Recurso implements Serializable {
     public String toString() {
         return "entities.Recurso[ idRecurso=" + idRecurso + " ]";
     }
-
+    
 }

@@ -28,11 +28,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author duran
- * @version 1.0
+ * @author AGarcia
  */
 @Entity
-@Table(name = "perfil")
+@Table(name = "PERFIL")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Perfil.findAll", query = "SELECT p FROM Perfil p"),
@@ -44,17 +43,17 @@ public class Perfil implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_perfil")
+    @Column(name = "ID_PERFIL")
     private Integer idPerfil;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "name_perfil")
+    @Column(name = "NAME_PERFIL")
     private String namePerfil;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 256)
-    @Column(name = "desc_perfil")
+    @Column(name = "DESC_PERFIL")
     private String descPerfil;
     @ManyToMany(mappedBy = "perfilList", fetch = FetchType.EAGER)
     private List<Funcion> funcionList;
@@ -140,5 +139,5 @@ public class Perfil implements Serializable {
     public String toString() {
         return "entities.Perfil[ idPerfil=" + idPerfil + " ]";
     }
-
+    
 }

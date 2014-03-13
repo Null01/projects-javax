@@ -16,11 +16,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author duran
- * @version 1.0
+ * @author AGarcia
  */
 @Entity
-@Table(name = "login")
+@Table(name = "LOGIN")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Login.findAll", query = "SELECT l FROM Login l"),
@@ -74,5 +73,5 @@ public class Login implements Serializable {
     public String toString() {
         return "entities.Login[ loginPK=" + loginPK + " ]";
     }
-
+    
 }

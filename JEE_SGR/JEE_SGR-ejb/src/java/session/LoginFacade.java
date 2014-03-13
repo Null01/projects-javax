@@ -13,13 +13,12 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author duran
- * @version 1.0
+ * @author AGarcia
  */
 @Stateless
 public class LoginFacade extends AbstractFacade<Login> implements LoginFacadeLocal {
 
-    @PersistenceContext(unitName = "JEE_SGR-ejbPU")
+    @PersistenceContext(unitName = "JEE_SGR-ejbPU2")
     private EntityManager em;
 
     @Override
