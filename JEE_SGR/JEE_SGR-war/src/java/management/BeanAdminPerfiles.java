@@ -6,6 +6,8 @@
 package management;
 
 import entities.Perfil;
+import entities.Recurso;
+import entities.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -22,6 +24,7 @@ public class BeanAdminPerfiles {
     private PerfilFacadeLocal perfilFacade;
 
     private List<Perfil> listaPerfiles;
+    private Recurso recursoSelected;
 
     public BeanAdminPerfiles() {
     }
@@ -32,6 +35,12 @@ public class BeanAdminPerfiles {
         if (findAll != null) {
             listaPerfiles = new ArrayList<>(findAll);
         }
+
+    }
+
+    public List<Usuario> showUser(Perfil perfil) {
+        List<Usuario> list = perfil.getUsuarioList();
+        return (list != null) ? list : new ArrayList<Usuario>();
     }
 
     public List<Perfil> getListaPerfiles() {
@@ -42,4 +51,11 @@ public class BeanAdminPerfiles {
         this.listaPerfiles = listaPerfiles;
     }
 
+    public Recurso getRecursoSelected() {
+        return recursoSelected;
+    }
+
+    public void setRecursoSelected(Recurso recursoSelected) {
+        this.recursoSelected = recursoSelected;
+    }
 }

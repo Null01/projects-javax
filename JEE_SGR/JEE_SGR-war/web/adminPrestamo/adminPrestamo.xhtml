@@ -15,12 +15,12 @@
 
         <h:body>
 
-            <h:form id="formReserva">  
+            <h:form id="formViewPrestamo">  
 
-                <p:dataTable id="dataTable1" var="recurso" value="#{beanReservaRecurso.listaRecursos}"  rowKey="#{recurso.idRecurso}"  
-                             selection="#{beanReservaRecurso.recursoSelected}" selectionMode="single" >   
+                <p:dataTable id="dataPrestamo" var="recurso" value="#{beanAdminPrestamo.listaRecursos}"  rowKey="#{recurso.idRecurso}"  
+                             paginator="true" rows="4" selection="#{beanAdminPrestamo.recursoSelected}" selectionMode="single" >   
                     <f:facet name="header">  
-                        RECURSOS DISPONIBLES
+                        PRESTAMO DE RECURSOS
                     </f:facet>  
 
                     <p:column sortBy="idRecurso" headerText="ID">
@@ -35,52 +35,23 @@
                         </div>
                     </p:column>
 
-                    <p:column headerText="CANTIDAD">  
-                        <h:outputText value="cantidad" />  
-                    </p:column>
-                    <!-- <p:column >  
-                         <p:commandButton id="modalDialogButton" value="Reservar" actionListener="#{beanReserveResource.asignarRecursoEvaluar(recurso)}" oncomplete="dlg2.show();
-                                          return false;" update=":modalDialog" />
-                     </p:column>-->
-                </p:dataTable>
-
-            </h:form> 
-
-
-            <!--    <p:dialog id="modalDialog" header="ELEMENTOS DISPONIBLES" widgetVar="dlg2" modal="true" showEffect="explode" resizable="false" width="600">
-                    <h:form id="formDialogReserva">
-                        <p:messages id="messages2" />
-                        <p:dataTable id="dataTable2" var="articulo" value="#{beanReserveResource.listaArticulos}"  rowKey="#{articulo}"  
-                                     selection="#{beanReserveResource.articuloSelected}" selectionMode="single" >  
-                            <f:facet name="header">  
-                                ARTICULOS
-                            </f:facet>
-                            <f:facet name="header">  
-                                <p:messages />  
-                            </f:facet>  
-    
-                            <p:column  headerText="ID">  
-                                <h:outputText value="#{articulo.articuloPK.idArticulo}" />  
-                            </p:column>  
-    
-                            <p:column headerText="OBJETIVO">
-                                <p:selectManyCheckbox id="pageDirection" value="#{beanReserveResource.selectedOptions}">  
-                                    <f:selectItem itemLabel="#{articulo.marca}" itemValue="#{articulo.marca}" />
-                                </p:selectManyCheckbox>  
-    
-                            </p:column>
-                        </p:dataTable>
-                        <p/>
-    
+                    <p:column  headerText="STOCK">
                         <div align="center">
-                            <h:panelGrid columns="3">
-                                <h:outputLabel for="calendar" value="FECHA RESERVA: *" style="font-weight:bold"/>
-                                <p:calendar id="calendar" value="#{beanReserveResource.dateSelected}" pattern="MM/dd/yyyy" />
-                                <p:commandButton id="modalDialogButton" value="Reservar" actionListener="#{beanReserveResource.registrarPrestamo}" update="messages2"/>
-                            </h:panelGrid>
+                            <h:outputText value="#{beanAdminPrestamo.countArticle(recurso)}" />  
                         </div>
-                    </h:form>
-                </p:dialog>-->
+                    </p:column>
+                    <p:column headerText="DISPONIBLES">  
+                        <div align="center">
+                            <h:outputText value="#{beanAdminPrestamo.countArticleEnable(recurso)}" />  
+                        </div>
+                    </p:column>
+                    <p:column headerText="DESCRIPCION">
+                        <div align="center">
+                            <p:inputTextarea value="#{recurso.descripcion}" disabled="true"  />
+                        </div>
+                    </p:column>
+                </p:dataTable>
+            </h:form> 
         </h:body>
     </f:view>
 </html>

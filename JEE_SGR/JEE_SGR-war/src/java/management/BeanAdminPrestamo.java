@@ -5,13 +5,14 @@
  */
 package management;
 
-import entities.Articulo;
 import entities.Recurso;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import session.ArticuloFacadeLocal;
+import session.RecursoFacadeLocal;
 
 /**
  *
@@ -19,25 +20,43 @@ import javax.annotation.PostConstruct;
  */
 public class BeanAdminPrestamo implements Serializable {
 
+    @EJB
+    private RecursoFacadeLocal recursoFacade;
+    @EJB
+    private ArticuloFacadeLocal articuloFacade;
+
     private List<Recurso> listaRecursos;
-    private List<Articulo> listaArticulos;
-    /**
-     * Parametros necesarios para realizar el prestamos de algun recurso en
-     * especifico.
-     */
-    private List<String> optionsSelected;
     private Recurso recursoSelected;
-    private Articulo articuloSelected;
-    private Date dateSelected;
 
     public BeanAdminPrestamo() {
-        listaArticulos = new ArrayList<>();
-        listaRecursos = new ArrayList<>();
     }
 
     @PostConstruct
     public void initialize() {
+        List<Recurso> findAll = recursoFacade.findAll();
+        if (findAll != null) {
+            listaRecursos = new ArrayList<>(findAll);
+        }
+    }
 
+    public String countArticle(Recurso recurso) {
+        if (recurso != null) {
+            int countArticlesEnable = articuloFacade.countArticle(recurso);
+            if (countArticlesEnable != 0) {
+                return countArticlesEnable + "";
+            }
+        }
+        return "<Empty>";
+    }
+
+    public String countArticleEnable(Recurso recurso) {
+        if (recurso != null) {
+            int countArticlesEnable = articuloFacade.countArticlesEnable(recurso);
+            if (countArticlesEnable != 0) {
+                return countArticlesEnable + "";
+            }
+        }
+        return "<Empty>";
     }
 
     public List<Recurso> getListaRecursos() {
@@ -48,43 +67,11 @@ public class BeanAdminPrestamo implements Serializable {
         this.listaRecursos = listaRecursos;
     }
 
-    public List<Articulo> getListaArticulos() {
-        return listaArticulos;
-    }
-
-    public void setListaArticulos(List<Articulo> listaArticulos) {
-        this.listaArticulos = listaArticulos;
-    }
-
-    public List<String> getOptionsSelected() {
-        return optionsSelected;
-    }
-
-    public void setOptionsSelected(List<String> optionsSelected) {
-        this.optionsSelected = optionsSelected;
-    }
-
     public Recurso getRecursoSelected() {
         return recursoSelected;
     }
 
     public void setRecursoSelected(Recurso recursoSelected) {
         this.recursoSelected = recursoSelected;
-    }
-
-    public Articulo getArticuloSelected() {
-        return articuloSelected;
-    }
-
-    public void setArticuloSelected(Articulo articuloSelected) {
-        this.articuloSelected = articuloSelected;
-    }
-
-    public Date getDateSelected() {
-        return dateSelected;
-    }
-
-    public void setDateSelected(Date dateSelected) {
-        this.dateSelected = dateSelected;
     }
 }

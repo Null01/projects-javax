@@ -4,7 +4,6 @@ package management;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-import entities.Login;
 import entities.LoginPK;
 import entities.Usuario;
 import java.io.Serializable;

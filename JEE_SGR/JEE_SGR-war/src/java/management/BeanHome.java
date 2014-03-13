@@ -8,7 +8,11 @@ package management;
 import entities.Funcion;
 import entities.Usuario;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.TreeMap;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 import org.primefaces.event.NodeSelectEvent;
@@ -27,26 +31,52 @@ public class BeanHome implements Serializable {
     private String pathForward;
 
     public BeanHome() {
-        menu = new DefaultTreeNode("root", null);
     }
 
     @PostConstruct
     public void initialize() {
         HttpSession session = FacesUtil.getFacesUtil().getSession();
         Usuario usuario = (Usuario) session.getAttribute("session");
-        List<Funcion> funcionList = usuario.getIdPerfil().getFuncionList();
+        if (usuario != null) {
+            menu = buildTree(usuario.getIdPerfil().getFuncionList());
+        }
+    }
+
+    private TreeNode buildTree(List<Funcion> funcionList) {
+        TreeNode tree = new DefaultTreeNode("root", null);
         if (funcionList != null) {
+            List<Funcion> rootList = new ArrayList<>();
+            TreeMap<Integer, List<Funcion>> map = new TreeMap<>();
             for (Funcion f : funcionList) {
-                DefaultTreeNode defaultTreeNode = new DefaultTreeNode(f, menu);
-                System.out.println(f.getNameFuncion());
+                if (f.getIdFuncion() == f.getIdFuncionPadre()) {
+                    DefaultTreeNode defaultTreeNode = new DefaultTreeNode(f, tree); // Nodos principales del arbol.
+                } else {
+                    if (map.get(f.getIdFuncionPadre()) == null) {
+                        map.put(f.getIdFuncionPadre(), new ArrayList<Funcion>());
+                    }
+                    map.get(f.getIdFuncionPadre()).add(f);
+                }
+            }
+            Queue<TreeNode> queue = new LinkedList<>(tree.getChildren());
+            while (!queue.isEmpty()) {
+                TreeNode treeNode = queue.poll();
+                if (treeNode != null) {
+                    Funcion funcion = (Funcion) treeNode.getData();
+                    if (map.get(funcion.getIdFuncion()) != null) {
+                        for (Funcion f : map.get(funcion.getIdFuncion())) {
+                            DefaultTreeNode defaultTreeNode = new DefaultTreeNode(f, treeNode);
+                            queue.add(defaultTreeNode);
+                        }
+                    }
+                }
             }
         }
+        return tree;
     }
 
     public void onNodeSelect(NodeSelectEvent event) {
         Funcion funcion = (Funcion) event.getTreeNode().getData();
         if (funcion != null) {
-            System.out.println("-> " + funcion.getUrlFuncion());
             setPathForward(funcion.getUrlFuncion());
         }
     }
@@ -74,5 +104,4 @@ public class BeanHome implements Serializable {
     public void setPathForward(String pathForward) {
         this.pathForward = pathForward;
     }
-
 }

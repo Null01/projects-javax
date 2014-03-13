@@ -23,4 +23,9 @@
         <managed-bean-class>management.BeanAdminPerfiles</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>beanSolicitudPrestamo</managed-bean-name>
+        <managed-bean-class>management.BeanSolicitudPrestamo</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>
