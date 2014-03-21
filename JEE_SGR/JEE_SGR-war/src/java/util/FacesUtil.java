@@ -6,12 +6,15 @@
 package util;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -56,5 +59,18 @@ public class FacesUtil {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
         return request.getContextPath();
+    }
+
+    public HttpServletRequest getHttpServletRequest() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        return (HttpServletRequest) facesContext.getExternalContext().getRequest();
+    }
+
+    public void execute(String string) {
+        RequestContext.getCurrentInstance().execute(string);
+    }
+
+    public void openDialog(String string, Map<String, Object> options) {
+        RequestContext.getCurrentInstance().openDialog(string, options, null);
     }
 }

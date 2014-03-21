@@ -46,6 +46,12 @@ public class BeanIndex implements Serializable {
         }
     }
 
+    public void salir() {
+        HttpSession httpSession = FacesUtil.getFacesUtil().getSession();
+        httpSession.invalidate();
+        FacesUtil.getFacesUtil().redirect(FacesUtil.getFacesUtil().getContextPath());
+    }
+
     public String getUser() {
         return user;
     }

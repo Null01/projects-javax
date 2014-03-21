@@ -10,37 +10,39 @@
         </h:head>
 
         <h:body>
-
             <h:form id="formReserva">
-                <p:dataTable id="dataTable1" var="perfil" value="#{beanAdminPerfiles.listaPerfiles}"  rowKey="#{perfil.idPerfil}"  
-                             selection="#{beanAdminPerfiles.recursoSelected}" selectionMode="single" >   
+                <p:dataTable id="dataTable1" var="perfil" value="#{beanAdminPerfiles.listaPerfiles}"  rowKey="#{perfil.idPerfil}"> 
                     <f:facet name="header">  
-                        PERFILES
+                        ADMINISTRACION DE PERFILES
                     </f:facet>  
 
-                    <p:column sortBy="idPerfil" headerText="ID">
+                    <p:column sortBy="idPerfil" headerText="ID" width="25">
                         <div align="center">
                             <h:outputText value="#{perfil.idPerfil}" />
                         </div>
                     </p:column>
-                    <p:column  headerText="ALIAS">
+                    <p:column  headerText="ALIAS" width="100">
                         <div align="center">
                             <h:outputText value="#{perfil.namePerfil}" />  
                         </div>
                     </p:column>
-                    <p:column headerText="DESCRIPCION">
+                    <p:column headerText="DESCRIPCION" width="350">
                         <div align="center">
-                            <div align="center">
-                                <p:inputTextarea value="#{perfil.descPerfil}" disabled="true"/>
-                            </div>
+                            <p:inputTextarea value="#{perfil.descPerfil}" disabled="true" cols="100" rows="3" autoResize="true" />                       
                         </div>
                     </p:column>
-                    <p:column headerText="USUARIOS">
-                        <p:orderList value="#{beanAdminPerfiles.showUser(perfil)}" var="usuario"
-                                     itemLabel="#{usuario.correo}" itemValue="#{usuario}"/>
+                    <p:column headerText="USUARIOS" width="100">
+                        <div align="center">
+                            <p:commandButton value="Ver Usuarios" actionListener="#{beanAdminPerfiles.onClickShowDialog(perfil) }"/> 
+                        </div>
                     </p:column>
                 </p:dataTable>
             </h:form>
+
+
+            <p:dialog widgetVar="asd" >
+                sdfsd
+            </p:dialog>
         </h:body>
     </f:view>
 </html>

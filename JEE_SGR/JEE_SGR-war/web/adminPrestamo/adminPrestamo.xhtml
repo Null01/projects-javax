@@ -14,44 +14,50 @@
         </h:head>
 
         <h:body>
+            <h:form id="formViewPrestamo">
+                <p:dataTable id="dataPrestamo" var="recurso" value="#{beanAdminPrestamo.listaRecursos}" paginator="true" rows="4"
+                             rowKey="#{recurso.idRecurso}" selectionMode="single" selection="#{beanAdminPrestamo.recursoSelected}" > 
 
-            <h:form id="formViewPrestamo">  
+                    <p:ajax event="rowSelect" oncomplete="PF('dialogPrestamo').show()" />
 
-                <p:dataTable id="dataPrestamo" var="recurso" value="#{beanAdminPrestamo.listaRecursos}"  rowKey="#{recurso.idRecurso}"  
-                             paginator="true" rows="4" selection="#{beanAdminPrestamo.recursoSelected}" selectionMode="single" >   
                     <f:facet name="header">  
                         PRESTAMO DE RECURSOS
                     </f:facet>  
 
-                    <p:column sortBy="idRecurso" headerText="ID">
+                    <p:column sortBy="idRecurso" headerText="ID"> 
                         <div align="center">
-                            <h:outputText value="#{recurso.idRecurso}" />
+                            #{recurso.idRecurso}
                         </div>
                     </p:column>  
 
                     <p:column sortBy="nombre" headerText="OBJETO">
                         <div align="center">
-                            <h:outputText value="#{recurso.nombre}" />  
+                            #{recurso.nombre}
                         </div>
                     </p:column>
 
                     <p:column  headerText="STOCK">
                         <div align="center">
-                            <h:outputText value="#{beanAdminPrestamo.countArticle(recurso)}" />  
+                            #{beanAdminPrestamo.countArticle(recurso)}
                         </div>
                     </p:column>
                     <p:column headerText="DISPONIBLES">  
                         <div align="center">
-                            <h:outputText value="#{beanAdminPrestamo.countArticleEnable(recurso)}" />  
+                            #{beanAdminPrestamo.countArticleEnable(recurso)}
                         </div>
                     </p:column>
-                    <p:column headerText="DESCRIPCION">
+                    <p:column headerText="DESCRIPCION" width="100">
                         <div align="center">
-                            <p:inputTextarea value="#{recurso.descripcion}" disabled="true"  />
+                            <p:inputTextarea value="#{recurso.descripcion}" disabled="true" cols="80" rows="2" autoResize="true" />
                         </div>
                     </p:column>
                 </p:dataTable>
-            </h:form> 
+
+                <p:dialog widgetVar="dialogPrestamo" modal="true" draggable="false" appendTo="@(body)" resizable="false" width="1000">
+                    <ui:include src="#{beanAdminPrestamo.outcomePageView}" />
+                </p:dialog>
+
+            </h:form>
         </h:body>
     </f:view>
 </html>

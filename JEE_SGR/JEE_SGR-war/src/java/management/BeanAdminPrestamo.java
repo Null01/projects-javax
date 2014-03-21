@@ -27,6 +27,7 @@ public class BeanAdminPrestamo implements Serializable {
 
     private List<Recurso> listaRecursos;
     private Recurso recursoSelected;
+    private String outcomePageView = "/adminPrestamo/vistaArticulos.xhtml";
 
     public BeanAdminPrestamo() {
     }
@@ -74,4 +75,13 @@ public class BeanAdminPrestamo implements Serializable {
     public void setRecursoSelected(Recurso recursoSelected) {
         this.recursoSelected = recursoSelected;
     }
+
+    public String getOutcomePageView() {
+        return outcomePageView;
+    }
+
+    public void setOutcomePageView(String outcomePageView) {
+        this.outcomePageView = outcomePageView;
+    }
+
 }

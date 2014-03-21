@@ -9,10 +9,14 @@ import entities.Perfil;
 import entities.Recurso;
 import entities.Usuario;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
 import session.PerfilFacadeLocal;
+import util.FacesUtil;
 
 /**
  *
@@ -25,6 +29,7 @@ public class BeanAdminPerfiles {
 
     private List<Perfil> listaPerfiles;
     private Recurso recursoSelected;
+    private String pathView;
 
     public BeanAdminPerfiles() {
     }
@@ -57,5 +62,28 @@ public class BeanAdminPerfiles {
 
     public void setRecursoSelected(Recurso recursoSelected) {
         this.recursoSelected = recursoSelected;
+    }
+
+    public String getPathView() {
+        return pathView;
+    }
+
+    public void setPathView(String pathView) {
+        this.pathView = pathView;
+    }
+
+    public void onClickShowDialog(Perfil perfil) {
+        //setPathView("adminPerfiles/vistaPerfiles.xhtml");
+        HttpServletRequest httpServletRequest = FacesUtil.getFacesUtil().getHttpServletRequest();
+        //httpServletRequest.setAttribute("ViewProfile", perfil);
+        System.out.println("Llega");
+        Map<String, Object> options = new HashMap<>();
+
+        options.put("modal", true);
+        options.put("draggable", false);
+        options.put("resizable", false);
+        options.put("contentHeight", 320);
+
+        FacesUtil.getFacesUtil().openDialog("asd", null);
     }
 }

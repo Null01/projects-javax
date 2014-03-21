@@ -14,29 +14,31 @@
             </f:facet>
         </h:head>
         <h:body>
-            <h:form id="form0">
-                <div align="center">
-                    <p:panel id="panel" header="SISTEMA RESERVA DE RECURSOS (SGR)" style="margin-bottom:10px;">
-                        <p:messages id="messages" />
-
-                        <h:panelGrid columns="3">
-                            <h:outputLabel for="user" value="Usuario: *" />
-                            <p:inputText id="user" value="#{beanIndex.user}" required="true" label="USUARIO">
-                                <f:validateLength minimum="4" />
-                            </p:inputText>
-                            <p:message for="user" />
-                            <h:outputLabel for="password" value="Contraseña: *" />
-                            <p:password id="password" value="#{beanIndex.password}" required="true" label="CONTRASEÑA">
-                                <f:validateLength minimum="4" />
-                            </p:password>
-                            <p:message for="password" />
+            <div align="center">
+                <h:form id="form0">
+                    <p:dialog widgetVar="dialogIndex" visible="true" showEffect="shake" draggable="false" 
+                              resizable="false" modal="true" closable="false" width="900">
+                        <p:panel id="panel" header="SISTEMA RESERVA DE RECURSOS (SGR)">    
+                            <h:panelGrid columns="3">
+                                <h:outputLabel for="user" value="Usuario: *" />
+                                <p:inputText id="user" value="#{beanIndex.user}" required="true" label="USUARIO">
+                                    <f:validateLength minimum="4" />
+                                </p:inputText>
+                                <p:message for="user" />
+                                <h:outputLabel for="password" value="Contraseña: *" />
+                                <p:password id="password" value="#{beanIndex.password}" required="true" label="CONTRASEÑA">
+                                    <f:validateLength minimum="4" />
+                                </p:password>
+                                <p:message for="password" />
+                            </h:panelGrid>
+                        </p:panel>
+                        <h:panelGrid columns="1">
+                            <p:commandButton update="@(form)" value="Ingresa" actionListener="#{beanIndex.ingresar}" />
                         </h:panelGrid>
-                    </p:panel>
-                    <h:panelGrid columns="1">
-                        <p:commandButton update="@(form)" value="Ingresa" actionListener="#{beanIndex.ingresar}" />
-                    </h:panelGrid>
-                </div>
-            </h:form>
+
+                    </p:dialog>
+                </h:form>
+            </div>
         </h:body>
     </f:view>
 </html>

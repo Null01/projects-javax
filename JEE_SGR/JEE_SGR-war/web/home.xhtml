@@ -9,6 +9,7 @@
         <h:head>
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <link href="css/style_app.css" type="text/css" rel="stylesheet"/>
                 <title>GestionRecursos</title>
             </f:facet>
         </h:head>
@@ -16,7 +17,11 @@
         <h:body>
             <p:layout fullPage="true">
                 <p:layoutUnit position="north" size="100" closable="true" collapsible="true">
-                    <h:form id="form1">Header</h:form>
+                    <h:form id="form1"  >
+                        <p:commandLink id="link" actionListener="#{beanIndex.salir}">  
+                            <h:outputText value="Cerrar sesion" styleClass="pos_text_closeSession" />  
+                        </p:commandLink>
+                    </h:form>
                 </p:layoutUnit>
                 <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
                     <h:form id="form2" >Footer</h:form>
