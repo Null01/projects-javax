@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package session;
 
 import entities.Funcion;
@@ -30,5 +29,5 @@ public interface FuncionFacadeLocal {
     List<Funcion> findRange(int[] range);
 
     int count();
-    
+
 }

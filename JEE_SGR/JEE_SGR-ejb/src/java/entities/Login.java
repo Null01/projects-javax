@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entities;
 
 import java.io.Serializable;
@@ -26,6 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Login.findByNameUser", query = "SELECT l FROM Login l WHERE l.loginPK.nameUser = :nameUser"),
     @NamedQuery(name = "Login.findByPassUser", query = "SELECT l FROM Login l WHERE l.loginPK.passUser = :passUser")})
 public class Login implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected LoginPK loginPK;
@@ -73,5 +73,5 @@ public class Login implements Serializable {
     public String toString() {
         return "entities.Login[ loginPK=" + loginPK + " ]";
     }
-    
+
 }

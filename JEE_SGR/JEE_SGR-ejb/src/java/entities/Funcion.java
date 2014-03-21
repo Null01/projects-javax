@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entities;
 
 import java.io.Serializable;
@@ -40,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Funcion.findByUrlFuncion", query = "SELECT f FROM Funcion f WHERE f.urlFuncion = :urlFuncion"),
     @NamedQuery(name = "Funcion.findByIdFuncionPadre", query = "SELECT f FROM Funcion f WHERE f.idFuncionPadre = :idFuncionPadre")})
 public class Funcion implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -145,5 +145,5 @@ public class Funcion implements Serializable {
     public String toString() {
         return "entities.Funcion[ idFuncion=" + idFuncion + " ]";
     }
-    
+
 }

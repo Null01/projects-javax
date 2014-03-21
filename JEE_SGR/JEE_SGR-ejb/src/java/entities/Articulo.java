@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entities;
 
 import java.io.Serializable;
@@ -34,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Articulo.findByDisponible", query = "SELECT a FROM Articulo a WHERE a.disponible = :disponible"),
     @NamedQuery(name = "Articulo.findByNotes", query = "SELECT a FROM Articulo a WHERE a.notes = :notes")})
 public class Articulo implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ArticuloPK articuloPK;
@@ -124,5 +124,5 @@ public class Articulo implements Serializable {
     public String toString() {
         return "entities.Articulo[ articuloPK=" + articuloPK + " ]";
     }
-    
+
 }

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package session;
 
 import entities.Perfil;
@@ -17,6 +16,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class PerfilFacade extends AbstractFacade<Perfil> implements PerfilFacadeLocal {
+
     @PersistenceContext(unitName = "JEE_SGR-ejbPU2")
     private EntityManager em;
 
@@ -28,5 +28,5 @@ public class PerfilFacade extends AbstractFacade<Perfil> implements PerfilFacade
     public PerfilFacade() {
         super(Perfil.class);
     }
-    
+
 }

@@ -30,6 +30,4 @@ public interface RecursoFacadeLocal {
 
     int count();
 
-
-
 }

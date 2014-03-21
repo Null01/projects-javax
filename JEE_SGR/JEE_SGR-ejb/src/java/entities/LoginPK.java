@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package entities;
 
 import java.io.Serializable;
@@ -19,6 +18,7 @@ import javax.validation.constraints.Size;
  */
 @Embeddable
 public class LoginPK implements Serializable {
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
@@ -82,5 +82,5 @@ public class LoginPK implements Serializable {
     public String toString() {
         return "entities.LoginPK[ nameUser=" + nameUser + ", passUser=" + passUser + " ]";
     }
-    
+
 }
