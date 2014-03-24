@@ -6,30 +6,29 @@
 package management;
 
 import entities.Perfil;
-import entities.Recurso;
 import entities.Usuario;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.servlet.http.HttpServletRequest;
 import session.PerfilFacadeLocal;
-import util.FacesUtil;
 
 /**
  *
  * @author duran
  */
-public class BeanAdminPerfiles {
+public class BeanAdminPerfiles implements Serializable{
 
     @EJB
     private PerfilFacadeLocal perfilFacade;
 
+    //
     private List<Perfil> listaPerfiles;
-    private Recurso recursoSelected;
-    private String pathView;
+    private Perfil profileSelected;
+
+    //
+    private List<Usuario> usersList;
 
     public BeanAdminPerfiles() {
     }
@@ -48,6 +47,21 @@ public class BeanAdminPerfiles {
         return (list != null) ? list : new ArrayList<Usuario>();
     }
 
+    public void onClickShowDialog() {
+        if (profileSelected != null) {
+            System.out.println("profile enable");
+            List<Usuario> list = profileSelected.getUsuarioList();
+            if (list != null) {
+                usersList = new ArrayList<>(list);
+                System.out.println("updateee");
+            } else {
+                usersList = new ArrayList<>();
+            }
+        } else {
+            usersList = new ArrayList<>();
+        }
+    }
+
     public List<Perfil> getListaPerfiles() {
         return listaPerfiles;
     }
@@ -56,34 +70,19 @@ public class BeanAdminPerfiles {
         this.listaPerfiles = listaPerfiles;
     }
 
-    public Recurso getRecursoSelected() {
-        return recursoSelected;
+    public Perfil getProfileSelected() {
+        return profileSelected;
     }
 
-    public void setRecursoSelected(Recurso recursoSelected) {
-        this.recursoSelected = recursoSelected;
+    public void setProfileSelected(Perfil profileSelected) {
+        this.profileSelected = profileSelected;
     }
 
-    public String getPathView() {
-        return pathView;
+    public List<Usuario> getUsersList() {
+        return usersList;
     }
 
-    public void setPathView(String pathView) {
-        this.pathView = pathView;
-    }
-
-    public void onClickShowDialog(Perfil perfil) {
-        //setPathView("adminPerfiles/vistaPerfiles.xhtml");
-        HttpServletRequest httpServletRequest = FacesUtil.getFacesUtil().getHttpServletRequest();
-        //httpServletRequest.setAttribute("ViewProfile", perfil);
-        System.out.println("Llega");
-        Map<String, Object> options = new HashMap<>();
-
-        options.put("modal", true);
-        options.put("draggable", false);
-        options.put("resizable", false);
-        options.put("contentHeight", 320);
-
-        FacesUtil.getFacesUtil().openDialog("asd", null);
+    public void setUsersList(List<Usuario> usersList) {
+        this.usersList = usersList;
     }
 }

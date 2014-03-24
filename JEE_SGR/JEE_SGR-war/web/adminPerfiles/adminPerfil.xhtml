@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head> 
+        </h:head>
+
+        <h:body>
+            <h:form id="formReserva">
+                <p:dataTable id="dataTable1" var="perfil" value="#{beanAdminPerfiles.listaPerfiles}"  rowKey="#{perfil.idPerfil}"
+                             paginator="true" rows="10" selection="#{beanAdminPerfiles.profileSelected}" selectionMode="single"   > 
+                    <f:facet name="header">  
+                        ADMINISTRACION DE PERFILES
+                    </f:facet>  
+                    <p:ajax event="rowSelect" update=":form4:dialogViewProfile" listener="#{beanAdminPerfiles.onClickShowDialog()}" oncomplete="dialogViewProfile.show()"/>
+
+                    <p:column sortBy="idPerfil" headerText="ID" width="25">
+                        <div align="center">
+                            <h:outputText value="#{perfil.idPerfil}" />
+                        </div>
+                    </p:column>
+                    <p:column  headerText="ALIAS" width="100">
+                        <div align="center">
+                            <h:outputText value="#{perfil.namePerfil}" />  
+                        </div>
+                    </p:column>
+                    <p:column headerText="DESCRIPCION" width="350">
+                        <div align="center">
+                            <p:inputTextarea value="#{perfil.descPerfil}" disabled="true" cols="100" rows="3" autoResize="true" />                       
+                        </div>
+                    </p:column>
+                    <p:column headerText="USUARIOS" width="100">
+                        <div align="center">
+                            <p:commandButton value="Ver Usuarios" actionListener="#{beanAdminPerfiles.onClickShowDialog() }"/> 
+                        </div>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+
+
+            <p:dialog id="dialogViewProfile" widgetVar="dialogViewProfile" modal="true" draggable="false" appendTo="@(body)" resizable="false" width="1000">
+                <h:form id="formViewProfile">              
+                    <p:dataTable id="dataTable3" var="usuario" value="#{beanAdminPerfiles.usersList}"  rowKey="#{user.nameUser}" 
+                                 paginator="true" rows="10">   
+                        <f:facet name="header">  
+                            USUARIO ASOCIADOS A #{beanAdminPerfiles.profileSelected.namePerfil}
+                        </f:facet>
+
+                        <p:column sortBy="nameUser"   headerText="USUARIO">
+                            <div align="center">
+                                <h:outputText value="#{usuario.nameUser}" />
+                            </div>
+                        </p:column>  
+
+                        <p:column sortBy="nombre" filterBy="nombre" headerText="NOMBRE" filterMatchMode="contains">
+                            <div align="center">
+                                <h:outputText value="#{usuario.nombre}" />  
+                            </div>
+                        </p:column>
+
+                        <p:column sortBy="apellido"  headerText="APELLIDO">
+                            <div align="center">
+                                <h:outputText value="#{usuario.apellido}" />  
+                            </div>
+                        </p:column>
+
+                        <p:column sortBy="correo" headerText="CORREO">
+                            <div align="center">
+                                <h:outputText value="#{usuario.correo}" />  
+                            </div>
+                        </p:column>
+
+
+                        <p:column sortBy="edad" headerText="EDAD">
+                            <div align="center">
+                                <h:outputText value="#{usuario.edad}" />  
+                            </div>
+                        </p:column>
+
+                    </p:dataTable>
+                </h:form>
+            </p:dialog>
+
+        </h:body>
+    </f:view>
+</html>
