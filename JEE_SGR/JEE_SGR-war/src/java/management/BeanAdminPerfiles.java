@@ -18,7 +18,7 @@ import session.PerfilFacadeLocal;
  *
  * @author duran
  */
-public class BeanAdminPerfiles implements Serializable{
+public class BeanAdminPerfiles implements Serializable {
 
     @EJB
     private PerfilFacadeLocal perfilFacade;
@@ -26,6 +26,7 @@ public class BeanAdminPerfiles implements Serializable{
     //
     private List<Perfil> listaPerfiles;
     private Perfil profileSelected;
+    private List<Usuario> listaFilteredUsuario;
 
     //
     private List<Usuario> usersList;
@@ -84,5 +85,13 @@ public class BeanAdminPerfiles implements Serializable{
 
     public void setUsersList(List<Usuario> usersList) {
         this.usersList = usersList;
+    }
+
+    public List<Usuario> getListaFilteredUsuario() {
+        return listaFilteredUsuario;
+    }
+
+    public void setListaFilteredUsuario(List<Usuario> listaFilteredUsuario) {
+        this.listaFilteredUsuario = listaFilteredUsuario;
     }
 }

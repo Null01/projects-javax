@@ -10,9 +10,10 @@
         </h:head>
 
         <h:body>
-            <h:form id="formReserva">
+            <h:form id="formAdminProfile">
                 <p:dataTable id="dataTable1" var="perfil" value="#{beanAdminPerfiles.listaPerfiles}"  rowKey="#{perfil.idPerfil}"
-                             paginator="true" rows="10" selection="#{beanAdminPerfiles.profileSelected}" selectionMode="single"   > 
+                             paginator="true" rows="10" selection="#{beanAdminPerfiles.profileSelected}" selectionMode="single"
+                             widgetVar="dataTable1W" emptyMessage=" - No existen informacion. -" >
                     <f:facet name="header">  
                         ADMINISTRACION DE PERFILES
                     </f:facet>  
@@ -32,12 +33,7 @@
                         <div align="center">
                             <p:inputTextarea value="#{perfil.descPerfil}" disabled="true" cols="100" rows="3" autoResize="true" />                       
                         </div>
-                    </p:column>
-                    <p:column headerText="USUARIOS" width="100">
-                        <div align="center">
-                            <p:commandButton value="Ver Usuarios" actionListener="#{beanAdminPerfiles.onClickShowDialog() }"/> 
-                        </div>
-                    </p:column>
+                    </p:column>                 
                 </p:dataTable>
             </h:form>
 
@@ -45,12 +41,12 @@
             <p:dialog id="dialogViewProfile" widgetVar="dialogViewProfile" modal="true" draggable="false" appendTo="@(body)" resizable="false" width="1000">
                 <h:form id="formViewProfile">              
                     <p:dataTable id="dataTable3" var="usuario" value="#{beanAdminPerfiles.usersList}"  rowKey="#{user.nameUser}" 
-                                 paginator="true" rows="10">   
+                                 paginator="true" rows="10" widgetVar="dataTable3W" emptyMessage=" - No existen informacion. -" filteredValue="#{beanAdminPerfiles.listaFilteredUsuario}">   
                         <f:facet name="header">  
                             USUARIO ASOCIADOS A #{beanAdminPerfiles.profileSelected.namePerfil}
                         </f:facet>
 
-                        <p:column sortBy="nameUser"   headerText="USUARIO">
+                        <p:column sortBy="nameUser" filterBy="nameUser" headerText="USUARIO" filterMatchMode="contains">
                             <div align="center">
                                 <h:outputText value="#{usuario.nameUser}" />
                             </div>
@@ -62,25 +58,22 @@
                             </div>
                         </p:column>
 
-                        <p:column sortBy="apellido"  headerText="APELLIDO">
+                        <p:column sortBy="apellido" filterBy="apellido" headerText="APELLIDO" filterMatchMode="contains">
                             <div align="center">
                                 <h:outputText value="#{usuario.apellido}" />  
                             </div>
                         </p:column>
 
-                        <p:column sortBy="correo" headerText="CORREO">
+                        <p:column sortBy="correo" filterBy="correo"  headerText="CORREO" filterMatchMode="contains">
                             <div align="center">
                                 <h:outputText value="#{usuario.correo}" />  
                             </div>
                         </p:column>
-
-
-                        <p:column sortBy="edad" headerText="EDAD">
+                        <p:column sortBy="edad" filterBy="edad" headerText="EDAD" filterMatchMode="contains">
                             <div align="center">
                                 <h:outputText value="#{usuario.edad}" />  
                             </div>
                         </p:column>
-
                     </p:dataTable>
                 </h:form>
             </p:dialog>
