@@ -74,6 +74,10 @@ public class FacesUtil {
         RequestContext.getCurrentInstance().openDialog(string, options, null);
     }
 
+    public void closeDialog(Object object) {
+        RequestContext.getCurrentInstance().closeDialog(object);
+    }
+
     public void update(String string) {
         RequestContext.getCurrentInstance().update(string);
     }

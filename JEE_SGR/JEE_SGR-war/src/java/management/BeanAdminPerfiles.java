@@ -9,10 +9,14 @@ import entities.Perfil;
 import entities.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import org.primefaces.event.RowEditEvent;
 import session.PerfilFacadeLocal;
+import util.FacesUtil;
 
 /**
  *
@@ -48,7 +52,8 @@ public class BeanAdminPerfiles implements Serializable {
         return (list != null) ? list : new ArrayList<Usuario>();
     }
 
-    public void onClickShowDialog() {
+    public void onClickShowDialog(Perfil perfil) {
+        setProfileSelected(perfil);
         if (profileSelected != null) {
             System.out.println("profile enable");
             List<Usuario> list = profileSelected.getUsuarioList();
@@ -61,6 +66,26 @@ public class BeanAdminPerfiles implements Serializable {
         } else {
             usersList = new ArrayList<>();
         }
+    }
+
+    public void onClickEditAccept(RowEditEvent event) {
+        System.out.println("EDITA");
+        Perfil perfil = (Perfil) event.getObject();
+        perfilFacade.edit(perfil);
+    }
+
+    public void onClickEditCancel(RowEditEvent event) {
+
+    }
+
+    public void onClickCreateProfile() {
+        Map<String, Object> options = new HashMap<>();
+        options.put("modal", true);
+        options.put("draggable", false);
+        options.put("resizable", false);
+        options.put("contentHeight", 500);
+        options.put("contentWidth", 530);
+        FacesUtil.getFacesUtil().openDialog("adminPerfiles/crearPerfil", options);
     }
 
     public List<Perfil> getListaPerfiles() {

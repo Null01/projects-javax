@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head> 
+        </h:head>
+
+        <h:body>
+            <h:form id="formCreateProfile">
+
+                <p:panel id="panel">
+
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Alias: *" />
+                        <p:inputText id="alias" value="#{beanCrearPerfil.perfil.namePerfil}" label="alias" size="40"/>
+
+                        <h:outputLabel value="Descripcion: *" />
+                        <p:inputTextarea id="descripcion" value="#{beanCrearPerfil.perfil.descPerfil}" label="descripcion" autoResize="false" cols="40"/>
+                    </h:panelGrid>
+
+                    <h:panelGrid columns="1">
+                        <p:pickList id="pickList" value="#{beanCrearPerfil.listFuncion}" var="funcion"   
+                                    itemLabel="#{funcion.nameFuncion}" itemValue="#{funcion.nameFuncion}" >
+                            <f:facet name="sourceCaption">Disponibles</f:facet>  
+                            <f:facet name="targetCaption">Asignados</f:facet>  
+                        </p:pickList>
+                    </h:panelGrid>
+                </p:panel>
+                <p:spacer/>
+                <div align="center"> <p:commandButton value="Crear" actionListener="#{beanCrearPerfil.onClickCreateProfile}"/></div>
+            </h:form>
+        </h:body>
+    </f:view>
+</html>

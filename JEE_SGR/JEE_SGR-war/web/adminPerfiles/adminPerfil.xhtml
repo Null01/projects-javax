@@ -11,30 +11,53 @@
 
         <h:body>
             <h:form id="formAdminProfile">
-                <p:dataTable id="dataTable1" var="perfil" value="#{beanAdminPerfiles.listaPerfiles}"  rowKey="#{perfil.idPerfil}"
-                             paginator="true" rows="10" selection="#{beanAdminPerfiles.profileSelected}" selectionMode="single"
-                             widgetVar="dataTable1W" emptyMessage=" - No existen informacion. -" >
+                <p:dataTable id="dataTable1" var="perfil" value="#{beanAdminPerfiles.listaPerfiles}" editable="true"
+                             rowKey="#{perfil.idPerfil}" paginator="true" rows="10">
                     <f:facet name="header">  
                         ADMINISTRACION DE PERFILES
                     </f:facet>  
-                    <p:ajax event="rowSelect" update=":form4:dialogViewProfile" listener="#{beanAdminPerfiles.onClickShowDialog()}" oncomplete="dialogViewProfile.show()"/>
+
+                    <p:ajax event="rowEdit" listener="#{beanAdminPerfiles.onClickEditAccept}" update="@this"/>  
+                    <p:ajax event="rowEditCancel" listener="#{beanAdminPerfiles.onClickEditCancel}" />
 
                     <p:column sortBy="idPerfil" headerText="ID" width="25">
-                        <div align="center">
-                            <h:outputText value="#{perfil.idPerfil}" />
-                        </div>
+                        <div align="center"> <h:outputText value="#{perfil.idPerfil}" /> </div>
                     </p:column>
+
                     <p:column  headerText="ALIAS" width="100">
+                        <p:cellEditor>  
+                            <f:facet name="output">  
+                                <div align="center"> <h:outputText value="#{perfil.namePerfil}" />  </div>
+                            </f:facet>  
+                            <f:facet name="input">  
+                                <div align="center"> <p:inputText value="#{perfil.namePerfil}" style="width:50%" />  </div>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column  headerText="DESCRIPCION" width="350">
+                        <p:cellEditor>  
+                            <f:facet name="output">  
+                                <div align="center"> <h:outputText value="#{perfil.descPerfil}" />  </div>
+                            </f:facet>  
+                            <f:facet name="input">  
+                                <div align="center"> <p:inputTextarea value="#{perfil.descPerfil}"  style="width:80%"  autoResize="false" />  </div>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column width="10">
                         <div align="center">
-                            <h:outputText value="#{perfil.namePerfil}" />  
+                            <p:commandButton icon="ui-icon ui-icon-extlink" actionListener="#{beanAdminPerfiles.onClickShowDialog(perfil)}" oncomplete="dialogViewProfile.show()" update=":form4:dialogViewProfile"/>
                         </div>
                     </p:column>
-                    <p:column headerText="DESCRIPCION" width="350">
-                        <div align="center">
-                            <p:inputTextarea value="#{perfil.descPerfil}" disabled="true" cols="100" rows="3" autoResize="true" />                       
-                        </div>
-                    </p:column>                 
+
+                    <p:column width="10">               
+                        <p:rowEditor />            
+                    </p:column>
+
                 </p:dataTable>
+                <p:commandButton value="Crear Perfil" actionListener="#{beanAdminPerfiles.onClickCreateProfile}"/>
             </h:form>
 
 
