@@ -14,20 +14,14 @@
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>beanAdminPrestamo</managed-bean-name>
-        <managed-bean-class>management.BeanAdminRecurso</managed-bean-class>
-    
+        <managed-bean-name>beanAdminRecurso</managed-bean-name>
+        <managed-bean-class>management.BeanAdminRecurso</managed-bean-class>    
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>beanAdminPerfiles</managed-bean-name>
         <managed-bean-class>management.BeanAdminPerfiles</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <managed-bean-name>beanCrearPerfil</managed-bean-name>
-        <managed-bean-class>management.BeanCrearPerfil</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
     <application>
         <action-listener>org.primefaces.application.DialogActionListener</action-listener>

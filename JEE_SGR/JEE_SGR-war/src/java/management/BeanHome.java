@@ -29,7 +29,6 @@ public class BeanHome implements Serializable {
     private TreeNode menu;
     private TreeNode selectedNode;
     private String pathForward;
-    private String pathForwardDialog;
 
     public BeanHome() {
     }
@@ -106,11 +105,4 @@ public class BeanHome implements Serializable {
         this.pathForward = pathForward;
     }
 
-    public String getPathForwardDialog() {
-        return pathForwardDialog;
-    }
-
-    public void setPathForwardDialog(String pathForwardDialog) {
-        this.pathForwardDialog = pathForwardDialog;
-    }
 }

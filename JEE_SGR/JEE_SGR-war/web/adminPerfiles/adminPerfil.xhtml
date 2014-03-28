@@ -11,7 +11,7 @@
 
         <h:body>
             <h:form id="formAdminProfile">
-                <p:dataTable id="dataTable1" var="perfil" value="#{beanAdminPerfiles.listaPerfiles}" editable="true"
+                <p:dataTable id="dataTableProfile" var="perfil" value="#{beanAdminPerfiles.listaPerfiles}" editable="true"
                              rowKey="#{perfil.idPerfil}" paginator="true" rows="10">
                     <f:facet name="header">  
                         ADMINISTRACION DE PERFILES
@@ -46,23 +46,59 @@
                         </p:cellEditor>
                     </p:column>
 
-                    <p:column width="10">
+                    <p:column width="5">               
+                        <p:rowEditor id="rowEditProfile" />
+                    </p:column>
+
+                    <p:column width="5">
                         <div align="center">
-                            <p:commandButton icon="ui-icon ui-icon-extlink" actionListener="#{beanAdminPerfiles.onClickShowDialog(perfil)}" oncomplete="dialogViewProfile.show()" update=":form4:dialogViewProfile"/>
+                            <p:commandButton id="buttonViewProfile" icon="ui-icon ui-icon-extlink" actionListener="#{beanAdminPerfiles.onClickShowDialog(perfil)}"
+                                             oncomplete="dialogViewProfile.show()" update=":form4:dialogViewProfile"/>
+                            <p:tooltip for="buttonViewProfile" value="Ver" showEffect="fade" hideEffect="fade" />  
                         </div>
                     </p:column>
 
-                    <p:column width="10">               
-                        <p:rowEditor />            
+                    <p:column width="5">
+                        <div align="center">
+                            <p:commandButton id="buttonDeleteProfile" icon="ui-icon-close" actionListener="#{beanAdminPerfiles.onClickDeleteProfile(perfil)}"
+                                             update="dataTableProfile"/>
+                            <p:tooltip for="buttonDeleteProfile" value="Eliminar" showEffect="fade" hideEffect="fade" />  
+                        </div>
                     </p:column>
 
                 </p:dataTable>
-                <p:commandButton value="Crear Perfil" actionListener="#{beanAdminPerfiles.onClickCreateProfile}"/>
+                <p:commandButton id="buttonCreateProfile" value="Crear Perfil" actionListener="#{beanAdminPerfiles.onClickPreCreateProfile}" 
+                                 oncomplete="dialogCreateProfile.show()" update=":form4:dialogCreateProfile"/>
+                <p:tooltip for="buttonCreateProfile" value="Crear" showEffect="fade" hideEffect="fade" />  
             </h:form>
+
+            <p:dialog id="dialogCreateProfile" widgetVar="dialogCreateProfile" modal="true" draggable="false" appendTo="@(body)" resizable="false" width="550">
+                <h:form id="formCreateProfile">
+                    <p:panel id="panelCreate">
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="Alias:* " />
+                            <p:inputText id="alias" value="#{beanAdminPerfiles.perfil.namePerfil}"  label="alias" size="40" />
+
+                            <h:outputLabel value="Descripcion:* " />
+                            <p:inputTextarea id="descripcion" value="#{beanAdminPerfiles.perfil.descPerfil}"  label="descripcion" autoResize="false" cols="40"/>              
+
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                            <p:pickList id="listaFunciones" value="#{beanAdminPerfiles.listFuncion}" var="funcion"   
+                                        itemLabel="#{funcion.nameFuncion}" itemValue="#{funcion.nameFuncion}" >
+                                <f:facet name="sourceCaption">Disponibles</f:facet>  
+                                <f:facet name="targetCaption">Asignados</f:facet>  
+                            </p:pickList>
+                        </h:panelGrid>
+                        <br/>
+                        <p:commandButton id="buttonA"  value="Crear" actionListener="#{beanAdminPerfiles.onClickCreateProfile}" />
+                    </p:panel>
+                </h:form>
+            </p:dialog>
 
 
             <p:dialog id="dialogViewProfile" widgetVar="dialogViewProfile" modal="true" draggable="false" appendTo="@(body)" resizable="false" width="1000">
-                <h:form id="formViewProfile">              
+                <h:form id="formViewProfile">
                     <p:dataTable id="dataTable3" var="usuario" value="#{beanAdminPerfiles.usersList}"  rowKey="#{user.nameUser}" 
                                  paginator="true" rows="10" widgetVar="dataTable3W" emptyMessage=" - No existen informacion. -" filteredValue="#{beanAdminPerfiles.listaFilteredUsuario}">   
                         <f:facet name="header">  
@@ -97,10 +133,9 @@
                                 <h:outputText value="#{usuario.edad}" />  
                             </div>
                         </p:column>
-                    </p:dataTable>
+                    </p:dataTable>                    
                 </h:form>
             </p:dialog>
-
         </h:body>
     </f:view>
 </html>

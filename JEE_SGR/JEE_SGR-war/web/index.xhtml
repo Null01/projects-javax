@@ -17,15 +17,15 @@
             <div align="center">
                 <h:form id="form0">
                     <p:dialog widgetVar="dialogIndex" visible="true" showEffect="shake" draggable="false" 
-                              resizable="false" modal="true" closable="false" width="900">
+                              resizable="false" modal="true" closable="false" width="910">
                         <p:panel id="panel" header="SISTEMA RESERVA DE RECURSOS (SGR)">    
                             <h:panelGrid columns="3">
-                                <h:outputLabel for="user" value="Usuario: *" />
+                                <h:outputLabel for="user" value="Usuario:* " />
                                 <p:inputText id="user" value="#{beanIndex.user}" required="true" label="USUARIO">
                                     <f:validateLength minimum="4" />
                                 </p:inputText>
                                 <p:message for="user" />
-                                <h:outputLabel for="password" value="Contraseña: *" />
+                                <h:outputLabel for="password" value="Contraseña:* " />
                                 <p:password id="password" value="#{beanIndex.password}" required="true" label="CONTRASEÑA">
                                     <f:validateLength minimum="4" />
                                 </p:password>
@@ -35,7 +35,6 @@
                         <h:panelGrid columns="1">
                             <p:commandButton update="@(form)" value="Ingresa" actionListener="#{beanIndex.ingresar}" />
                         </h:panelGrid>
-
                     </p:dialog>
                 </h:form>
             </div>

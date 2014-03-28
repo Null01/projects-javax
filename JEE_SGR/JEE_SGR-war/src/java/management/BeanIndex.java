@@ -10,6 +10,7 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
+import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 import session.LoginFacadeLocal;
 import session.UsuarioFacadeLocal;
@@ -34,7 +35,7 @@ public class BeanIndex implements Serializable {
     public void initialize() {
     }
 
-    public void ingresar() {
+    public void ingresar(ActionEvent event) {
         boolean state = loginFacade.autenticarUsuario(new LoginPK(user, password));
         if (state) {
             Usuario find = usuarioFacade.find(user);
@@ -46,7 +47,7 @@ public class BeanIndex implements Serializable {
         }
     }
 
-    public void salir() {
+    public void salir(ActionEvent event) {
         HttpSession httpSession = FacesUtil.getFacesUtil().getSession();
         httpSession.invalidate();
         FacesUtil.getFacesUtil().redirect(FacesUtil.getFacesUtil().getContextPath());

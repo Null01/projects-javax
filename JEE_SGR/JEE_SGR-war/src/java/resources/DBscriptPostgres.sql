@@ -32,9 +32,9 @@ CREATE TABLE FUNCION_USUARIO(
 );
 
 
-INSERT INTO funcion VALUES (1,'Admin perfiles','/adminPerfiles/adminPerfil.xhtml',1);
-INSERT INTO funcion VALUES (2,'Admin recursos','/adminRecursos/adminRecurso.xhtml',2);
-INSERT INTO funcion VALUES (3,'Admin Prestamo','/adminPrestamos/adminPrestamo.xhtml',3);
+INSERT INTO funcion VALUES (1,'Administracion perfiles','/adminPerfiles/adminPerfil.xhtml',1);
+INSERT INTO funcion VALUES (2,'Administracion recursos','/adminRecursos/adminRecurso.xhtml',2);
+INSERT INTO funcion VALUES (3,'Administracion Prestamo','/adminPrestamos/adminPrestamo.xhtml',3);
 
 INSERT INTO perfil VALUES (1,'ADMINISTRADOR','PERFIL QUE POSEE TODOS LOS PERMISOS DE LA APLICACION.');
 INSERT INTO perfil VALUES (2,'CLIENTE','PERFIL USUARIO FINAL.');

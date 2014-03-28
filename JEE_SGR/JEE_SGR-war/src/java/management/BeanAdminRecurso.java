@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.event.ActionEvent;
+import org.primefaces.event.RowEditEvent;
 import session.ArticuloFacadeLocal;
 import session.RecursoFacadeLocal;
 
@@ -26,12 +28,15 @@ public class BeanAdminRecurso implements Serializable {
     @EJB
     private ArticuloFacadeLocal articuloFacade;
 
-    // Lista de recursos disponibles en stock
+    // Consulta de recursos
     private Recurso resourceSelected;
     private List<Recurso> listaRecursos;
 
-    // Lista articulos pertenecientes a un recurso em stock.
+    // Consulta de Articulos a partir de un recurso.
     private List<Articulo> articleList;
+
+    // Creacion de un recurso
+    private Recurso recurso;
 
     public BeanAdminRecurso() {
     }
@@ -77,19 +82,40 @@ public class BeanAdminRecurso implements Serializable {
         return "<Empty>";
     }
 
-    public void onClickShowDialog() {
+    public void onClickEditAccept(RowEditEvent event) {
+
+    }
+
+    public void onClickEditCancel(RowEditEvent event) {
+
+    }
+
+    public void onClickShowDialog(Recurso r) {
+        setResourceSelected(r);
         if (resourceSelected != null) {
-            System.out.println("resource enable");
-            List<Articulo> list = articuloFacade.getArticlesEnable(resourceSelected);
-            if (list != null) {
-                articleList = new ArrayList<>(list);
-                System.out.println("updateee");
-            } else {
+            articleList = articuloFacade.getArticlesEnable(resourceSelected);
+            if (articleList == null) {
                 articleList = new ArrayList<>();
             }
         } else {
             articleList = new ArrayList<>();
         }
+    }
+
+    public void onClickPreCreateResource(ActionEvent event) {
+
+    }
+
+    public void onClickCreateResource(ActionEvent event) {
+        System.out.println("create");
+    }
+
+    public Recurso getRecurso() {
+        return recurso;
+    }
+
+    public void setRecurso(Recurso recurso) {
+        this.recurso = recurso;
     }
 
     public List<Recurso> getListaRecursos() {

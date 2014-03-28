@@ -5,18 +5,19 @@
  */
 package management;
 
+import entities.Funcion;
 import entities.Perfil;
 import entities.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.event.ActionEvent;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.model.DualListModel;
+import session.FuncionFacadeLocal;
 import session.PerfilFacadeLocal;
-import util.FacesUtil;
 
 /**
  *
@@ -25,17 +26,24 @@ import util.FacesUtil;
 public class BeanAdminPerfiles implements Serializable {
 
     @EJB
+    private FuncionFacadeLocal funcionFacade;
+    @EJB
     private PerfilFacadeLocal perfilFacade;
 
-    //
+    // Consulta de perfiles
     private List<Perfil> listaPerfiles;
     private Perfil profileSelected;
+
+    // Consulta de usuarios
+    private List<Usuario> usersList;
     private List<Usuario> listaFilteredUsuario;
 
-    //
-    private List<Usuario> usersList;
+    // Creacion de un perfil
+    private Perfil perfil;
+    private DualListModel<Funcion> listFuncion;
 
     public BeanAdminPerfiles() {
+        listFuncion = new DualListModel<>();
     }
 
     @PostConstruct
@@ -44,7 +52,6 @@ public class BeanAdminPerfiles implements Serializable {
         if (findAll != null) {
             listaPerfiles = new ArrayList<>(findAll);
         }
-
     }
 
     public List<Usuario> showUser(Perfil perfil) {
@@ -55,11 +62,9 @@ public class BeanAdminPerfiles implements Serializable {
     public void onClickShowDialog(Perfil perfil) {
         setProfileSelected(perfil);
         if (profileSelected != null) {
-            System.out.println("profile enable");
             List<Usuario> list = profileSelected.getUsuarioList();
             if (list != null) {
                 usersList = new ArrayList<>(list);
-                System.out.println("updateee");
             } else {
                 usersList = new ArrayList<>();
             }
@@ -69,7 +74,6 @@ public class BeanAdminPerfiles implements Serializable {
     }
 
     public void onClickEditAccept(RowEditEvent event) {
-        System.out.println("EDITA");
         Perfil perfil = (Perfil) event.getObject();
         perfilFacade.edit(perfil);
     }
@@ -78,14 +82,44 @@ public class BeanAdminPerfiles implements Serializable {
 
     }
 
-    public void onClickCreateProfile() {
-        Map<String, Object> options = new HashMap<>();
-        options.put("modal", true);
-        options.put("draggable", false);
-        options.put("resizable", false);
-        options.put("contentHeight", 500);
-        options.put("contentWidth", 530);
-        FacesUtil.getFacesUtil().openDialog("adminPerfiles/crearPerfil", options);
+    public void onClickPreCreateProfile(ActionEvent event) {
+        System.out.println("pre create profile");
+        perfil = new Perfil();
+        List<Funcion> source = funcionFacade.findAll();
+        if (source == null) {
+            source = new ArrayList<>();
+        }
+        List<Funcion> target = new ArrayList<>();
+        listFuncion = new DualListModel<>(source, target);
+    }
+
+    public void onClickCreateProfile(ActionEvent event) {
+        System.out.println("create profile---->");
+        System.out.println("ASCAOSDAS");
+    }
+
+    public void onClickDeleteProfile(Perfil perfil1) {
+        perfilFacade.remove(perfil1);
+        listaPerfiles = perfilFacade.findAll();
+        if (listaPerfiles == null) {
+            listaPerfiles = new ArrayList<>();
+        }
+    }
+
+    public DualListModel<Funcion> getListFuncion() {
+        return listFuncion;
+    }
+
+    public void setListFuncion(DualListModel<Funcion> listFuncion) {
+        this.listFuncion = listFuncion;
+    }
+
+    public Perfil getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
     }
 
     public List<Perfil> getListaPerfiles() {
