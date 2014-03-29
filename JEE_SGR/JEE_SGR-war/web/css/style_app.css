@@ -8,10 +8,6 @@ and open the template in the editor.
     Author     : duran
 */
 
-.p { 
-    font-family: monospace; 
-}
-
 .pos_text_closeSession
 {
     position:fixed;

@@ -19,7 +19,7 @@
                     <p:dialog widgetVar="dialogIndex" visible="true" showEffect="shake" draggable="false" 
                               resizable="false" modal="true" closable="false" width="910">
                         <p:panel id="panel" header="SISTEMA RESERVA DE RECURSOS (SGR)">    
-                            <h:panelGrid columns="3">
+                            <h:panelGrid columns="3"  cellpadding="5">
                                 <h:outputLabel for="user" value="Usuario:* " />
                                 <p:inputText id="user" value="#{beanIndex.user}" required="true" label="USUARIO">
                                     <f:validateLength minimum="4" />
@@ -31,10 +31,12 @@
                                 </p:password>
                                 <p:message for="password" />
                             </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <f:facet name="footer">  
+                                    <p:commandButton update="@(form)" value="Ingresa" actionListener="#{beanIndex.ingresar}" />
+                                </f:facet>  
+                            </h:panelGrid>
                         </p:panel>
-                        <h:panelGrid columns="1">
-                            <p:commandButton update="@(form)" value="Ingresa" actionListener="#{beanIndex.ingresar}" />
-                        </h:panelGrid>
                     </p:dialog>
                 </h:form>
             </div>

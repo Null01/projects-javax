@@ -68,7 +68,7 @@
                     <p:column width="10">
                         <div align="center">
                             <p:commandButton icon="ui-icon ui-icon-extlink" actionListener="#{beanAdminRecurso.onClickShowDialog(recurso)}"
-                                             oncomplete="dialogViewArticle.show()" update=":form4:dialogViewArticle"/>
+                                             oncomplete="dialogViewArticle.show()" update=":form4:dialogViewArticle1"/>
                         </div>
                     </p:column>
 
@@ -83,7 +83,7 @@
             </h:form>
 
 
-            <p:dialog id="dialogCreateResource" widgetVar="dialogCreateResource" modal="true" draggable="false" appendTo="@(body)" resizable="false" width="550">
+            <p:dialog id="dialogCreateResource1" widgetVar="dialogCreateResource" modal="true" draggable="false" appendTo="@(body)" resizable="false" width="550">
                 <h:form id="formCreateResource">
                     <p:panel id="panelCreate">
                         <h:panelGrid columns="2">
@@ -104,7 +104,7 @@
 
 
 
-            <p:dialog id="dialogViewArticle" widgetVar="dialogViewArticle" modal="true" draggable="false" appendTo="@(body)" resizable="false" width="1000">
+            <p:dialog id="dialogViewArticle1" widgetVar="dialogViewArticle" modal="true" draggable="false" appendTo="@(body)" resizable="false" width="1000">
                 <h:form id="formViewPrestamoArticle">              
                     <p:dataTable id="dataTable3" var="articulo" value="#{beanAdminRecurso.articleList}"  rowKey="#{articulo.articuloPK.idArticulo}" 
                                  paginator="true" rows="10">   

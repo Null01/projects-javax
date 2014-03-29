@@ -39,8 +39,9 @@ public class BeanAdminPerfiles implements Serializable {
     private List<Usuario> listaFilteredUsuario;
 
     // Creacion de un perfil
-    private Perfil perfil;
     private DualListModel<Funcion> listFuncion;
+    private String namePerfil;
+    private String descPerfil;
 
     public BeanAdminPerfiles() {
         listFuncion = new DualListModel<>();
@@ -54,13 +55,8 @@ public class BeanAdminPerfiles implements Serializable {
         }
     }
 
-    public List<Usuario> showUser(Perfil perfil) {
-        List<Usuario> list = perfil.getUsuarioList();
-        return (list != null) ? list : new ArrayList<Usuario>();
-    }
-
-    public void onClickShowDialog(Perfil perfil) {
-        setProfileSelected(perfil);
+    public void onClickShowDialog(Perfil perfil1) {
+        setProfileSelected(perfil1);
         if (profileSelected != null) {
             List<Usuario> list = profileSelected.getUsuarioList();
             if (list != null) {
@@ -71,21 +67,18 @@ public class BeanAdminPerfiles implements Serializable {
         } else {
             usersList = new ArrayList<>();
         }
+        listaFilteredUsuario = usersList;
     }
 
     public void onClickEditAccept(RowEditEvent event) {
         Perfil perfil = (Perfil) event.getObject();
+        perfil.setDescPerfil(perfil.getDescPerfil().trim());
+        perfil.setNamePerfil(perfil.getNamePerfil().trim());
         perfilFacade.edit(perfil);
     }
 
-    public void onClickEditCancel(RowEditEvent event) {
-
-    }
-
     public void onClickPreCreateProfile(ActionEvent event) {
-        System.out.println("pre create profile");
-        perfil = new Perfil();
-        List<Funcion> source = funcionFacade.findAll();
+        List<Funcion> source = funcionFacade.findAll();  // <-- Mejorar
         if (source == null) {
             source = new ArrayList<>();
         }
@@ -94,8 +87,24 @@ public class BeanAdminPerfiles implements Serializable {
     }
 
     public void onClickCreateProfile(ActionEvent event) {
-        System.out.println("create profile---->");
-        System.out.println("ASCAOSDAS");
+
+        Perfil perfil = new Perfil();
+        perfil.setNamePerfil(namePerfil.trim());
+        perfil.setDescPerfil(descPerfil.trim());
+     
+        List<Funcion> target = new ArrayList<>();
+        // REVISAR, no existe coherencia en el objeto Funcion y la lista de target del DualListModel
+        for (int i = 0; i < listFuncion.getTarget().size(); i++) {
+            Object o = listFuncion.getTarget().get(i);
+            int index = o.toString().indexOf("=") + 1;
+            String key_clean = o.toString().substring(index, o.toString().length() - 1).trim();
+            target.add(funcionFacade.find(new Integer(key_clean)));
+        }
+        perfil.setFuncionList(target);
+        perfil.setUsuarioList(new ArrayList<Usuario>());
+
+        perfilFacade.create(perfil);
+        listaPerfiles.add(perfil);
     }
 
     public void onClickDeleteProfile(Perfil perfil1) {
@@ -106,20 +115,32 @@ public class BeanAdminPerfiles implements Serializable {
         }
     }
 
+    public void test(ActionEvent event) {
+        System.out.println("ASDtest");
+    }
+
+    public String getDescPerfil() {
+        return descPerfil;
+    }
+
+    public void setDescPerfil(String descPerfil) {
+        this.descPerfil = descPerfil;
+    }
+
+    public String getNamePerfil() {
+        return namePerfil;
+    }
+
+    public void setNamePerfil(String namePerfil) {
+        this.namePerfil = namePerfil;
+    }
+
     public DualListModel<Funcion> getListFuncion() {
         return listFuncion;
     }
 
     public void setListFuncion(DualListModel<Funcion> listFuncion) {
         this.listFuncion = listFuncion;
-    }
-
-    public Perfil getPerfil() {
-        return perfil;
-    }
-
-    public void setPerfil(Perfil perfil) {
-        this.perfil = perfil;
     }
 
     public List<Perfil> getListaPerfiles() {

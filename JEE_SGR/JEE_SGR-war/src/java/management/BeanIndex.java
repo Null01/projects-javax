@@ -53,6 +53,10 @@ public class BeanIndex implements Serializable {
         FacesUtil.getFacesUtil().redirect(FacesUtil.getFacesUtil().getContextPath());
     }
 
+    public void test(ActionEvent event) {
+        System.out.println("test");
+    }
+
     public String getUser() {
         return user;
     }
