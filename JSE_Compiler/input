@@ -1,0 +1,21 @@
+
+program : Program 
+data_type
+
+string: nombre;
+int: codigo;
+float: dinero;
+
+begin
+read("Digita tu nombre:");
+write(nombre);
+read("Digita tu codigo:");
+write(codigo);
+read("Digita tu sueldo:");
+write(dinero);
+
+if(dinero>=1.0) then
+while (nombre == "hello word?") then
+end_if
+end_if
+end
