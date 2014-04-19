@@ -73,7 +73,10 @@
 
                 </p:dataTable>
                 <p:commandButton id="buttonCreateProfile" value="Crear Perfil" actionListener="#{beanAdminPerfiles.onClickPreCreateProfile}" 
-                                 oncomplete="dialogCreateProfile.show();" update="dialogCreateProfile1" />
+                                 oncomplete="dialogCreateProfile.show();" update="dialogCreateProfile1" >
+
+                    <p:ajax update="panelCreate" resetValues="true" />  
+                </p:commandButton>
 
                 <p:tooltip for="buttonCreateProfile" value="Crear" showEffect="fade" hideEffect="fade" />
 
@@ -96,8 +99,8 @@
 
                         </h:panelGrid>
                         <h:panelGrid columns="1">
-                            <p:pickList id="listaFunciones" value="#{beanAdminPerfiles.listFuncion}" var="funcion"   
-                                        itemValue="#{funcion}"  itemLabel="#{funcion.nameFuncion}"  >                                
+                            <p:pickList id="listaFunciones" value="#{beanAdminPerfiles.listFuncion}" var="function"   
+                                        itemLabel="#{function}"  itemValue="#{function}" >                                
                                 <f:facet name="sourceCaption">Disponibles</f:facet>  
                                 <f:facet name="targetCaption">Asignados</f:facet>  
                             </p:pickList>

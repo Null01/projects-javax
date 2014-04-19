@@ -31,6 +31,9 @@ public class BeanIndex implements Serializable {
     private String user = "admin";
     private String password = "admin";
 
+    // navegate next page
+    private final String forward = "faces/home.xhtml";
+
     @PostConstruct
     public void initialize() {
     }
@@ -41,9 +44,9 @@ public class BeanIndex implements Serializable {
             Usuario find = usuarioFacade.find(user);
             HttpSession httpSession = FacesUtil.getFacesUtil().getSession();
             httpSession.setAttribute("session", find);
-            FacesUtil.getFacesUtil().redirect("faces/home.xhtml");
+            FacesUtil.getFacesUtil().redirect(forward);
         } else {
-            FacesUtil.getFacesUtil().addMessage(FacesMessage.SEVERITY_WARN, "Error!", "Intentelo de nuevo.");
+            FacesUtil.getFacesUtil().addMessage(FacesMessage.SEVERITY_WARN, "Error! Intentelo de nuevo.", "");
         }
     }
 
@@ -53,9 +56,6 @@ public class BeanIndex implements Serializable {
         FacesUtil.getFacesUtil().redirect(FacesUtil.getFacesUtil().getContextPath());
     }
 
-    public void test(ActionEvent event) {
-        System.out.println("test");
-    }
 
     public String getUser() {
         return user;
