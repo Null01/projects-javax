@@ -15,6 +15,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.BasicConfigurator;
 
 /**
  *
@@ -27,6 +28,8 @@ public class FilterWeb implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         this.filterConfig = filterConfig;
+        // Set up a simple configuration that logs on the console.
+        BasicConfigurator.configure();
     }
 
     @Override
@@ -55,9 +58,9 @@ public class FilterWeb implements Filter {
 
         if (!createSession) {
             httpRequest.getRequestDispatcher(indexURI).forward(request, response);
+        } else {
+            chain.doFilter(request, response);
         }
-
-        chain.doFilter(request, response);
     }
 
     @Override

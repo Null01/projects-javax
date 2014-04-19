@@ -12,6 +12,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 import session.LoginFacadeLocal;
 import session.UsuarioFacadeLocal;
 import util.FacesUtil;
@@ -27,6 +28,8 @@ public class BeanIndex implements Serializable {
 
     @EJB
     private LoginFacadeLocal loginFacade;
+
+    private static final Logger LOGGER = Logger.getLogger(BeanIndex.class);
 
     private String user = "admin";
     private String password = "admin";
@@ -45,17 +48,18 @@ public class BeanIndex implements Serializable {
             HttpSession httpSession = FacesUtil.getFacesUtil().getSession();
             httpSession.setAttribute("session", find);
             FacesUtil.getFacesUtil().redirect(forward);
+            LOGGER.info("Create Session - LoginOn " + find);
         } else {
             FacesUtil.getFacesUtil().addMessage(FacesMessage.SEVERITY_WARN, "Error! Intentelo de nuevo.", "");
         }
     }
 
     public void salir(ActionEvent event) {
-        HttpSession httpSession = FacesUtil.getFacesUtil().getSession();
-        httpSession.invalidate();
+        HttpSession session = FacesUtil.getFacesUtil().getSession();
+        LOGGER.info("Close Session - LoginOff " + session.getAttribute("session"));
+        session.invalidate();
         FacesUtil.getFacesUtil().redirect(FacesUtil.getFacesUtil().getContextPath());
     }
-
 
     public String getUser() {
         return user;
