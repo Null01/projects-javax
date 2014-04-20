@@ -6,6 +6,8 @@ package management;
  */
 import entities.LoginPK;
 import entities.Usuario;
+import enumeration.ELabels;
+import enumeration.ELabelsError;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -47,15 +49,15 @@ public class BeanIndex implements Serializable {
             HttpSession httpSession = FacesUtil.getFacesUtil().getSession();
             httpSession.setAttribute("session", find);
             FacesUtil.getFacesUtil().redirect(forward);
-            LOGGER.info("Create Session - LoginOn " + find);
+            LOGGER.info(ELabels.OPEN.getString() + ELabels.SESSION.getString() + ELabels.LOGIN.getString() + find);
         } else {
-            FacesUtil.getFacesUtil().addMessage(FacesMessage.SEVERITY_WARN, "Error! Intentelo de nuevo.", "");
+            FacesUtil.getFacesUtil().addMessage(FacesMessage.SEVERITY_WARN, ELabelsError.ERROR_AUTENTICACION.getString(), "");
         }
     }
 
     public void salir(ActionEvent event) {
         HttpSession session = FacesUtil.getFacesUtil().getSession();
-        LOGGER.info("Close Session - LoginOff " + session.getAttribute("session"));
+        LOGGER.info(ELabels.CLOSE.getString() + ELabels.SESSION.getString() + ELabels.LOGOUT.getString() + session.getAttribute("session"));
         session.invalidate();
         FacesUtil.getFacesUtil().redirect(FacesUtil.getFacesUtil().getContextPath());
     }
