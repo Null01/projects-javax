@@ -20,10 +20,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author AGarcia
+ * @author duran
+ * @version 1.0
  */
 @Entity
-@Table(name = "ARTICULO")
+@Table(name = "articulo")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Articulo.findAll", query = "SELECT a FROM Articulo a"),
@@ -38,14 +39,14 @@ public class Articulo implements Serializable {
     @EmbeddedId
     protected ArticuloPK articuloPK;
     @Size(max = 30)
-    @Column(name = "MARCA")
+    @Column(name = "marca")
     private String marca;
-    @Column(name = "DISPONIBLE")
+    @Column(name = "disponible")
     private Short disponible;
     @Size(max = 256)
-    @Column(name = "NOTES")
+    @Column(name = "notes")
     private String notes;
-    @JoinColumn(name = "ID_RECURSO", referencedColumnName = "ID_RECURSO", insertable = false, updatable = false)
+    @JoinColumn(name = "id_recurso", referencedColumnName = "id_recurso", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Recurso recurso;
 

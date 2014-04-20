@@ -14,7 +14,8 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author AGarcia
+ * @author duran
+ * @version 1.0
  */
 @Embeddable
 public class LoginPK implements Serializable {
@@ -22,12 +23,12 @@ public class LoginPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "NAME_USER")
+    @Column(name = "name_user")
     private String nameUser;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "PASS_USER")
+    @Column(name = "pass_user")
     private String passUser;
 
     public LoginPK() {

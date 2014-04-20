@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package session;
 
 import entities.Login;
@@ -12,7 +13,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author AGarcia
+ * @author duran
  */
 @Local
 public interface LoginFacadeLocal {
@@ -32,5 +33,5 @@ public interface LoginFacadeLocal {
     int count();
 
     public boolean autenticarUsuario(LoginPK loginPK);
-
+    
 }

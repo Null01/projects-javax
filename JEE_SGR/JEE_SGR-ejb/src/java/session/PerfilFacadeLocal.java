@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package session;
 
 import entities.Perfil;
@@ -11,7 +12,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author AGarcia
+ * @author duran
  */
 @Local
 public interface PerfilFacadeLocal {
@@ -29,5 +30,5 @@ public interface PerfilFacadeLocal {
     List<Perfil> findRange(int[] range);
 
     int count();
-
+    
 }

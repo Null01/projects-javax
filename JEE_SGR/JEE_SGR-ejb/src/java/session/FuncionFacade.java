@@ -7,14 +7,19 @@ package session;
 
 import entities.Funcion;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import util.InterceptorWeb;
 
 /**
  *
- * @author AGarcia
+ * @author duran
+ * @version 1.0
  */
 @Stateless
+@Interceptors(InterceptorWeb.class)
 public class FuncionFacade extends AbstractFacade<Funcion> implements FuncionFacadeLocal {
 
     @PersistenceContext(unitName = "JEE_SGR-ejbPU2")
@@ -27,6 +32,12 @@ public class FuncionFacade extends AbstractFacade<Funcion> implements FuncionFac
 
     public FuncionFacade() {
         super(Funcion.class);
+    }
+
+    @Override
+    public Funcion findByNameFuncion(String nameFuncion) {
+        Funcion funcion = (Funcion) getEntityManager().createNamedQuery("Funcion.findByNameFuncion").setParameter("nameFuncion", nameFuncion).getSingleResult();
+        return funcion;
     }
 
 }

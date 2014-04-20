@@ -8,14 +8,18 @@ package session;
 import entities.Login;
 import entities.LoginPK;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import util.InterceptorWeb;
 
 /**
  *
- * @author AGarcia
+ * @author duran
+ * @version 1.0
  */
 @Stateless
+@Interceptors(InterceptorWeb.class)
 public class LoginFacade extends AbstractFacade<Login> implements LoginFacadeLocal {
 
     @PersistenceContext(unitName = "JEE_SGR-ejbPU2")

@@ -44,31 +44,30 @@ INSERT INTO funcion_usuario VALUES (1,2);
 INSERT INTO funcion_usuario VALUES (2,1);
 INSERT INTO funcion_usuario VALUES (1,3);
 
-
-CREATE TABLE USUARIO(
-  id_perfil     serial not null,
-  foreign key (id_perfil)  references PERFIL(id_perfil),
-  name_user     character varying(30) not null,
-  nombre        character varying(30) not null,
-  apellido      character varying(30) not null,
-  edad          date not null,
-  correo        character varying(40) not null,
-  primary key(name_user)
-);
-
  CREATE TABLE LOGIN(
   name_user character varying(30) not null,
   pass_user character varying(30) not null,
   primary key(name_user,pass_user)
 );
 
-INSERT INTO usuario VALUES (2,'usuario2','Carlos','Jimenez','2000-01-01','pedropedraza@correo.com');
-INSERT INTO usuario VALUES (2,'usuario','Pedro','Pedraza','2000-01-01','pedropedraza@correo.com');
-INSERT INTO usuario VALUES (1,'admin','Admin','Super','1992-03-26','superadmin@correo.com');
+CREATE TABLE USUARIO(
+  id_perfil     serial not null,
+  foreign key (id_perfil)  references PERFIL(id_perfil),
+  name_user     character varying(30) not null,
+  primary key(name_user),
+  pass_user     character varying(30) not null,
+  foreign key (name_user,pass_user)  references LOGIN(name_user,pass_user),  
+  nombre        character varying(30) not null,
+  apellido      character varying(30) not null,
+  edad          date not null,
+  correo        character varying(40) not null
+);
 
-INSERT INTO login VALUES ('usuario2','usuario2');
 INSERT INTO login VALUES ('usuario','usuario');
 INSERT INTO login VALUES ('admin','admin');
+
+INSERT INTO usuario VALUES (2,'usuario','usuario','Pedro','Pedraza','2000-01-01','pedropedraza@correo.com');
+INSERT INTO usuario VALUES (1,'admin','admin','Admin','Super','1992-03-26','superadmin@correo.com');
 
 CREATE TABLE RECURSO(
   id_recurso     serial not null,

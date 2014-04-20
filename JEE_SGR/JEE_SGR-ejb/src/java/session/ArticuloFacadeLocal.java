@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package session;
 
 import entities.Articulo;
@@ -12,7 +13,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author AGarcia
+ * @author duran
  */
 @Local
 public interface ArticuloFacadeLocal {
@@ -31,10 +32,10 @@ public interface ArticuloFacadeLocal {
 
     int count();
 
-    public int countArticlesEnable(Recurso recurso);
-
-    public List<Articulo> getArticlesEnable(Recurso recurso);
-
     public int countArticle(Recurso recurso);
 
+    public List<Articulo> getArticlesEnable(Recurso resourceSelected);
+
+    public int countArticlesEnable(Recurso recurso);
+    
 }

@@ -19,10 +19,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author AGarcia
+ * @author duran
+ * @version 1.0
  */
 @Entity
-@Table(name = "PRESTAMO")
+@Table(name = "prestamo")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Prestamo.findAll", query = "SELECT p FROM Prestamo p"),
@@ -36,7 +37,7 @@ public class Prestamo implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected PrestamoPK prestamoPK;
-    @Column(name = "FECHA_ENTREGA")
+    @Column(name = "fecha_entrega")
     @Temporal(TemporalType.DATE)
     private Date fechaEntrega;
 

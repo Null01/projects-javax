@@ -17,27 +17,28 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author AGarcia
+ * @author duran
+ * @version 1.0
  */
 @Embeddable
 public class PrestamoPK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ID_RECURSO")
+    @Column(name = "id_recurso")
     private int idRecurso;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ID_ARTICULO")
+    @Column(name = "id_articulo")
     private int idArticulo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "ID_USUARIO")
+    @Column(name = "id_usuario")
     private String idUsuario;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FECHA_PRESTAMO")
+    @Column(name = "fecha_prestamo")
     @Temporal(TemporalType.DATE)
     private Date fechaPrestamo;
 

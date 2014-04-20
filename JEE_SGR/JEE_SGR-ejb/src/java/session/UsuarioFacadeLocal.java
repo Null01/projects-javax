@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package session;
 
 import entities.Usuario;
@@ -11,7 +12,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author AGarcia
+ * @author duran
  */
 @Local
 public interface UsuarioFacadeLocal {
@@ -29,5 +30,5 @@ public interface UsuarioFacadeLocal {
     List<Usuario> findRange(int[] range);
 
     int count();
-
+    
 }

@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package session;
 
 import entities.Funcion;
@@ -11,7 +12,7 @@ import javax.ejb.Local;
 
 /**
  *
- * @author AGarcia
+ * @author duran
  */
 @Local
 public interface FuncionFacadeLocal {
@@ -30,4 +31,6 @@ public interface FuncionFacadeLocal {
 
     int count();
 
+    public Funcion findByNameFuncion(String nameFuncion);
+    
 }

@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -25,10 +26,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author AGarcia
+ * @author duran
+ * @version 1.0
  */
 @Entity
-@Table(name = "USUARIO")
+@Table(name = "usuario")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
@@ -44,31 +46,36 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "NAME_USER")
+    @Column(name = "name_user")
     private String nameUser;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "NOMBRE")
+    @Column(name = "nombre")
     private String nombre;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "APELLIDO")
+    @Column(name = "apellido")
     private String apellido;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "EDAD")
+    @Column(name = "edad")
     @Temporal(TemporalType.DATE)
     private Date edad;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 40)
-    @Column(name = "CORREO")
+    @Column(name = "correo")
     private String correo;
-    @JoinColumn(name = "ID_PERFIL", referencedColumnName = "ID_PERFIL")
+    @JoinColumn(name = "id_perfil", referencedColumnName = "id_perfil")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Perfil idPerfil;
+    @JoinColumns({
+        @JoinColumn(name = "name_user", referencedColumnName = "name_user", insertable = false, updatable = false),
+        @JoinColumn(name = "pass_user", referencedColumnName = "pass_user")})
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private Login login;
 
     public Usuario() {
     }
@@ -131,6 +138,14 @@ public class Usuario implements Serializable {
 
     public void setIdPerfil(Perfil idPerfil) {
         this.idPerfil = idPerfil;
+    }
+
+    public Login getLogin() {
+        return login;
+    }
+
+    public void setLogin(Login login) {
+        this.login = login;
     }
 
     @Override

@@ -34,8 +34,7 @@ public class BeanIndex implements Serializable {
     private String user = "admin";
     private String password = "admin";
 
-    // navegate next page
-    private final String forward = "faces/home.xhtml";
+    private final String forward = "faces/home.xhtml";  // navegate next page
 
     @PostConstruct
     public void initialize() {

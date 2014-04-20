@@ -15,7 +15,8 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author AGarcia
+ * @author duran
+ * @version 1.0
  */
 @Stateless
 public class ArticuloFacade extends AbstractFacade<Articulo> implements ArticuloFacadeLocal {

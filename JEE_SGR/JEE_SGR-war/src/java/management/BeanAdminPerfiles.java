@@ -17,6 +17,7 @@ import javax.faces.event.ActionEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.DualListModel;
 import session.FuncionFacadeLocal;
+import session.LoginFacadeLocal;
 import session.PerfilFacadeLocal;
 
 /**
@@ -25,6 +26,8 @@ import session.PerfilFacadeLocal;
  */
 public class BeanAdminPerfiles implements Serializable {
 
+    @EJB
+    private LoginFacadeLocal loginFacade;
     @EJB
     private FuncionFacadeLocal funcionFacade;
     @EJB
@@ -95,24 +98,41 @@ public class BeanAdminPerfiles implements Serializable {
         List<Funcion> target = new ArrayList<>();
         // REVISAR, no existe coherencia en el objeto Funcion y la lista de target del DualListModel
         for (int i = 0; i < listFuncion.getTarget().size(); i++) {
-     //       Object o = listFuncion.getTarget().get(i);
-            //       int index = o.toString().indexOf("=") + 1;
-            //       String key_clean = o.toString().substring(index, o.toString().length() - 1).trim();
-            //       target.add(funcionFacade.find(new Integer(key_clean)));
+            Object object = listFuncion.getTarget().get(i);
+            String nameFuncion = problemPickList(object.toString());
+            Funcion funcion = funcionFacade.findByNameFuncion(nameFuncion);
+            target.add(funcion);
         }
-    //    perfil.setFuncionList(target);
-        //   perfil.setUsuarioList(new ArrayList<Usuario>());
 
-    //    perfilFacade.create(perfil);
-        //  listaPerfiles.add(perfil);
-        // this.namePerfil = this.descPerfil =  null;
+        perfil.setFuncionList(target);
+        perfil.setUsuarioList(new ArrayList<Usuario>());
+
+        perfilFacade.create(perfil);
+        listaPerfiles.add(perfil);
+        this.namePerfil = this.descPerfil = null;
     }
 
     public void onClickDeleteProfile(Perfil perfil1) {
+        List<Usuario> usuarioList = perfil1.getUsuarioList();
+        for (Usuario usuario : usuarioList) {
+            loginFacade.remove(usuario.getLogin());
+        }
+
         perfilFacade.remove(perfil1);
         listaPerfiles = perfilFacade.findAll();
         if (listaPerfiles == null) {
             listaPerfiles = new ArrayList<>();
+        }
+    }
+
+    // Tis is a problem of framework - PickList - itemLabel()
+    public String problemPickList(String bug) {
+        String key = "nameFuncion=";
+        if (bug.contains(key)) {
+            int index = bug.lastIndexOf(key) + key.length();
+            return bug.subSequence(index, bug.length() - 2).toString();
+        } else {
+            return "";
         }
     }
 

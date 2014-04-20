@@ -6,19 +6,25 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author AGarcia
+ * @author duran
+ * @version 1.0
  */
 @Entity
-@Table(name = "LOGIN")
+@Table(name = "login")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Login.findAll", query = "SELECT l FROM Login l"),
@@ -29,6 +35,8 @@ public class Login implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected LoginPK loginPK;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "login", fetch = FetchType.EAGER)
+    private List<Usuario> usuarioList;
 
     public Login() {
     }
@@ -47,6 +55,15 @@ public class Login implements Serializable {
 
     public void setLoginPK(LoginPK loginPK) {
         this.loginPK = loginPK;
+    }
+
+    @XmlTransient
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
+    }
+
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
     }
 
     @Override

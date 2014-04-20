@@ -67,7 +67,6 @@
                                              update="dataTableProfile">
                                 <p:confirm header="Eliminar perfil" message="  Esta usted seguro?" icon="ui-icon-alert" />  
                             </p:commandButton>
-                            <p:tooltip for="buttonDeleteProfile" value="Eliminar" showEffect="fade" hideEffect="fade" />  
                         </div>
                     </p:column>
 
@@ -100,7 +99,7 @@
                         </h:panelGrid>
                         <h:panelGrid columns="1">
                             <p:pickList id="listaFunciones" value="#{beanAdminPerfiles.listFuncion}" var="function"   
-                                        itemLabel="#{function}"  itemValue="#{function}" >                                
+                                        itemLabel="#{beanAdminPerfiles.problemPickList(function)}"  itemValue="#{function}" >                                
                                 <f:facet name="sourceCaption">Disponibles</f:facet>  
                                 <f:facet name="targetCaption">Asignados</f:facet>  
                             </p:pickList>

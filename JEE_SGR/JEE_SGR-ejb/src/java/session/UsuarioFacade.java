@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package session;
 
 import entities.Usuario;
@@ -12,11 +13,11 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author AGarcia
+ * @author duran
+ * @version 1.0
  */
 @Stateless
 public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFacadeLocal {
-
     @PersistenceContext(unitName = "JEE_SGR-ejbPU2")
     private EntityManager em;
 

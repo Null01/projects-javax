@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package session;
 
 import java.util.List;
@@ -10,12 +11,11 @@ import javax.persistence.EntityManager;
 
 /**
  *
- * @author AGarcia
- * @param <T>
+ * @author duran
+ * @version 1.0
  */
 public abstract class AbstractFacade<T> {
-
-    private final Class<T> entityClass;
+    private Class<T> entityClass;
 
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;
