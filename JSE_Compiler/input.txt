@@ -1,4 +1,4 @@
-program : Program
+program : Nombre_Programa
 data_type
  string: nombre;
  int: codigo;
@@ -11,3 +11,9 @@ begin
  write ( codigo );
  read ( "Digita tu sueldo:" );
  write ( dinero );
+ if ( dinero >= 1.0 ) then
+ while ( nombre == "hello word?" ) then
+ end_if
+ end_if
+
+end

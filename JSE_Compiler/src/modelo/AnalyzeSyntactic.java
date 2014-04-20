@@ -2,20 +2,38 @@ package modelo;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Stack;
-import java.util.TreeMap;
 
 /**
  *
  * @author AGarcia
  */
 public class AnalyzeSyntactic extends Analyze implements IAnalyze {
+
+    private Set<String> setWordsReserve;
+    private Set<String> setWordsOperators;
+
+    public Set<String> getSetWordsReserve() {
+        return setWordsReserve;
+    }
+
+    public Set<String> getSetWordsOperators() {
+        return setWordsOperators;
+    }
+
+    public int getNumberlines() {
+        return numberlines;
+    }
 
     private AnalyzeSyntactic() {
     }
@@ -24,11 +42,15 @@ public class AnalyzeSyntactic extends Analyze implements IAnalyze {
         try {
             bufferedReader = new BufferedReader(new FileReader(file));
             this.initialize();
-            bufferedWriter = new BufferedWriter(new FileWriter(file + "_out", false));
+            bufferedWriter = new BufferedWriter(new FileWriter(file + "-out", false));
+            setWordsReserve = new HashSet<>();
+            setWordsOperators = new HashSet<>();
         } catch (FileNotFoundException ex) {
             System.err.println(ex);
         } catch (IOException ex) {
             System.out.println(ex);
+        } catch (Exception e) {
+            System.out.println(e);
         }
     }
 
@@ -214,6 +236,7 @@ public class AnalyzeSyntactic extends Analyze implements IAnalyze {
                 }
                 printStackError(causeError);
                 textValid = false;
+                System.out.println(ex);
             }
 
             if (bufferedWriter != null) {
@@ -238,6 +261,7 @@ public class AnalyzeSyntactic extends Analyze implements IAnalyze {
             key = ("" + array[++i]) + "" + array[(i + 1) % line.length()];
             key = (isSymbol(key)) ? key : ("" + array[i]);
             if (isSymbol(key)) {
+                setWordsOperators.add(key);
                 flag = isCaseSpecial(i, array);
                 if (flag != -1) {
                     index = flag;
@@ -271,7 +295,7 @@ public class AnalyzeSyntactic extends Analyze implements IAnalyze {
     @Override
     public boolean validate(Stack<String> stack, String key, String value) {
         // VERIFICAR POSIBLES EXPRESIONES RELACIONADAS.
-        // EJEMPLO (- 3) = -3  // (-   0.22) = -0.22
+        // EJEMPLO (-    3) = -3  // (-   0.22) = -0.22
         if (!stack.isEmpty()) {
             String temp = stack.pop();
             // POSIBLES JOINS ENTRE EXPRESIONES Y SIMBOLOS
@@ -297,11 +321,11 @@ public class AnalyzeSyntactic extends Analyze implements IAnalyze {
                                 stack.push(value);
                             } else {
                                 if (isExpress(value)) {
+                                    setWordsReserve.add(value);
                                     // System.out.println(temp + " isExpress " + value);
                                     if (temp.compareTo(value) != 0) {
                                         stack.push(temp);
                                     }
-
                                     stack.push(value);
                                 } else {
                                     if (isVariable(value, false)) {
@@ -356,4 +380,12 @@ public class AnalyzeSyntactic extends Analyze implements IAnalyze {
         return " " + target;
     }
 
+    public void clearAnalyze() {
+        stackError.clear();
+    }
+
+    public Reader ReformatFile(File file) throws FileNotFoundException {
+        File f = new File(file.getName() + "-out");
+        return new FileReader(f);
+    }
 }
