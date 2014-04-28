@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entities;
 
 import java.io.Serializable;
@@ -22,7 +23,6 @@ import javax.validation.constraints.Size;
  */
 @Embeddable
 public class PrestamoPK implements Serializable {
-
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_recurso")

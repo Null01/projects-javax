@@ -9,8 +9,10 @@ package enumeration;
  *
  * @author duran
  */
-public enum ELabels {
+public enum ELabelsCommon {
 
+    INIT("INICIA "),
+    END("FINALIZA "),
     CREATE("CREACION "),
     DELETE("ELIMINACION "),
     UPDATE("ACTUALIZACION "),
@@ -21,7 +23,7 @@ public enum ELabels {
     OPEN("ABRIR "),
     CLOSE("CERRAR ");
 
-    private ELabels(String string) {
+    private ELabelsCommon(String string) {
         this.string = string;
     }
 

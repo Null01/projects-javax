@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entities;
 
 import java.io.Serializable;
@@ -39,7 +40,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Perfil.findByNamePerfil", query = "SELECT p FROM Perfil p WHERE p.namePerfil = :namePerfil"),
     @NamedQuery(name = "Perfil.findByDescPerfil", query = "SELECT p FROM Perfil p WHERE p.descPerfil = :descPerfil")})
 public class Perfil implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,9 +56,9 @@ public class Perfil implements Serializable {
     @Size(min = 1, max = 256)
     @Column(name = "desc_perfil")
     private String descPerfil;
-    @ManyToMany(mappedBy = "perfilList", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "perfilList", fetch = FetchType.LAZY)
     private List<Funcion> funcionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPerfil", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPerfil", fetch = FetchType.LAZY)
     private List<Usuario> usuarioList;
 
     public Perfil() {

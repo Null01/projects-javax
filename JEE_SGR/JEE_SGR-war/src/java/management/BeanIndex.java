@@ -6,8 +6,9 @@ package management;
  */
 import entities.LoginPK;
 import entities.Usuario;
-import enumeration.ELabels;
+import enumeration.ELabelsCommon;
 import enumeration.ELabelsError;
+import enumeration.ELabelsMessages;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -43,21 +44,26 @@ public class BeanIndex implements Serializable {
     }
 
     public void ingresar(ActionEvent event) {
-        boolean state = loginFacade.autenticarUsuario(new LoginPK(user, password));
-        if (state) {
+        int state = loginFacade.autenticarUsuario(new LoginPK(user, password));
+        if (state == 0) {
             Usuario find = usuarioFacade.find(user);
             HttpSession httpSession = FacesUtil.getFacesUtil().getSession();
             httpSession.setAttribute("session", find);
             FacesUtil.getFacesUtil().redirect(forward);
-            LOGGER.info(ELabels.OPEN.getString() + ELabels.SESSION.getString() + ELabels.LOGIN.getString() + find);
+            LOGGER.info(ELabelsCommon.OPEN.getString() + ELabelsCommon.SESSION.getString() + ELabelsCommon.LOGIN.getString() + find);
+            FacesUtil.getFacesUtil().addMessage(FacesMessage.SEVERITY_INFO, ELabelsMessages.SUCCESSFULL_LOGIN.getString(), "");
         } else {
-            FacesUtil.getFacesUtil().addMessage(FacesMessage.SEVERITY_WARN, ELabelsError.ERROR_AUTENTICACION.getString(), "");
+            if (state == -1) {
+                FacesUtil.getFacesUtil().addMessage(FacesMessage.SEVERITY_WARN, ELabelsError.ERROR_AUTENTICACION.getString(), "");
+            } else {
+                FacesUtil.getFacesUtil().addMessage(FacesMessage.SEVERITY_WARN, ELabelsError.ERROR_AUTENTICACION_USUARIO_BLOQUEADO.getString(), "");
+            }
         }
     }
 
     public void salir(ActionEvent event) {
         HttpSession session = FacesUtil.getFacesUtil().getSession();
-        LOGGER.info(ELabels.CLOSE.getString() + ELabels.SESSION.getString() + ELabels.LOGOUT.getString() + session.getAttribute("session"));
+        LOGGER.info(ELabelsCommon.CLOSE.getString() + ELabelsCommon.SESSION.getString() + ELabelsCommon.LOGOUT.getString() + session.getAttribute("session"));
         session.invalidate();
         FacesUtil.getFacesUtil().redirect(FacesUtil.getFacesUtil().getContextPath());
     }

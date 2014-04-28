@@ -8,12 +8,14 @@ package management;
 import entities.Funcion;
 import entities.Perfil;
 import entities.Usuario;
+import enumeration.ELabelsCommon;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.event.ActionEvent;
+import org.apache.log4j.Logger;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.DualListModel;
 import session.FuncionFacadeLocal;
@@ -25,6 +27,8 @@ import session.PerfilFacadeLocal;
  * @author duran
  */
 public class BeanAdminPerfiles implements Serializable {
+
+    private static final Logger LOGGER = Logger.getLogger(BeanAdminPerfiles.class);
 
     @EJB
     private LoginFacadeLocal loginFacade;
@@ -90,18 +94,26 @@ public class BeanAdminPerfiles implements Serializable {
     }
 
     public void onClickCreateProfile(ActionEvent event) {
-
+        LOGGER.info(ELabelsCommon.INIT.getString() + ELabelsCommon.CREATE.getString());
         Perfil perfil = new Perfil();
-        perfil.setNamePerfil(namePerfil.trim());
-        perfil.setDescPerfil(descPerfil.trim());
+        perfil.setNamePerfil(namePerfil.trim().toUpperCase());
+        perfil.setDescPerfil(descPerfil.trim().toUpperCase());
 
-        List<Funcion> target = new ArrayList<>();
         // REVISAR, no existe coherencia en el objeto Funcion y la lista de target del DualListModel
-        for (int i = 0; i < listFuncion.getTarget().size(); i++) {
-            Object object = listFuncion.getTarget().get(i);
-            String nameFuncion = problemPickList(object.toString());
-            Funcion funcion = funcionFacade.findByNameFuncion(nameFuncion);
-            target.add(funcion);
+        List<Funcion> target = new ArrayList<>();
+        if (listFuncion != null) {
+
+            for (int i = 0; i < listFuncion.getTarget().size(); i++) {
+                Object object = listFuncion.getTarget().get(i);
+                String nameFuncion = problemPickList(object.toString());
+                if (!nameFuncion.isEmpty()) {
+                    System.out.println(nameFuncion);
+                    Funcion funcion = funcionFacade.findByNameFuncion(nameFuncion);
+                    if (funcion != null) {
+                        target.add(funcion);
+                    }
+                }
+            }
         }
 
         perfil.setFuncionList(target);
@@ -110,6 +122,8 @@ public class BeanAdminPerfiles implements Serializable {
         perfilFacade.create(perfil);
         listaPerfiles.add(perfil);
         this.namePerfil = this.descPerfil = null;
+
+        LOGGER.info(ELabelsCommon.END.getString() + ELabelsCommon.CREATE.getString());
     }
 
     public void onClickDeleteProfile(Perfil perfil1) {
@@ -125,14 +139,14 @@ public class BeanAdminPerfiles implements Serializable {
         }
     }
 
-    // Tis is a problem of framework - PickList - itemLabel()
+    // This is a problem of framework - PickList - itemLabel()
     public String problemPickList(String bug) {
         String key = "nameFuncion=";
         if (bug.contains(key)) {
             int index = bug.lastIndexOf(key) + key.length();
-            return bug.subSequence(index, bug.length() - 2).toString();
+            return bug.subSequence(index, bug.length() - 1).toString();
         } else {
-            return "";
+            return "-none-";
         }
     }
 

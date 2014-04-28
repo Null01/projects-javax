@@ -64,7 +64,7 @@ public class Funcion implements Serializable {
     @JoinTable(name = "funcion_usuario", joinColumns = {
         @JoinColumn(name = "id_funcion", referencedColumnName = "id_funcion")}, inverseJoinColumns = {
         @JoinColumn(name = "id_perfil", referencedColumnName = "id_perfil")})
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Perfil> perfilList;
 
     public Funcion() {
@@ -144,7 +144,7 @@ public class Funcion implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Funcion[ idFuncion=" + idFuncion + " nameFuncion=" + nameFuncion + " ]";
+        return "entities.Funcion[ idFuncion=" + idFuncion + " nameFuncion=" + nameFuncion + "]";
     }
 
 }

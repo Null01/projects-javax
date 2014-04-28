@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entities;
 
 import java.io.Serializable;
@@ -40,7 +41,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuario.findByEdad", query = "SELECT u FROM Usuario u WHERE u.edad = :edad"),
     @NamedQuery(name = "Usuario.findByCorreo", query = "SELECT u FROM Usuario u WHERE u.correo = :correo")})
 public class Usuario implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -69,12 +69,12 @@ public class Usuario implements Serializable {
     @Column(name = "correo")
     private String correo;
     @JoinColumn(name = "id_perfil", referencedColumnName = "id_perfil")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Perfil idPerfil;
     @JoinColumns({
         @JoinColumn(name = "name_user", referencedColumnName = "name_user", insertable = false, updatable = false),
         @JoinColumn(name = "pass_user", referencedColumnName = "pass_user")})
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Login login;
 
     public Usuario() {

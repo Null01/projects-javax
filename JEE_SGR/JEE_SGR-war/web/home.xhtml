@@ -23,14 +23,14 @@
                         </p:commandLink>
                     </h:form>
                 </p:layoutUnit>
-                <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+                <p:layoutUnit id="south" position="south" size="100" closable="true" collapsible="true">
                     <h:form id="form2" >Footer</h:form>
                 </p:layoutUnit>
-                <p:layoutUnit position="west" size="315" closable="true" collapsible="true">
+                <p:layoutUnit id="west" position="west" size="315" closable="true" collapsible="true">
                     <h:form id="form3">
                         <p:tree value="#{beanHome.menu}" var="node" dynamic="true" cache="false"  
                                 selectionMode="single"  selection="#{beanHome.selectedNode}" id="tree" >
-                            <p:ajax event="select" update=":form4" listener="#{beanHome.onNodeSelect}" />  
+                            <p:ajax event="select" update=":myPanel" listener="#{beanHome.onNodeSelect}" />  
                             <p:treeNode>
                                 <h:outputText value="#{node.nameFuncion}"/>
                             </p:treeNode>
@@ -38,9 +38,9 @@
                     </h:form>
                 </p:layoutUnit>
                 <p:layoutUnit position="center">
-                    <h:form id="form4">
+                    <p:panel id="myPanel">
                         <ui:include id="include" src="#{beanHome.pathForward}" />
-                    </h:form>
+                    </p:panel>
                 </p:layoutUnit>
             </p:layout>
         </h:body>

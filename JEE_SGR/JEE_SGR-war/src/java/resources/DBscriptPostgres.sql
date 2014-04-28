@@ -45,8 +45,10 @@ INSERT INTO funcion_usuario VALUES (2,1);
 INSERT INTO funcion_usuario VALUES (1,3);
 
  CREATE TABLE LOGIN(
-  name_user character varying(30) not null,
-  pass_user character varying(30) not null,
+  name_user     character varying(30) not null,
+  pass_user     character varying(30) not null,
+  count_trys    smallint not null,
+  date_last_try date,
   primary key(name_user,pass_user)
 );
 
@@ -63,8 +65,8 @@ CREATE TABLE USUARIO(
   correo        character varying(40) not null
 );
 
-INSERT INTO login VALUES ('usuario','usuario');
-INSERT INTO login VALUES ('admin','admin');
+INSERT INTO login VALUES ('usuario','usuario',0,null);
+INSERT INTO login VALUES ('admin','admin',0,null);
 
 INSERT INTO usuario VALUES (2,'usuario','usuario','Pedro','Pedraza','2000-01-01','pedropedraza@correo.com');
 INSERT INTO usuario VALUES (1,'admin','admin','Admin','Super','1992-03-26','superadmin@correo.com');

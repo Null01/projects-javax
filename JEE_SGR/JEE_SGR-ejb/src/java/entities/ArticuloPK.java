@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entities;
 
 import java.io.Serializable;
@@ -18,7 +19,6 @@ import javax.validation.constraints.NotNull;
  */
 @Embeddable
 public class ArticuloPK implements Serializable {
-
     @Basic(optional = false)
     @Column(name = "id_articulo")
     private int idArticulo;

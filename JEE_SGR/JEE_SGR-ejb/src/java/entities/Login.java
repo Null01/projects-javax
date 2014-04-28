@@ -3,11 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +19,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -29,13 +36,21 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Login.findAll", query = "SELECT l FROM Login l"),
     @NamedQuery(name = "Login.findByNameUser", query = "SELECT l FROM Login l WHERE l.loginPK.nameUser = :nameUser"),
-    @NamedQuery(name = "Login.findByPassUser", query = "SELECT l FROM Login l WHERE l.loginPK.passUser = :passUser")})
+    @NamedQuery(name = "Login.findByPassUser", query = "SELECT l FROM Login l WHERE l.loginPK.passUser = :passUser"),
+    @NamedQuery(name = "Login.findByCountTrys", query = "SELECT l FROM Login l WHERE l.countTrys = :countTrys"),
+    @NamedQuery(name = "Login.findByDateLastTry", query = "SELECT l FROM Login l WHERE l.dateLastTry = :dateLastTry")})
 public class Login implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected LoginPK loginPK;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "login", fetch = FetchType.EAGER)
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "count_trys")
+    private short countTrys;
+    @Column(name = "date_last_try")
+    @Temporal(TemporalType.DATE)
+    private Date dateLastTry;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "login", fetch = FetchType.LAZY)
     private List<Usuario> usuarioList;
 
     public Login() {
@@ -43,6 +58,11 @@ public class Login implements Serializable {
 
     public Login(LoginPK loginPK) {
         this.loginPK = loginPK;
+    }
+
+    public Login(LoginPK loginPK, short countTrys) {
+        this.loginPK = loginPK;
+        this.countTrys = countTrys;
     }
 
     public Login(String nameUser, String passUser) {
@@ -55,6 +75,22 @@ public class Login implements Serializable {
 
     public void setLoginPK(LoginPK loginPK) {
         this.loginPK = loginPK;
+    }
+
+    public short getCountTrys() {
+        return countTrys;
+    }
+
+    public void setCountTrys(short countTrys) {
+        this.countTrys = countTrys;
+    }
+
+    public Date getDateLastTry() {
+        return dateLastTry;
+    }
+
+    public void setDateLastTry(Date dateLastTry) {
+        this.dateLastTry = dateLastTry;
     }
 
     @XmlTransient

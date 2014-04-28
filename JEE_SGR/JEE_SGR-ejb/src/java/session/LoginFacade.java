@@ -7,6 +7,7 @@ package session;
 
 import entities.Login;
 import entities.LoginPK;
+import java.util.Date;
 import javax.ejb.Stateless;
 import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
@@ -22,6 +23,8 @@ import util.InterceptorWeb;
 @Interceptors(InterceptorWeb.class)
 public class LoginFacade extends AbstractFacade<Login> implements LoginFacadeLocal {
 
+    private final short MAX_TRY_LOGIN = 3;
+
     @PersistenceContext(unitName = "JEE_SGR-ejbPU2")
     private EntityManager em;
 
@@ -35,9 +38,32 @@ public class LoginFacade extends AbstractFacade<Login> implements LoginFacadeLoc
     }
 
     @Override
-    public boolean autenticarUsuario(LoginPK loginPK) {
-        Login find = em.find(Login.class, loginPK);
-        return (find != null);
+    public int autenticarUsuario(LoginPK loginPK) {
+        Login login = em.find(Login.class, loginPK);
+        if (login != null) {
+            if (login.getCountTrys() >= MAX_TRY_LOGIN) {
+                return 1;
+            } else {
+                login.setCountTrys(new Short("0"));
+                login.setDateLastTry(null);
+                em.merge(login);
+                return 0;
+            }
+        } else {
+            login = (Login) em.createNamedQuery("Login.findByNameUser").setParameter("nameUser", loginPK.getNameUser()).getSingleResult();
+            if (login != null) {
+                if (login.getCountTrys() >= MAX_TRY_LOGIN) {
+                    return 1;
+                } else {
+                    short trys = login.getCountTrys();
+                    login.setCountTrys((short) (trys + 1));
+                    login.setDateLastTry(new Date());
+                    em.merge(login);
+                    return (login.getCountTrys() >= MAX_TRY_LOGIN) ? 1 : -1;
+                }
+            } else {
+                return -1;
+            }
+        }
     }
-
 }

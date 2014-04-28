@@ -34,8 +34,9 @@ public interface ArticuloFacadeLocal {
 
     public int countArticle(Recurso recurso);
 
+    public int countArticlesEnable(Recurso recurso);
+
     public List<Articulo> getArticlesEnable(Recurso resourceSelected);
 
-    public int countArticlesEnable(Recurso recurso);
     
 }

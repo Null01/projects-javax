@@ -9,16 +9,15 @@ package enumeration;
  *
  * @author duran
  */
-public enum ELabelsError {
-    
-    ERROR_AUTENTICACION_USUARIO_BLOQUEADO("USUARIO BLOQUEADO."),
-    ERROR_AUTENTICACION("ERROR AUTENTICACION. POR FAVOR REVISE SUS DATOS. ");
+public enum ELabelsMessages {
 
-    private ELabelsError(String string) {
-        this.string = string;
-    }
+    SUCCESSFULL_LOGIN("Bienvenido.");
 
     private String string;
+
+    private ELabelsMessages(String string) {
+        this.string = string;
+    }
 
     public String getString() {
         return string;
@@ -27,4 +26,5 @@ public enum ELabelsError {
     public void setString(String string) {
         this.string = string;
     }
+
 }
