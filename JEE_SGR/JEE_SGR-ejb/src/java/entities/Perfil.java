@@ -21,6 +21,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -56,6 +57,8 @@ public class Perfil implements Serializable {
     @Size(min = 1, max = 256)
     @Column(name = "desc_perfil")
     private String descPerfil;
+    @Version
+    private int version;
     @ManyToMany(mappedBy = "perfilList", fetch = FetchType.LAZY)
     private List<Funcion> funcionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPerfil", fetch = FetchType.LAZY)
@@ -96,6 +99,14 @@ public class Perfil implements Serializable {
 
     public void setDescPerfil(String descPerfil) {
         this.descPerfil = descPerfil;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     @XmlTransient
