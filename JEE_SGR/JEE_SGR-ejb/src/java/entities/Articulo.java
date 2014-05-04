@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -47,10 +48,12 @@ public class Articulo implements Serializable {
     @Size(max = 256)
     @Column(name = "notes")
     private String notes;
+    @Version
+    private int version;
     @JoinColumn(name = "id_recurso", referencedColumnName = "id_recurso", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Recurso recurso;
-
+    
     public Articulo() {
     }
 
@@ -92,6 +95,14 @@ public class Articulo implements Serializable {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     public Recurso getRecurso() {
