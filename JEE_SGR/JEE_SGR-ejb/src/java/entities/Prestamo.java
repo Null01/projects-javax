@@ -16,6 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -40,7 +41,9 @@ public class Prestamo implements Serializable {
     @Column(name = "fecha_entrega")
     @Temporal(TemporalType.DATE)
     private Date fechaEntrega;
-
+    @Version
+    private int version;
+    
     public Prestamo() {
     }
 
@@ -68,6 +71,16 @@ public class Prestamo implements Serializable {
         this.fechaEntrega = fechaEntrega;
     }
 
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;
