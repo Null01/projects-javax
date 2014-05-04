@@ -20,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -61,6 +62,9 @@ public class Funcion implements Serializable {
     @NotNull
     @Column(name = "id_funcion_padre")
     private int idFuncionPadre;
+    @Version
+    private int version;
+    
     @JoinTable(name = "funcion_usuario", joinColumns = {
         @JoinColumn(name = "id_funcion", referencedColumnName = "id_funcion")}, inverseJoinColumns = {
         @JoinColumn(name = "id_perfil", referencedColumnName = "id_perfil")})
@@ -111,6 +115,14 @@ public class Funcion implements Serializable {
 
     public void setIdFuncionPadre(int idFuncionPadre) {
         this.idFuncionPadre = idFuncionPadre;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     @XmlTransient
