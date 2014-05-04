@@ -38,6 +38,7 @@
         <link rel="stylesheet" href="css/skel-noscript.css" />
         <link rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" href="css/style-desktop.css" />
+        <link rel="stylesheet" href="css/font-awesome.css" />
         </noscript>
         <!--[if lte IE 8]><script src="js/html5shiv.js"></script><link rel="stylesheet" href="css/ie8.css" /><![endif]-->
     </head>
@@ -53,7 +54,28 @@
 
                             <!-- Logo -->
                             <h1><a href="#">SISTEMA DE ADOPCION ANIMALES</a></h1>
-                            EN CONTRUCCION...
+
+                            <!-- navegate -->
+                            <nav id="nav">
+                                <ul>
+                                    <li class="button alt"><a href="#"> MASCOTA </a>
+                                        <ul>
+                                            <li><a href="#">Crear mascota ...</a></li>
+                                            <li><a href="#">Modificar mascota</a></li>
+                                            <li><a href="#">Eliminar mascota</a></li>
+                                        </ul>
+                                    </li>                                  
+
+
+                                    <li class="button alt"><a href="#"> - LOCK - </a>
+                                    <li class="button alt"><a href="#"> - LOCK - </a>
+                                    <li class="button alt"><a href="#"> - LOCK - </a>
+                                    <li class="button alt"><a href="#"> - LOCK - </a>
+                                    </li>                                  
+                                </ul>
+                            </nav>
+
+
                         </section>
                         <a href="loginController" class="button alt pos_text_left"> Salir</a>
                     </div>
@@ -66,35 +88,67 @@
 
                         <!-- Intro -->
                         <section id="intro">
+                            <div  align="center">
+                                <form id="formView" action="" >
+                                    <table style="width:400px" >
+                                        <tr>
+                                            <td><h1> NOMBRE </h1></td>
+                                            <td><h1> EDAD </h1></td>
+                                        </tr>
 
-                            <div>
-                                <div class="row">
-                                    <div class="4u">
-                                        <section class="middle">
-                                            <span class="pennant pennant-alt"><span class="fa fa-cog"></span></span>
-                                            <header>
-                                                <h2>Developing</h2>
-                                            </header>                                            
-                                        </section>
-                                    </div>
-                                    <div class="4u">
-                                        <section class="middle">
-                                            <span class="pennant pennant-alt"><span class="fa fa-flash"></span></span>
-                                            <header>
-                                                <h2>Développement</h2>
-                                            </header>                                            
-                                        </section>
-                                    </div>
-                                    <div class="4u">
-                                        <section class="last">
-                                            <span class="pennant pennant-alt"><span class="fa fa-star"></span></span>
-                                            <header>
-                                                <h2>Developing</h2>
-                                            </header>                                          
-                                        </section>
-                                    </div>
-                                </div>
+                                        <tr>
+                                            <td> NOMBRE A </td>
+                                            <td> NOMBRE B </td>
+                                            <td>
+                                                <button type="submit"  style="width:65px; height:30px">
+                                                    <i class="fa fa-spinner fa-spin"> </i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td> NOMBRE A </td>
+                                            <td> NOMBRE B </td>
+                                            <td>
+
+                                            </td>
+                                        </tr>  
+                                    </table>
+                                </form>
                             </div>
+
+
+                            <!--
+                            
+                            <div class="row">
+                                <div class="4u">
+                                    <section class="middle">
+                                        <span class="pennant pennant-alt"><span class="fa fa-cog"></span></span>
+                                        <header>
+                                            <h2>Developing</h2>
+                                        </header>                                            
+                                    </section>
+                                </div>
+                                <div class="4u">
+                                    <section class="middle">
+                                        <span class="pennant pennant-alt"><span class="fa fa-flash"></span></span>
+                                        <header>
+                                            <h2>Développement</h2>
+                                        </header>                                            
+                                    </section>
+                                </div>
+                                <div class="4u">
+                                    <section class="last">
+                                        <span class="pennant pennant-alt"><span class="fa fa-star"></span></span>
+                                        <header>
+                                            <h2>Developing</h2>
+                                        </header>                                          
+                                    </section>
+                                </div>
+                            </div> -->
+
+
+
+
                         </section>
 
                     </div>

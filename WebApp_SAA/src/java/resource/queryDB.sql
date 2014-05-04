@@ -1,0 +1,151 @@
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema saa
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS 'saa' DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE 'saa' ;
+
+-- -----------------------------------------------------
+-- Table 'saa'.'RAZA'
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS 'saa'.'RAZA' (
+  'ID_RAZA' INT NOT NULL,
+  'NOMBRE' VARCHAR(45) NOT NULL,
+  PRIMARY KEY ('ID_RAZA'))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table 'saa'.'ESTADO_MASCOTA'
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS 'saa'.'ESTADO_MASCOTA' (
+  'ID_ESTADO_MASCOTA' INT NOT NULL,
+  'NOMBRE' VARCHAR(45) NOT NULL,
+  PRIMARY KEY ('ID_ESTADO_MASCOTA'))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table 'saa'.'TIPO_MASCOTA'
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS 'saa'.'TIPO_MASCOTA' (
+  'ID_TIPO_MASCOTA' INT NOT NULL,
+  'NOMBRE' VARCHAR(45) NOT NULL,
+  PRIMARY KEY ('ID_TIPO_MASCOTA'))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table 'saa'.'MASCOTA'
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS 'saa'.'MASCOTA' (
+  'ID_MASCOTA' INT NOT NULL,
+  'ID_RAZA' INT NOT NULL,
+  'NOMBRE' VARCHAR(45) NULL,
+  'EDAD' INT NOT NULL,
+  'ID_ESTADO_MASCOTA' INT NOT NULL,
+  'ID_TIPO_MASCOTA' INT NOT NULL,
+  'OTRA_RAZA' VARCHAR(45) NULL,
+  'OTRO_TIPO_MASCOTA' VARCHAR(45) NULL,
+  PRIMARY KEY ('ID_MASCOTA'),
+  INDEX 'fk_MASCOTA_RAZA_idx' ('ID_RAZA' ASC),
+  INDEX 'fk_MASCOTA_ESTADO_MASCOTA1_idx' ('ID_ESTADO_MASCOTA' ASC),
+  INDEX 'fk_MASCOTA_TIPO_MASCOTA1_idx' ('ID_TIPO_MASCOTA' ASC),
+  CONSTRAINT 'fk_MASCOTA_RAZA'
+    FOREIGN KEY ('ID_RAZA')
+    REFERENCES 'saa'.'RAZA' ('ID_RAZA')
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT 'fk_MASCOTA_ESTADO_MASCOTA1'
+    FOREIGN KEY ('ID_ESTADO_MASCOTA')
+    REFERENCES 'saa'.'ESTADO_MASCOTA' ('ID_ESTADO_MASCOTA')
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT 'fk_MASCOTA_TIPO_MASCOTA1'
+    FOREIGN KEY ('ID_TIPO_MASCOTA')
+    REFERENCES 'saa'.'TIPO_MASCOTA' ('ID_TIPO_MASCOTA')
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table 'saa'.'TIPO_USUARIO'
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS 'saa'.'TIPO_USUARIO' (
+  'ID_TIPO_USUARIO' INT NOT NULL AUTO_INCREMENT,
+  'NOMBRE' VARCHAR(45) NOT NULL,
+  PRIMARY KEY ('ID_TIPO_USUARIO'))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table 'saa'.'USUARIO'
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS 'saa'.'USUARIO' (
+  'ID_USUARIO' INT NOT NULL AUTO_INCREMENT,
+  'NOMBRES' VARCHAR(45) NOT NULL,
+  'APELLIDOS' VARCHAR(45) NOT NULL,
+  'EMAIL' VARCHAR(45) NOT NULL,
+  'PASSWORD' VARCHAR(45) NOT NULL,
+  'DIRECCION' VARCHAR(45) NOT NULL,
+  'TELEFONO1' VARCHAR(15) NOT NULL,
+  'TELEFONO2' VARCHAR(15) NULL,
+  'ID_TIPO_USUARIO' INT NOT NULL,
+  PRIMARY KEY ('ID_USUARIO'),
+  INDEX 'fk_USUARIO_TIPO_USUARIO1_idx' ('ID_TIPO_USUARIO' ASC),
+  CONSTRAINT 'fk_USUARIO_TIPO_USUARIO1'
+    FOREIGN KEY ('ID_TIPO_USUARIO')
+    REFERENCES 'saa'.'TIPO_USUARIO' ('ID_TIPO_USUARIO')
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table 'saa'.'ID_ESTADO_SOLICITUD'
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS 'saa'.'ID_ESTADO_SOLICITUD' (
+  'ID_ESTADO_SOLICITUD' INT NOT NULL,
+  'NOMBRE' VARCHAR(45) NOT NULL,
+  PRIMARY KEY ('ID_ESTADO_SOLICITUD'))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table 'saa'.'SOLICITUD'
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS 'saa'.'SOLICITUD' (
+  'ID_SOLICITUD' INT NOT NULL AUTO_INCREMENT,
+  'ID_MASCOTA' INT NOT NULL,
+  'ID_USUARIO' INT NOT NULL,
+  'ID_ESTADO_SOLICITUD' INT NOT NULL,
+  'FECHA_SOLICITUD' DATETIME NOT NULL,
+  PRIMARY KEY ('ID_SOLICITUD'),
+  INDEX 'fk_SOLICITUD_MASCOTA1_idx' ('ID_MASCOTA' ASC),
+  INDEX 'fk_SOLICITUD_USUARIO1_idx' ('ID_USUARIO' ASC),
+  INDEX 'fk_SOLICITUD_ID_ESTADO_SOLICITUD1_idx' ('ID_ESTADO_SOLICITUD' ASC),
+  CONSTRAINT 'fk_SOLICITUD_MASCOTA1'
+    FOREIGN KEY ('ID_MASCOTA')
+    REFERENCES 'saa'.'MASCOTA' ('ID_MASCOTA')
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT 'fk_SOLICITUD_USUARIO1'
+    FOREIGN KEY ('ID_USUARIO')
+    REFERENCES 'saa'.'USUARIO' ('ID_USUARIO')
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT 'fk_SOLICITUD_ID_ESTADO_SOLICITUD1'
+    FOREIGN KEY ('ID_ESTADO_SOLICITUD')
+    REFERENCES 'saa'.'ID_ESTADO_SOLICITUD' ('ID_ESTADO_SOLICITUD')
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

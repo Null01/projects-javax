@@ -69,11 +69,11 @@
                                     <tbody>
                                         <tr>
                                             <td><h2>USUARIO: </h2></td>
-                                            <td><input type="text" name="user" class="rounded_corners" required /></td>
+                                            <td><input type="text" name="user" value="admin" class="rounded_corners" required /></td>
                                         </tr>
                                         <tr>
                                             <td><h2>CONTRASEÑA: </h2></td>
-                                            <td><input type="password" name="password" class="rounded_corners" required /></td>
+                                            <td><input type="password" name="password" value="admin" class="rounded_corners" required /></td>
                                         </tr>
                                     </tbody>
                                 </table>
