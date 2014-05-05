@@ -29,8 +29,10 @@ public class ControllerJPAMascota {
         return null;
     }
 
-    public static void main(String args[]) {
-        System.out.println("inicio");
-    }
-
+    /* public static void main(String args[]) {
+     System.out.println("inicio");
+     ControllerJPAMascota controllerJPAMascota = new ControllerJPAMascota();
+     controllerJPAMascota.emf.createEntityManager();
+     System.out.println("fin");
+     }*/
 }
