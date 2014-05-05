@@ -59,7 +59,7 @@ public class CreateMascotaController extends HttpServlet {
             obj_Mascota.setEdad(new Integer(edad));
             obj_Mascota.setNombre(nombre);
 
-            EstadoMascota find = em.find(EstadoMascota.class, new Integer("1"));
+            EstadoMascota find = em.find(EstadoMascota.class, new Integer("2"));
             obj_Mascota.setIdEstadoMascota(find);
 
             Raza find1 = em.find(Raza.class, new Integer(raza));

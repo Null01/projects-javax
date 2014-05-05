@@ -20,6 +20,14 @@
         <servlet-name>solicitudController</servlet-name>
         <servlet-class>Servlets.solicitudController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>aceptarSolicitudController</servlet-name>
+        <servlet-class>Servlets.aceptarSolicitudController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>denegarSolicitudController</servlet-name>
+        <servlet-class>Servlets.denegarSolicitudController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
         <url-pattern>/loginController</url-pattern>
@@ -39,6 +47,14 @@
     <servlet-mapping>
         <servlet-name>solicitudController</servlet-name>
         <url-pattern>/solicitudController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>aceptarSolicitudController</servlet-name>
+        <url-pattern>/aceptarSolicitudController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>denegarSolicitudController</servlet-name>
+        <url-pattern>/denegarSolicitudController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
