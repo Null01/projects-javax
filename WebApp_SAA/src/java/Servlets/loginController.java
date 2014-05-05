@@ -5,8 +5,15 @@
  */
 package Servlets;
 
+import Entities.Usuario;
+import Facade.ControllerJPAMascota;
+import Names.Usuario_;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,24 +42,37 @@ public class loginController extends HttpServlet {
         String user = request.getParameter("user");
         String password = request.getParameter("password");
         if (user != null && password != null) {
-            if (user.compareTo("admin") == 0 && password.compareTo("admin") == 0) {
-                HttpSession session = request.getSession(false);
-                session.setAttribute("session", new Object());
-                response.sendRedirect("admin_system.jsp");
-            } else {
+            
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("WebApp_SAAPU");
+            EntityManager em = emf.createEntityManager();
+            TypedQuery<Usuario> query = em.createNamedQuery("Usuario.findByEmail", Usuario.class);
+            query.setParameter(user, Usuario_.email);
+            Usuario us = query.getSingleResult();
+            if (us != null){
+                if (us.getPassword().equals(password)){
+                    HttpSession session = request.getSession(true);
+                    
+                    if (us.getIdTipoUsuario().getIdTipoUsuario() == 1){
+                        response.sendRedirect("admin_system.jsp");
+                        session.setAttribute("Administrador", us);
+                    }
+                    else{
+                        response.sendRedirect("index.jsp");
+                        session.setAttribute("Usuario", us);
+                    }
+                } else {
+                    request.setAttribute("mensaje", "Contraseña inválida");
+                    response.sendRedirect("login.jsp");
+                }
+            }
+            else
+            {
+                request.setAttribute("mensaje", "Usuario o contraseña inválidos");
                 response.sendRedirect("login.jsp");
             }
         } else {
-            HttpSession session = request.getSession(false);
-            if (session != null) {
-                Object attribute = session.getAttribute("session");
-                if (attribute != null) {
-                    session.invalidate();
-                    response.sendRedirect("login.jsp");
-                } else {
-                    response.sendRedirect("admin_system.jsp");
-                }
-            }
+            request.setAttribute("mensaje", "Usuario o contraseña vacíos");
+            response.sendRedirect("login.jsp");
         }
 
     }
