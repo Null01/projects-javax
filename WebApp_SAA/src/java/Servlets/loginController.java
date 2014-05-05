@@ -6,14 +6,8 @@
 package Servlets;
 
 import Entities.Usuario;
-import Facade.ControllerJPAMascota;
-import Names.Usuario_;
+import Facade.ControllerJPAUsuario;
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,36 +37,32 @@ public class loginController extends HttpServlet {
         String password = request.getParameter("password");
         if (user != null && password != null) {
             
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("WebApp_SAAPU");
-            EntityManager em = emf.createEntityManager();
-            TypedQuery<Usuario> query = em.createNamedQuery("Usuario.findByEmail", Usuario.class);
-            query.setParameter(user, Usuario_.email);
-            Usuario us = query.getSingleResult();
+            ControllerJPAUsuario controllerJPAUsuario = new ControllerJPAUsuario();
+            Usuario us = controllerJPAUsuario.getUsuario(user);
             if (us != null){
                 if (us.getPassword().equals(password)){
-                    HttpSession session = request.getSession(true);
-                    
                     if (us.getIdTipoUsuario().getIdTipoUsuario() == 1){
-                        response.sendRedirect("admin_system.jsp");
+                        HttpSession session = request.getSession(true);
                         session.setAttribute("Administrador", us);
+                        request.getRequestDispatcher("admin_system.jsp").forward(request, response);
                     }
                     else{
-                        response.sendRedirect("index.jsp");
-                        session.setAttribute("Usuario", us);
+                        request.setAttribute("mensaje", "Usuario o contraseña inválidos");
+                        request.getRequestDispatcher("login.jsp").forward(request, response);
                     }
                 } else {
                     request.setAttribute("mensaje", "Contraseña inválida");
-                    response.sendRedirect("login.jsp");
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
                 }
             }
             else
             {
                 request.setAttribute("mensaje", "Usuario o contraseña inválidos");
-                response.sendRedirect("login.jsp");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         } else {
             request.setAttribute("mensaje", "Usuario o contraseña vacíos");
-            response.sendRedirect("login.jsp");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
 
     }

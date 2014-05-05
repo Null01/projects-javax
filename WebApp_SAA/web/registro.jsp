@@ -13,7 +13,7 @@
         </header>
     </section>
     <div align="center"> 
-        <form id="formLogin" name="login" action="loginController">
+        <form id="formLogin" name="login" action="registerController">
             <table border="1" style="width:500px" >
                 <tbody>
                     <tr>
@@ -50,8 +50,8 @@
                         <td><input type="tel" name="telefono2" class="rounded_corners" required /></td>
                     </tr>
                     <tr>
-                    <% if (request.getParameter("mensaje") != null) {%>
-                    <td> <%=request.getParameter("mensaje")%> </td>
+                    <% if (request.getAttribute("mensaje") != null) {%>
+                    <td> <%=request.getAttribute("mensaje")%> </td>
                     <%}%>
                 </tr>
             </tbody>

@@ -39,7 +39,8 @@ import javax.persistence.GenerationType;
     @NamedQuery(name = "Mascota.findByNombre", query = "SELECT m FROM Mascota m WHERE m.nombre = :nombre"),
     @NamedQuery(name = "Mascota.findByEdad", query = "SELECT m FROM Mascota m WHERE m.edad = :edad"),
     @NamedQuery(name = "Mascota.findByOtraRaza", query = "SELECT m FROM Mascota m WHERE m.otraRaza = :otraRaza"),
-    @NamedQuery(name = "Mascota.findByOtroTipoMascota", query = "SELECT m FROM Mascota m WHERE m.otroTipoMascota = :otroTipoMascota")})
+    @NamedQuery(name = "Mascota.findByOtroTipoMascota", query = "SELECT m FROM Mascota m WHERE m.otroTipoMascota = :otroTipoMascota"),
+    @NamedQuery(name = "Mascota.findByIdEstadoMascota", query = "SELECT m FROM Mascota m WHERE m.idEstadoMascota = :idEstadoMascota")})
 public class Mascota implements Serializable {
 
     private static final long serialVersionUID = 1L;

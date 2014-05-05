@@ -5,6 +5,7 @@
  */
 package Facade;
 
+import Entities.EstadoMascota;
 import Entities.Mascota;
 import Entities.Raza;
 import Entities.TipoMascota;
@@ -12,6 +13,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +29,21 @@ public class ControllerJPAMascota {
         List resultList = em.createNamedQuery("Mascota.findAll").getResultList();
         em.getTransaction().commit();
         return resultList;
+    }
+    
+    public List<Mascota> getListaMascotaPorEstado(int estado) {
+        EntityManager em = emf.createEntityManager();
+        Query query = em.createNamedQuery("Mascota.findByIdEstadoMascota");
+        query.setParameter("idEstadoMascota", em.getReference(EstadoMascota.class, estado));
+        return query.getResultList();
+    }
+    
+    public Mascota getMascota(int idMascota)
+    {
+        EntityManager em = emf.createEntityManager();
+        Query query = em.createNamedQuery("Mascota.findByIdMascota");
+        query.setParameter("idMascota", idMascota);
+        return (Mascota)query.getSingleResult();
     }
 
     public List<Raza> getListaRazas() {

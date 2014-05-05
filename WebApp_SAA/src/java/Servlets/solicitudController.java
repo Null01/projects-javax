@@ -6,9 +6,11 @@
 
 package Servlets;
 
+import Entities.Solicitud;
 import Entities.Usuario;
-import Facade.ControllerJPAUsuario;
+import Facade.ControllerJPASolicitud;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Yury
  */
-public class registerController extends HttpServlet {
+public class solicitudController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,37 +35,17 @@ public class registerController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String nombres, apellidos, email, password, confirmacionPassword, direccion, telefono1, telefono2;
-        nombres = request.getParameter("nombres");
-        apellidos = request.getParameter("apellidos");
-        email = request.getParameter("email");
-        password = request.getParameter("password");
-        confirmacionPassword = request.getParameter("confirmacionPassword");
-        direccion = request.getParameter("direccion");
-        telefono1 = request.getParameter("telefono1");
-        telefono2 = request.getParameter("telefono2");
+        HttpSession session = request.getSession();
+        int idMascota = Integer.parseInt(request.getParameter("idmascota"));
+        ControllerJPASolicitud controllerJPASolicitud = new ControllerJPASolicitud();
+        Solicitud solicitud =  controllerJPASolicitud.createSolicitud(idMascota,
+                (Usuario)session.getAttribute("Usuario"));
         
-        if (password.equals(confirmacionPassword))
+        if (solicitud != null)
         {
-            ControllerJPAUsuario controllerJPAUsuario = new ControllerJPAUsuario();
-            Usuario usuario = controllerJPAUsuario.createUsuario(nombres, apellidos, email, password,
-                    direccion, telefono1, telefono2);
-            
-            if (usuario != null)
-            {
-                HttpSession session = request.getSession(true);
-                session.setAttribute("Usuario", usuario);
-                request.setAttribute("mensaje", "Registro procesado exitosamente");
-                request.getRequestDispatcher("confirmacion.jsp").forward(request, response);
-            }
-            else{
-                request.setAttribute("mensaje", "Error registrando usuario... Por favor revise los datos");
-                request.getRequestDispatcher("registro.jsp").forward(request, response);
-            }
-        }
-        else{
-            request.setAttribute("mensaje", "Error al validar confirmación de contraseña... Ingrese nuevamente");
-            request.getRequestDispatcher("registro.jsp").forward(request, response);
+            request.setAttribute("mensaje", "Su solicitud ha sido enviada. Número de confirmación: " 
+                    + solicitud.getIdSolicitud());
+            request.getRequestDispatcher("confirmacion.jsp").forward(request, response);
         }
     }
 

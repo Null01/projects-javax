@@ -23,7 +23,7 @@
     if (httpSession == null) {
         response.sendRedirect("login.jsp");
     } else {
-        Object object = httpSession.getAttribute("session");
+        Object object = httpSession.getAttribute("Administrador");
         if (object == null) {
             response.sendRedirect("login.jsp");
         }

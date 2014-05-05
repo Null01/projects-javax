@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Yury
  */
-public class registerController extends HttpServlet {
+public class loginUserController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,38 +33,41 @@ public class registerController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String nombres, apellidos, email, password, confirmacionPassword, direccion, telefono1, telefono2;
-        nombres = request.getParameter("nombres");
-        apellidos = request.getParameter("apellidos");
-        email = request.getParameter("email");
-        password = request.getParameter("password");
-        confirmacionPassword = request.getParameter("confirmacionPassword");
-        direccion = request.getParameter("direccion");
-        telefono1 = request.getParameter("telefono1");
-        telefono2 = request.getParameter("telefono2");
-        
-        if (password.equals(confirmacionPassword))
-        {
-            ControllerJPAUsuario controllerJPAUsuario = new ControllerJPAUsuario();
-            Usuario usuario = controllerJPAUsuario.createUsuario(nombres, apellidos, email, password,
-                    direccion, telefono1, telefono2);
+
+        String user = request.getParameter("user");
+        String password = request.getParameter("password");
+        if (user != null && password != null) {
             
-            if (usuario != null)
+            ControllerJPAUsuario controllerJPAUsuario = new ControllerJPAUsuario();
+            Usuario us = controllerJPAUsuario.getUsuario(user);
+            if (us != null){
+                if (us.getPassword().equals(password)){                    
+                    if (us.getIdTipoUsuario().getIdTipoUsuario() == 2){
+                        HttpSession session = request.getSession(true);
+                        session.setAttribute("Usuario", us);
+                        request.setAttribute("mensaje", "Bienvenid@: " 
+                                + us.getNombres() + " " + us.getApellidos());
+                        request.getRequestDispatcher("confirmacion.jsp").forward(request, response);
+                    }
+                    else{
+                        request.setAttribute("mensaje", "Usuario o contraseña inválidos");
+                        request.getRequestDispatcher("login_user.jsp").forward(request, response);
+                    }
+                } else {
+                    request.setAttribute("mensaje", "Contraseña inválida");
+                    request.getRequestDispatcher("login_user.jsp").forward(request, response);
+                }
+            }
+            else
             {
-                HttpSession session = request.getSession(true);
-                session.setAttribute("Usuario", usuario);
-                request.setAttribute("mensaje", "Registro procesado exitosamente");
-                request.getRequestDispatcher("confirmacion.jsp").forward(request, response);
+                request.setAttribute("mensaje", "Usuario o contraseña inválidos");
+                request.getRequestDispatcher("login_user.jsp").forward(request, response);
             }
-            else{
-                request.setAttribute("mensaje", "Error registrando usuario... Por favor revise los datos");
-                request.getRequestDispatcher("registro.jsp").forward(request, response);
-            }
+        } else {
+            request.setAttribute("mensaje", "Usuario o contraseña vacíos");
+            request.getRequestDispatcher("login_user.jsp").forward(request, response);
         }
-        else{
-            request.setAttribute("mensaje", "Error al validar confirmación de contraseña... Ingrese nuevamente");
-            request.getRequestDispatcher("registro.jsp").forward(request, response);
-        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

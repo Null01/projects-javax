@@ -47,7 +47,7 @@
                                     <li>
                                         <a href="">MASCOTAS</a>
                                         <ul>
-                                            <li><a href="adoptar.jsp">Adopta</a></li>
+                                            <li><a href="mascotas.jsp">Adopta</a></li>
                                             <li><a href="#">Adoptados</a></li>
                                         </ul>
                                     </li>
