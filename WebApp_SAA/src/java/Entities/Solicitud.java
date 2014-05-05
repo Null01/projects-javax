@@ -41,20 +41,20 @@ public class Solicitud implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ID_SOLICITUD")
+    @Column(name = "id_solicitud")
     private Integer idSolicitud;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FECHA_SOLICITUD")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "fecha_solicitud")
+    @Temporal(TemporalType.DATE)
     private Date fechaSolicitud;
-    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuario idUsuario;
-    @JoinColumn(name = "ID_MASCOTA", referencedColumnName = "ID_MASCOTA")
+    @JoinColumn(name = "id_mascota", referencedColumnName = "id_mascota")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Mascota idMascota;
-    @JoinColumn(name = "ID_ESTADO_SOLICITUD", referencedColumnName = "ID_ESTADO_SOLICITUD")
+    @JoinColumn(name = "id_estado_solicitud", referencedColumnName = "id_estado_solicitud")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private IdEstadoSolicitud idEstadoSolicitud;
 

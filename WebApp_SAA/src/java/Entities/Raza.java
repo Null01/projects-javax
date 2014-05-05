@@ -39,12 +39,12 @@ public class Raza implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ID_RAZA")
+    @Column(name = "id_raza")
     private Integer idRaza;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "NOMBRE")
+    @Column(name = "nombre")
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRaza", fetch = FetchType.LAZY)
     private List<Mascota> mascotaList;

@@ -39,12 +39,12 @@ public class IdEstadoSolicitud implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ID_ESTADO_SOLICITUD")
+    @Column(name = "id_estado_solicitud")
     private Integer idEstadoSolicitud;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "NOMBRE")
+    @Column(name = "nombre")
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEstadoSolicitud", fetch = FetchType.LAZY)
     private List<Solicitud> solicitudList;

@@ -3,6 +3,10 @@
     Created on : 28/04/2014, 12:50:49 AM
     Author     : duran
 --%>
+<%@page import="Enums.LabelsStates"%>
+<%@page import="Entities.EstadoMascota"%>
+<%@page import="Entities.TipoMascota"%>
+<%@page import="Entities.Raza"%>
 <%@page import="Facade.ControllerJPAMascota"%>
 <%@page import="Entities.Mascota"%>
 <%@page import="java.util.List"%>
@@ -108,35 +112,33 @@
                         <script type="text/javascript">
                             $(document).ready(function() {
                                 var now = new Date();
-
+                                
                                 var day = ("0" + now.getDate()).slice(-2);
                                 var month = ("0" + (now.getMonth() + 1)).slice(-2);
                                 var today = now.getFullYear() + "-" + (month) + "-" + (day);
-
+                                
                                 $('#date_min').val(today);
                                 $('#date_max').val(today);
-
+                                
                             });
                         </script>
 
-                        <%
-                         /*   ControllerJPAMascota controllerJPAMascota = new ControllerJPAMascota();
-                           List<Mascota> l = controllerJPAMascota.getListMascotas();
-
-                            if (l == null) {
-                                out.print("null");
-                            } else {
-                                out.print("not null");
-                            }*/
-
-                        %>
 
 
 
                         <!-- Intro -->
                         <section id="intro">
                             <div align="center">
-                                <form id="formView" action="" >
+                                <%                                    
+                                    ControllerJPAMascota controllerJPAMascota = new ControllerJPAMascota();
+                                    List listaMascotas = controllerJPAMascota.getListaMascota();
+                                    
+                                    if (listaMascotas == null || listaMascotas.isEmpty()) {
+                                        out.println(" - NO HAY MASCOTAS RELACIONADAS - ");
+                                    } else {
+                                %>
+
+                                <form id="form-view" action="" >
 
                                     <b> Filtro de busqueda: </b> 
                                     <input id="date_min" type="date" name="date_min" style="width:220px ;height:25px"> <b> a </b>
@@ -146,26 +148,56 @@
                                     </button>
                                     <table>
                                         <tr>
+                                            <td><h1> ID_MASCOTA </h1></td>
                                             <td><h1> NOMBRE </h1></td>
                                             <td><h1> EDAD </h1></td>
-                                            <td><h1> </h1></td>
+                                            <td><h1> ESTADO MASCOTA </h1></td>
+                                            <td><h1> TIPO MASCOTA MASCOTA </h1></td>
                                             <td><h1> </h1></td>
                                         </tr>
-                                        <tr>
-                                            <td> NOMBRE A </td>
-                                            <td> NOMBRE B </td>
-                                            <td>
-                                                <button type="submit" style="width:65px; height:30px">
-                                                    <i class="fa fa-refresh fa-spin"> </i>
-                                                </button>
-                                            </td>
 
-                                            <td>
-                                                <button type="submit" style="width:65px; height:30px">
-                                                    <i class="fa fa-trash-o fa-lg"> </i>
-                                                </button>
-                                            </td>
-                                        </tr>  
+                                        <%            
+                                            String message = "";
+                                            for (int i = 0; i < listaMascotas.size(); i++) {
+                                                out.print("<tr>");
+                                                Mascota row = (Mascota) listaMascotas.get(i);
+                                                out.print("<td> " + row.getIdMascota() + "</td>");
+                                                out.print("<td> " + row.getNombre() + "</td>");
+                                                out.print("<td> " + row.getEdad() + "</td>");
+                                                
+                                                EstadoMascota estado = row.getIdEstadoMascota();
+                                                switch (estado.getIdEstadoMascota()) {
+                                                    case 0:
+                                                        message = LabelsStates.ESTADO_ADOPTADO.getEstado();
+                                                        break;
+                                                    case 1:
+                                                        message = LabelsStates.ESTADO_SIN_ADOPTAR.getEstado();
+                                                        break;
+                                                    case 2:
+                                                        message = LabelsStates.ESTADO_EN_PROCESO_ADOPCION.getEstado();
+                                                        break;
+                                                }
+                                                out.print("<td> " + message + "</td>");
+                                                
+                                                TipoMascota tipoMascota = row.getIdTipoMascota();
+                                                out.print("<td> " + tipoMascota.getNombre() + "</td>");
+                                        %>
+                                        <td>
+                                            <button type="submit" style="width:65px; height:30px">
+                                                <i class="fa fa-refresh fa-spin"> </i>
+                                            </button>
+                                        </td>
+
+                                        <td>
+                                            <button type="submit" style="width:65px; height:30px">
+                                                <i class="fa fa-trash-o fa-lg"> </i>
+                                            </button>
+                                        </td>
+                                        <%        
+                                                out.print("</tr>");
+                                            }
+                                        %>
+
                                     </table>
                                     <br/><br/>
                                     <button id="btn-create" type="button" style="width:100px; height:30px">
@@ -174,23 +206,68 @@
 
                                 </form>
 
+                                <%}
+                                %>
+
                             </div>
 
                             <div id="dialog" title="CREAR UNA MASCOTA">
-                                <form id="form-create" action="">
+                                <form id="form-create" action="CreateMascotaController" method="post">
                                     <table style="width:450px">
                                         <tr>
-                                            <td> NOMBRE A </td>
-                                            <td> <input type="text" name="nombre" ></td>
-                                        </tr>  
+                                            <td> NOMBRE</td>
+                                            <td> <input type="text" name="nombre" required></td>
+                                        </tr>
 
+                                        <tr>
+                                            <td> EDAD</td>
+                                            <td> <input type="number" name="edad" min="1" max="20" required></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td> TIPO DE RAZA</td>
+                                            <td> 
+                                                <select style="width:300px" name="raza" required>
+                                                    <%                        
+                                                        List listaRazas = controllerJPAMascota.getListaRazas();
+                                                        if (listaRazas == null || listaRazas.isEmpty()) {
+                                                            out.print("- NO HAY RAZAS - ");
+                                                        } else {
+                                                            for (int i = 0; i < listaRazas.size(); i++) {
+                                                                Raza raza = (Raza) listaRazas.get(i);
+                                                    %>
+
+                                                    <option value ="<%= raza.getIdRaza()%>"> <% out.print(raza.getNombre());  %> </option>
+
+                                                    <%      }
+                                                        }
+                                                    %>                                                
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <td> TIPO DE MASCOTA</td>
+                                        <td> <select style="width:300px" name="mascota" required>
+                                                <%
+                                                    List listaTipoMascota = controllerJPAMascota.getListaTipoMascota();
+                                                    if (listaRazas == null || listaRazas.isEmpty()) {
+                                                        out.print("- NO HAY RAZAS - ");
+                                                    } else {
+                                                        for (int i = 0; i < listaRazas.size(); i++) {
+                                                            TipoMascota raza = (TipoMascota) listaTipoMascota.get(i);
+                                                %>
+
+                                                <option value ="<%= raza.getIdTipoMascota()%>"> <% out.print(raza.getNombre());  %> </option>
+
+                                                <%      }
+                                                    }
+                                                %>                                                
+                                            </select>
+                                        </td>
                                     </table>
                                     <button id="btn-create-submit" type="submit"  style="width:100px; height:30px; text-align:center; ">
-                                        <i>Crear </i>
+                                        <i>Crear Mascota</i>
                                     </button>
 
-
-                                    asdasd
                                 </form>
 
                             </div>

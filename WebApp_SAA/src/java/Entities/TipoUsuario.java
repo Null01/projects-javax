@@ -41,12 +41,12 @@ public class TipoUsuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ID_TIPO_USUARIO")
+    @Column(name = "id_tipo_usuario")
     private Integer idTipoUsuario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "NOMBRE")
+    @Column(name = "nombre")
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoUsuario", fetch = FetchType.LAZY)
     private List<Usuario> usuarioList;

@@ -6,6 +6,8 @@
 package Facade;
 
 import Entities.Mascota;
+import Entities.Raza;
+import Entities.TipoMascota;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,20 +21,28 @@ public class ControllerJPAMascota {
 
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("WebApp_SAAPU");
 
-    public List<Mascota> getListMascotas() {
-
+    public List<Mascota> getListaMascota() {
         EntityManager em = emf.createEntityManager();
-
-        // em.getTransaction().begin();
-        //List<Mascota> lista = em.createNamedQuery("SELECT m FROM Mascota m").getResultList();
-        // em.getTransaction().commit();
-        return null;
+        em.getTransaction().begin();
+        List resultList = em.createNamedQuery("Mascota.findAll").getResultList();
+        em.getTransaction().commit();
+        return resultList;
     }
 
-    /* public static void main(String args[]) {
-     System.out.println("inicio");
-     ControllerJPAMascota controllerJPAMascota = new ControllerJPAMascota();
-     controllerJPAMascota.emf.createEntityManager();
-     System.out.println("fin");
-     }*/
+    public List<Raza> getListaRazas() {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        List resultList = em.createNamedQuery("Raza.findAll").getResultList();
+        em.getTransaction().commit();
+        return resultList;
+    }
+
+    public List<TipoMascota> getListaTipoMascota() {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        List resultList = em.createNamedQuery("TipoMascota.findAll").getResultList();
+        em.getTransaction().commit();
+        return resultList;
+    }
+
 }

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Entities;
 
 import java.io.Serializable;
@@ -24,6 +23,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 /**
  *
@@ -40,32 +41,33 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Mascota.findByOtraRaza", query = "SELECT m FROM Mascota m WHERE m.otraRaza = :otraRaza"),
     @NamedQuery(name = "Mascota.findByOtroTipoMascota", query = "SELECT m FROM Mascota m WHERE m.otroTipoMascota = :otroTipoMascota")})
 public class Mascota implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID_MASCOTA")
+    @Column(name = "id_mascota")
     private Integer idMascota;
     @Size(max = 45)
-    @Column(name = "NOMBRE")
+    @Column(name = "nombre")
     private String nombre;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "EDAD")
+    @Column(name = "edad")
     private int edad;
     @Size(max = 45)
-    @Column(name = "OTRA_RAZA")
+    @Column(name = "otra_raza")
     private String otraRaza;
     @Size(max = 45)
-    @Column(name = "OTRO_TIPO_MASCOTA")
+    @Column(name = "otro_tipo_mascota")
     private String otroTipoMascota;
-    @JoinColumn(name = "ID_TIPO_MASCOTA", referencedColumnName = "ID_TIPO_MASCOTA")
+    @JoinColumn(name = "id_tipo_mascota", referencedColumnName = "id_tipo_mascota")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoMascota idTipoMascota;
-    @JoinColumn(name = "ID_RAZA", referencedColumnName = "ID_RAZA")
+    @JoinColumn(name = "id_raza", referencedColumnName = "id_raza")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Raza idRaza;
-    @JoinColumn(name = "ID_ESTADO_MASCOTA", referencedColumnName = "ID_ESTADO_MASCOTA")
+    @JoinColumn(name = "id_estado_mascota", referencedColumnName = "id_estado_mascota")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private EstadoMascota idEstadoMascota;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMascota", fetch = FetchType.LAZY)
@@ -180,5 +182,5 @@ public class Mascota implements Serializable {
     public String toString() {
         return "Entities.Mascota[ idMascota=" + idMascota + " ]";
     }
-    
+
 }

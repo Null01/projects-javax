@@ -4,9 +4,17 @@
         <servlet-name>loginController</servlet-name>
         <servlet-class>Servlets.loginController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateMascotaController</servlet-name>
+        <servlet-class>Servlets.CreateMascotaController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
         <url-pattern>/loginController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateMascotaController</servlet-name>
+        <url-pattern>/CreateMascotaController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
