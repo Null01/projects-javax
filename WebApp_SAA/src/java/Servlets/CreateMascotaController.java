@@ -5,13 +5,13 @@
  */
 package Servlets;
 
-import ControllerJPA.MascotaJpaController;
 import ControllerJPA.exceptions.RollbackFailureException;
 import Entities.EstadoMascota;
 import Entities.Mascota;
 import Entities.Raza;
 import Entities.Solicitud;
 import Entities.TipoMascota;
+import Facade.ControllerJPAMascota;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -43,50 +43,23 @@ public class CreateMascotaController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+        /* TODO output your page here. You may use following sample code. */
 
-            String nombre = request.getParameter("nombre");
-            String edad = request.getParameter("edad");
-            String raza = request.getParameter("raza");
-            String mascota = request.getParameter("mascota");
+        String nombre = request.getParameter("nombre");
+        int edad = Integer.parseInt(request.getParameter("edad"));
+        int raza = Integer.parseInt(request.getParameter("raza"));
+        int mascota = Integer.parseInt(request.getParameter("mascota"));
 
-            EntityManagerFactory emf = Persistence.createEntityManagerFactory("WebApp_SAAPU");
-            EntityManager em = emf.createEntityManager();
-
-            Mascota obj_Mascota = new Mascota();
-
-            obj_Mascota.setEdad(new Integer(edad));
-            obj_Mascota.setNombre(nombre);
-
-            EstadoMascota find = em.find(EstadoMascota.class, new Integer("2"));
-            obj_Mascota.setIdEstadoMascota(find);
-
-            Raza find1 = em.find(Raza.class, new Integer(raza));
-            obj_Mascota.setIdRaza(find1);
-
-            TipoMascota find2 = em.find(TipoMascota.class, new Integer(mascota));
-            obj_Mascota.setIdTipoMascota(find2);
-
-            obj_Mascota.setOtraRaza(" ");
-            obj_Mascota.setOtroTipoMascota(" ");
-            obj_Mascota.setSolicitudList(new ArrayList<Solicitud>());
-            System.out.println(nombre + " " + edad + " " + raza + " " + mascota);
-
-            System.out.println("INICIA");
-            MascotaJpaController controller = new MascotaJpaController(null, emf);
-            try {
-                controller.create(obj_Mascota);
-            } catch (RollbackFailureException ex) {
-                Logger.getLogger(CreateMascotaController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(CreateMascotaController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            System.out.println("FINALIZA");
-
-            response.sendRedirect("admin_system.jsp");
-
+        System.out.println("INICIA");
+        ControllerJPAMascota controller = new ControllerJPAMascota();
+        try {
+            controller.createMascota(nombre, edad, mascota, raza, 2);
+        } catch (Exception ex) {
+            Logger.getLogger(CreateMascotaController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("FINALIZA");
+
+        response.sendRedirect("admin_system.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -20,8 +20,6 @@
 
 <jsp:include page="adminHeader.jsp"></jsp:include>
 
-    
-
     <script type="text/javascript">
         $(document).ready(function() {
             var now = new Date();
@@ -62,7 +60,7 @@
                     <td><h1> NOMBRE </h1></td>
                     <td><h1> EDAD </h1></td>
                     <td><h1> ESTADO MASCOTA </h1></td>
-                    <td><h1> TIPO MASCOTA MASCOTA </h1></td>
+                    <td><h1> TIPO MASCOTA </h1></td>
                     <td><h1> </h1></td>
                 </tr>
 

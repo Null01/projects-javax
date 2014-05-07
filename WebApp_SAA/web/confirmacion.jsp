@@ -14,7 +14,22 @@
     </section>
     <div align="center"> 
         <p><%=request.getAttribute("mensaje")%></p>
-        <a href="index.jsp" class='button fa fa-file-text'>Aceptar</a>
+    <a href="index.jsp" class='button fa fa-file-text'>Aceptar</a>
 </div> 
 
-<jsp:include page="footer.jsp"></jsp:include>
+</div>
+</div>
+<!-- Footer Wrapper -->
+<div id="footer-wrapper">
+
+    <!-- Footer -->
+    <section id="footer" class="container">
+    </section>    
+</div>
+
+</body>
+<footer>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style-desktop.css" />
+</footer>
+</html>

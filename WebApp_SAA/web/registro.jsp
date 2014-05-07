@@ -60,4 +60,15 @@
     </form>
 </div> 
 
-<jsp:include page="footer.jsp"></jsp:include>
+</div>
+</div>
+<!-- Footer Wrapper -->
+<div id="footer-wrapper">
+
+    <!-- Footer -->
+    <section id="footer" class="container">
+    </section>    
+</div>
+
+</body>
+</html>

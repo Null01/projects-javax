@@ -28,6 +28,10 @@
         <servlet-name>denegarSolicitudController</servlet-name>
         <servlet-class>Servlets.denegarSolicitudController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>logoutController</servlet-name>
+        <servlet-class>Servlets.logoutController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginController</servlet-name>
         <url-pattern>/loginController</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>denegarSolicitudController</servlet-name>
         <url-pattern>/denegarSolicitudController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>logoutController</servlet-name>
+        <url-pattern>/logoutController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

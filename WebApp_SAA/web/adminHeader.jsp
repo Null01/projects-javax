@@ -5,7 +5,7 @@
 --%>
 
 <%
-    HttpSession httpSession = request.getSession(false);
+    HttpSession httpSession = request.getSession();
     if (httpSession == null) {
         response.sendRedirect("login.jsp");
     } else {
@@ -55,7 +55,7 @@
                             <!-- navegate -->
                             <nav id="nav">
                                 <ul>
-                                    <li class="button alt"><a href="#"> MASCOTAS </a>
+                                    <li class="button alt"><a href="admin_system.jsp"> MASCOTAS </a>
                                         <ul>
                                             <li><a href="#">Crear mascota ...</a></li>
                                             <li><a href="#">Modificar mascota</a></li>
@@ -65,16 +65,13 @@
 
 
                                     <li class="button alt"><a href="solicitudes.jsp"> - SOLICITUDES - </a>
-                                    <li class="button alt"><a href="#"> - LOCK - </a>
-                                    <li class="button alt"><a href="#"> - LOCK - </a>
-                                    <li class="button alt"><a href="#"> - LOCK - </a>
                                     </li>                                  
                                 </ul>
                             </nav>
 
 
                         </section>
-                        <a href="loginController" class="button alt pos_text_left"> Salir</a>
+                        <a href="logoutController" class="button alt pos_text_left"> Salir</a>
                     </div>
                 </div>
                 <div class="row">

@@ -61,5 +61,22 @@ public class ControllerJPAMascota {
         em.getTransaction().commit();
         return resultList;
     }
-
+    
+    public boolean createMascota(String nombre, int edad, int tipoMasota, int raza, int estadoMascota)
+    {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        
+        Mascota mascota = new Mascota();
+        mascota.setEdad(edad);
+        mascota.setIdEstadoMascota(em.getReference(EstadoMascota.class, estadoMascota));
+        mascota.setIdRaza(em.getReference(Raza.class, raza));
+        mascota.setIdTipoMascota(em.getReference(TipoMascota.class, tipoMasota));
+        mascota.setNombre(nombre);
+        
+        em.persist(mascota);
+        em.getTransaction().commit();
+        
+        return true;
+    }
 }

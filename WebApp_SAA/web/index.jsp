@@ -6,18 +6,18 @@
 
 <jsp:include page="header.jsp"></jsp:include>
 
-    <!-- Banner -->
-    <section id="banner">
-        <a href="#">
-            <img src="images/pic01.jpg" alt="" />
-            <!--<span class="image image-full">
-            </span>
-            <header>
-                <h2>Howdy. This is Dopetrope.</h2>
-                <span class="byline">A responsive template by HTML5 UP</span>
-            </header>-->
-        </a>
-    </section>
+<!-- Banner -->
+<section id="banner">
+    <a href="#">
+        <img src="images/pic01.jpg" alt="" />
+        <!--<span class="image image-full">
+        </span>
+        <header>
+            <h2>Howdy. This is Dopetrope.</h2>
+            <span class="byline">A responsive template by HTML5 UP</span>
+        </header>-->
+    </a>
+</section>
 
 </div>
 </div>
@@ -72,8 +72,22 @@
                         </div>
                     </div>
                 </section>
-
             </div>
         </div>
 
-    <jsp:include page="footer.jsp"></jsp:include>
+    </div>
+</div>
+<!-- Footer Wrapper -->
+<div id="footer-wrapper">
+
+    <!-- Footer -->
+    <section id="footer" class="container">
+    </section>    
+</div>
+
+</body>
+<footer>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/style-desktop.css" />
+</footer>
+</html>

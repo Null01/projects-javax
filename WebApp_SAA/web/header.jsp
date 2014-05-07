@@ -47,11 +47,10 @@
                                     <li>
                                         <a href="">MASCOTAS</a>
                                         <ul>
-                                            <li><a href="mascotas.jsp">Adopta</a></li>
-                                            <li><a href="#">Adoptados</a></li>
+                                            <li><a href="mascotas.jsp?estado=2&titulo=MASCOTAS EN ADOPCIÓN">Adopta</a></li>
+                                            <li><a href="mascotas.jsp?estado=3&titulo=MASCOTAS QUE HAN SIDO ADOPTADAS">Adoptados</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="#">CONTACTO</a></li>
                                 </ul>
                             </nav>
 
@@ -60,10 +59,10 @@
                 </div>
                 <div class="row">
                     <h3>
-                    <% if (session.getAttribute("Usuario") != null) {
-                        Usuario us = (Usuario)session.getAttribute("Usuario");
-                        out.println(us.getNombres() + " " + us.getApellidos());
-                    }%>
+                        <% if (session.getAttribute("Usuario") != null) {
+                                Usuario us = (Usuario) session.getAttribute("Usuario");
+                                out.println(us.getNombres() + " " + us.getApellidos());
+                        }%>
                     </h3>
                 </div>
                 <div class="row">
