@@ -8,7 +8,9 @@ package Facade;
 import Entities.EstadoMascota;
 import Entities.Mascota;
 import Entities.Raza;
+import Entities.Solicitud;
 import Entities.TipoMascota;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -30,20 +32,19 @@ public class ControllerJPAMascota {
         em.getTransaction().commit();
         return resultList;
     }
-    
+
     public List<Mascota> getListaMascotaPorEstado(int estado) {
         EntityManager em = emf.createEntityManager();
         Query query = em.createNamedQuery("Mascota.findByIdEstadoMascota");
         query.setParameter("idEstadoMascota", em.getReference(EstadoMascota.class, estado));
         return query.getResultList();
     }
-    
-    public Mascota getMascota(int idMascota)
-    {
+
+    public Mascota getMascota(int idMascota) {
         EntityManager em = emf.createEntityManager();
         Query query = em.createNamedQuery("Mascota.findByIdMascota");
         query.setParameter("idMascota", idMascota);
-        return (Mascota)query.getSingleResult();
+        return (Mascota) query.getSingleResult();
     }
 
     public List<Raza> getListaRazas() {
@@ -61,22 +62,24 @@ public class ControllerJPAMascota {
         em.getTransaction().commit();
         return resultList;
     }
-    
-    public boolean createMascota(String nombre, int edad, int tipoMasota, int raza, int estadoMascota)
-    {
+
+    public boolean createMascota(String nombre, int edad, int tipoMasota, int raza, int estadoMascota) {
         EntityManager em = emf.createEntityManager();
+
+        Mascota mascota_new = new Mascota();
+        mascota_new.setEdad(edad);
+        mascota_new.setNombre(nombre);
+        mascota_new.setIdEstadoMascota(em.getReference(EstadoMascota.class, estadoMascota));
+        mascota_new.setIdRaza(em.getReference(Raza.class, raza));
+        mascota_new.setIdTipoMascota(em.getReference(TipoMascota.class, tipoMasota));
+        mascota_new.setOtraRaza("");
+        mascota_new.setOtroTipoMascota("");
+        mascota_new.setSolicitudList(new ArrayList<Solicitud>());
+
         em.getTransaction().begin();
-        
-        Mascota mascota = new Mascota();
-        mascota.setEdad(edad);
-        mascota.setIdEstadoMascota(em.getReference(EstadoMascota.class, estadoMascota));
-        mascota.setIdRaza(em.getReference(Raza.class, raza));
-        mascota.setIdTipoMascota(em.getReference(TipoMascota.class, tipoMasota));
-        mascota.setNombre(nombre);
-        
-        em.persist(mascota);
+        em.persist(mascota_new);
         em.getTransaction().commit();
-        
+
         return true;
     }
 }

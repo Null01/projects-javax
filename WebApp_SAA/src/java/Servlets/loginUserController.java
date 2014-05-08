@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Servlets;
 
 import Entities.Usuario;
@@ -37,19 +36,18 @@ public class loginUserController extends HttpServlet {
         String user = request.getParameter("user");
         String password = request.getParameter("password");
         if (user != null && password != null) {
-            
+
             ControllerJPAUsuario controllerJPAUsuario = new ControllerJPAUsuario();
             Usuario us = controllerJPAUsuario.getUsuario(user);
-            if (us != null){
-                if (us.getPassword().equals(password)){                    
-                    if (us.getIdTipoUsuario().getIdTipoUsuario() == 2){
+            if (us != null) {
+                if (us.getPassword().equals(password)) {
+                    if (us.getIdTipoUsuario().getIdTipoUsuario() == 2) {
                         HttpSession session = request.getSession(true);
                         session.setAttribute("Usuario", us);
-                        request.setAttribute("mensaje", "Bienvenid@: " 
+                        request.setAttribute("mensaje", "Bienvenid@: "
                                 + us.getNombres() + " " + us.getApellidos());
                         request.getRequestDispatcher("confirmacion.jsp").forward(request, response);
-                    }
-                    else{
+                    } else {
                         request.setAttribute("mensaje", "Usuario o contraseña inválidos");
                         request.getRequestDispatcher("login_user.jsp").forward(request, response);
                     }
@@ -57,9 +55,7 @@ public class loginUserController extends HttpServlet {
                     request.setAttribute("mensaje", "Contraseña inválida");
                     request.getRequestDispatcher("login_user.jsp").forward(request, response);
                 }
-            }
-            else
-            {
+            } else {
                 request.setAttribute("mensaje", "Usuario o contraseña inválidos");
                 request.getRequestDispatcher("login_user.jsp").forward(request, response);
             }

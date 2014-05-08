@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Entities;
 
 import java.io.Serializable;
@@ -25,26 +24,28 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Duran
+ * @author duran
+ * @version 1.0
  */
 @Entity
-@Table(name = "tipo_mascota")
+@Table(name = "TIPO_MASCOTA")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TipoMascota.findAll", query = "SELECT t FROM TipoMascota t"),
     @NamedQuery(name = "TipoMascota.findByIdTipoMascota", query = "SELECT t FROM TipoMascota t WHERE t.idTipoMascota = :idTipoMascota"),
     @NamedQuery(name = "TipoMascota.findByNombre", query = "SELECT t FROM TipoMascota t WHERE t.nombre = :nombre")})
 public class TipoMascota implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "id_tipo_mascota")
+    @Column(name = "ID_TIPO_MASCOTA")
     private Integer idTipoMascota;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "nombre")
+    @Column(name = "NOMBRE")
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoMascota", fetch = FetchType.LAZY)
     private List<Mascota> mascotaList;
@@ -110,5 +111,5 @@ public class TipoMascota implements Serializable {
     public String toString() {
         return "Entities.TipoMascota[ idTipoMascota=" + idTipoMascota + " ]";
     }
-    
+
 }

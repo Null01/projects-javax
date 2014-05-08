@@ -12,6 +12,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,15 +25,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 
 /**
  *
- * @author Duran
+ * @author duran
+ * @version 1.0
  */
 @Entity
-@Table(name = "mascota")
+@Table(name = "MASCOTA")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Mascota.findAll", query = "SELECT m FROM Mascota m"),
@@ -39,40 +40,39 @@ import javax.persistence.GenerationType;
     @NamedQuery(name = "Mascota.findByNombre", query = "SELECT m FROM Mascota m WHERE m.nombre = :nombre"),
     @NamedQuery(name = "Mascota.findByEdad", query = "SELECT m FROM Mascota m WHERE m.edad = :edad"),
     @NamedQuery(name = "Mascota.findByOtraRaza", query = "SELECT m FROM Mascota m WHERE m.otraRaza = :otraRaza"),
-    @NamedQuery(name = "Mascota.findByOtroTipoMascota", query = "SELECT m FROM Mascota m WHERE m.otroTipoMascota = :otroTipoMascota"),
-    @NamedQuery(name = "Mascota.findByIdEstadoMascota", query = "SELECT m FROM Mascota m WHERE m.idEstadoMascota = :idEstadoMascota")})
+    @NamedQuery(name = "Mascota.findByOtroTipoMascota", query = "SELECT m FROM Mascota m WHERE m.otroTipoMascota = :otroTipoMascota")})
 public class Mascota implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_mascota")
+    @Column(name = "ID_MASCOTA")
     private Integer idMascota;
     @Size(max = 45)
-    @Column(name = "nombre")
+    @Column(name = "NOMBRE")
     private String nombre;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "edad")
+    @Column(name = "EDAD")
     private int edad;
     @Size(max = 45)
-    @Column(name = "otra_raza")
+    @Column(name = "OTRA_RAZA")
     private String otraRaza;
     @Size(max = 45)
-    @Column(name = "otro_tipo_mascota")
+    @Column(name = "OTRO_TIPO_MASCOTA")
     private String otroTipoMascota;
-    @JoinColumn(name = "id_tipo_mascota", referencedColumnName = "id_tipo_mascota")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private TipoMascota idTipoMascota;
-    @JoinColumn(name = "id_raza", referencedColumnName = "id_raza")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Raza idRaza;
-    @JoinColumn(name = "id_estado_mascota", referencedColumnName = "id_estado_mascota")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private EstadoMascota idEstadoMascota;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMascota", fetch = FetchType.LAZY)
     private List<Solicitud> solicitudList;
+    @JoinColumn(name = "ID_TIPO_MASCOTA", referencedColumnName = "ID_TIPO_MASCOTA")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private TipoMascota idTipoMascota;
+    @JoinColumn(name = "ID_ESTADO_MASCOTA", referencedColumnName = "ID_ESTADO_MASCOTA")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private EstadoMascota idEstadoMascota;
+    @JoinColumn(name = "ID_RAZA", referencedColumnName = "ID_RAZA")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Raza idRaza;
 
     public Mascota() {
     }
@@ -126,20 +126,21 @@ public class Mascota implements Serializable {
         this.otroTipoMascota = otroTipoMascota;
     }
 
+    @XmlTransient
+    public List<Solicitud> getSolicitudList() {
+        return solicitudList;
+    }
+
+    public void setSolicitudList(List<Solicitud> solicitudList) {
+        this.solicitudList = solicitudList;
+    }
+
     public TipoMascota getIdTipoMascota() {
         return idTipoMascota;
     }
 
     public void setIdTipoMascota(TipoMascota idTipoMascota) {
         this.idTipoMascota = idTipoMascota;
-    }
-
-    public Raza getIdRaza() {
-        return idRaza;
-    }
-
-    public void setIdRaza(Raza idRaza) {
-        this.idRaza = idRaza;
     }
 
     public EstadoMascota getIdEstadoMascota() {
@@ -150,13 +151,12 @@ public class Mascota implements Serializable {
         this.idEstadoMascota = idEstadoMascota;
     }
 
-    @XmlTransient
-    public List<Solicitud> getSolicitudList() {
-        return solicitudList;
+    public Raza getIdRaza() {
+        return idRaza;
     }
 
-    public void setSolicitudList(List<Solicitud> solicitudList) {
-        this.solicitudList = solicitudList;
+    public void setIdRaza(Raza idRaza) {
+        this.idRaza = idRaza;
     }
 
     @Override

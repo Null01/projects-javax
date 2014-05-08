@@ -26,19 +26,18 @@ public class ControllerJPAUsuario {
             EntityManager em = emf.createEntityManager();
             Query query = em.createNamedQuery("Usuario.findByEmail");
             query.setParameter("email", email);
-            return (Usuario)query.getSingleResult();
+            return (Usuario) query.getSingleResult();
         } catch (NoResultException e) {
             return null;
         }
     }
-    
+
     public Usuario createUsuario(String nombres, String apellidos, String email,
-            String password, String direccion, String telefono1, String telefono2)
-    {
+            String password, String direccion, String telefono1, String telefono2) {
         EntityManager em = emf.createEntityManager();
         TipoUsuario tipoUsuario = em.getReference(TipoUsuario.class, 2);
         em.getTransaction().begin();
-        
+
         Usuario usuario = new Usuario();
         usuario.setApellidos(apellidos);
         usuario.setDireccion(direccion);
@@ -48,11 +47,11 @@ public class ControllerJPAUsuario {
         usuario.setPassword(password);
         usuario.setTelefono1(telefono1);
         usuario.setTelefono2(telefono2);
-        
+
         em.persist(usuario);
         em.getTransaction().commit();
         em.refresh(usuario);
-        
+
         return usuario;
     }
 }

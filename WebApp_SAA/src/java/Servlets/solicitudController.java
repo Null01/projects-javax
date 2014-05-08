@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Servlets;
 
 import Entities.Solicitud;
@@ -37,12 +36,11 @@ public class solicitudController extends HttpServlet {
         HttpSession session = request.getSession();
         int idMascota = Integer.parseInt(request.getParameter("idmascota"));
         ControllerJPASolicitud controllerJPASolicitud = new ControllerJPASolicitud();
-        Solicitud solicitud =  controllerJPASolicitud.createSolicitud(idMascota,
-                (Usuario)session.getAttribute("Usuario"));
-        
-        if (solicitud != null)
-        {
-            request.setAttribute("mensaje", "Su solicitud ha sido enviada. Número de confirmación: " 
+        Solicitud solicitud = controllerJPASolicitud.createSolicitud(idMascota,
+                (Usuario) session.getAttribute("Usuario"));
+
+        if (solicitud != null) {
+            request.setAttribute("mensaje", "Su solicitud ha sido enviada. Número de confirmación: "
                     + solicitud.getIdSolicitud());
             request.getRequestDispatcher("confirmacion.jsp").forward(request, response);
         }

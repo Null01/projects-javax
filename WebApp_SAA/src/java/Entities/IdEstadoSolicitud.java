@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Entities;
 
 import java.io.Serializable;
@@ -25,26 +24,28 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Duran
+ * @author duran
+ * @version 1.0
  */
 @Entity
-@Table(name = "id_estado_solicitud")
+@Table(name = "ID_ESTADO_SOLICITUD")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "IdEstadoSolicitud.findAll", query = "SELECT i FROM IdEstadoSolicitud i"),
     @NamedQuery(name = "IdEstadoSolicitud.findByIdEstadoSolicitud", query = "SELECT i FROM IdEstadoSolicitud i WHERE i.idEstadoSolicitud = :idEstadoSolicitud"),
     @NamedQuery(name = "IdEstadoSolicitud.findByNombre", query = "SELECT i FROM IdEstadoSolicitud i WHERE i.nombre = :nombre")})
 public class IdEstadoSolicitud implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "id_estado_solicitud")
+    @Column(name = "ID_ESTADO_SOLICITUD")
     private Integer idEstadoSolicitud;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "nombre")
+    @Column(name = "NOMBRE")
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEstadoSolicitud", fetch = FetchType.LAZY)
     private List<Solicitud> solicitudList;
@@ -110,5 +111,5 @@ public class IdEstadoSolicitud implements Serializable {
     public String toString() {
         return "Entities.IdEstadoSolicitud[ idEstadoSolicitud=" + idEstadoSolicitud + " ]";
     }
-    
+
 }

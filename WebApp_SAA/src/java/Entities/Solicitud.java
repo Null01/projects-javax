@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Entities;
 
 import java.io.Serializable;
@@ -27,36 +26,38 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Duran
+ * @author duran
+ * @version 1.0
  */
 @Entity
-@Table(name = "solicitud")
+@Table(name = "SOLICITUD")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Solicitud.findAll", query = "SELECT s FROM Solicitud s"),
     @NamedQuery(name = "Solicitud.findByIdSolicitud", query = "SELECT s FROM Solicitud s WHERE s.idSolicitud = :idSolicitud"),
     @NamedQuery(name = "Solicitud.findByFechaSolicitud", query = "SELECT s FROM Solicitud s WHERE s.fechaSolicitud = :fechaSolicitud")})
 public class Solicitud implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_solicitud")
+    @Column(name = "ID_SOLICITUD")
     private Integer idSolicitud;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "fecha_solicitud")
+    @Column(name = "FECHA_SOLICITUD")
     @Temporal(TemporalType.DATE)
     private Date fechaSolicitud;
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Usuario idUsuario;
-    @JoinColumn(name = "id_mascota", referencedColumnName = "id_mascota")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Mascota idMascota;
-    @JoinColumn(name = "id_estado_solicitud", referencedColumnName = "id_estado_solicitud")
+    @JoinColumn(name = "ID_ESTADO_SOLICITUD", referencedColumnName = "ID_ESTADO_SOLICITUD")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private IdEstadoSolicitud idEstadoSolicitud;
+    @JoinColumn(name = "ID_USUARIO", referencedColumnName = "ID_USUARIO")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Usuario idUsuario;
+    @JoinColumn(name = "ID_MASCOTA", referencedColumnName = "ID_MASCOTA")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Mascota idMascota;
 
     public Solicitud() {
     }
@@ -86,6 +87,14 @@ public class Solicitud implements Serializable {
         this.fechaSolicitud = fechaSolicitud;
     }
 
+    public IdEstadoSolicitud getIdEstadoSolicitud() {
+        return idEstadoSolicitud;
+    }
+
+    public void setIdEstadoSolicitud(IdEstadoSolicitud idEstadoSolicitud) {
+        this.idEstadoSolicitud = idEstadoSolicitud;
+    }
+
     public Usuario getIdUsuario() {
         return idUsuario;
     }
@@ -100,14 +109,6 @@ public class Solicitud implements Serializable {
 
     public void setIdMascota(Mascota idMascota) {
         this.idMascota = idMascota;
-    }
-
-    public IdEstadoSolicitud getIdEstadoSolicitud() {
-        return idEstadoSolicitud;
-    }
-
-    public void setIdEstadoSolicitud(IdEstadoSolicitud idEstadoSolicitud) {
-        this.idEstadoSolicitud = idEstadoSolicitud;
     }
 
     @Override
@@ -134,5 +135,5 @@ public class Solicitud implements Serializable {
     public String toString() {
         return "Entities.Solicitud[ idSolicitud=" + idSolicitud + " ]";
     }
-    
+
 }

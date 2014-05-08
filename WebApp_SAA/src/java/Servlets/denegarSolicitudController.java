@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Servlets;
 
 import Facade.ControllerJPASolicitud;
@@ -33,13 +32,12 @@ public class denegarSolicitudController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         int idsolicitud = Integer.parseInt(request.getParameter("idsolicitud"));
         ControllerJPASolicitud controllerJPASolicitud = new ControllerJPASolicitud();
-        if (controllerJPASolicitud.actualizarEstadoSolicitud(idsolicitud, 3))
-        {
+        if (controllerJPASolicitud.actualizarEstadoSolicitud(idsolicitud, 3)) {
             request.setAttribute("mensaje", "Solicitud de adopción denegada!");
-        }else{
+        } else {
             request.setAttribute("mensaje", "Error interno. Solicitud en proceso.");
         }
-        
+
         request.getRequestDispatcher("solicitudes.jsp").forward(request, response);
     }
 

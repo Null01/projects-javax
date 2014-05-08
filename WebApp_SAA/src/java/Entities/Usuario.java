@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Entities;
 
 import java.io.Serializable;
@@ -29,10 +28,11 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Duran
+ * @author duran
+ * @version 1.0
  */
 @Entity
-@Table(name = "usuario")
+@Table(name = "USUARIO")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
@@ -45,51 +45,52 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByTelefono1", query = "SELECT u FROM Usuario u WHERE u.telefono1 = :telefono1"),
     @NamedQuery(name = "Usuario.findByTelefono2", query = "SELECT u FROM Usuario u WHERE u.telefono2 = :telefono2")})
 public class Usuario implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_usuario")
+    @Column(name = "ID_USUARIO")
     private Integer idUsuario;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "nombres")
+    @Column(name = "NOMBRES")
     private String nombres;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "apellidos")
+    @Column(name = "APELLIDOS")
     private String apellidos;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "email")
+    @Column(name = "EMAIL")
     private String email;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "password")
+    @Column(name = "PASSWORD")
     private String password;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "direccion")
+    @Column(name = "DIRECCION")
     private String direccion;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
-    @Column(name = "telefono1")
+    @Column(name = "TELEFONO1")
     private String telefono1;
     @Size(max = 15)
-    @Column(name = "telefono2")
+    @Column(name = "TELEFONO2")
     private String telefono2;
-    @JoinColumn(name = "id_tipo_usuario", referencedColumnName = "id_tipo_usuario")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private TipoUsuario idTipoUsuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario", fetch = FetchType.LAZY)
     private List<Solicitud> solicitudList;
+    @JoinColumn(name = "ID_TIPO_USUARIO", referencedColumnName = "ID_TIPO_USUARIO")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private TipoUsuario idTipoUsuario;
 
     public Usuario() {
     }
@@ -172,14 +173,6 @@ public class Usuario implements Serializable {
         this.telefono2 = telefono2;
     }
 
-    public TipoUsuario getIdTipoUsuario() {
-        return idTipoUsuario;
-    }
-
-    public void setIdTipoUsuario(TipoUsuario idTipoUsuario) {
-        this.idTipoUsuario = idTipoUsuario;
-    }
-
     @XmlTransient
     public List<Solicitud> getSolicitudList() {
         return solicitudList;
@@ -187,6 +180,14 @@ public class Usuario implements Serializable {
 
     public void setSolicitudList(List<Solicitud> solicitudList) {
         this.solicitudList = solicitudList;
+    }
+
+    public TipoUsuario getIdTipoUsuario() {
+        return idTipoUsuario;
+    }
+
+    public void setIdTipoUsuario(TipoUsuario idTipoUsuario) {
+        this.idTipoUsuario = idTipoUsuario;
     }
 
     @Override
@@ -213,5 +214,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "Entities.Usuario[ idUsuario=" + idUsuario + " ]";
     }
-    
+
 }

@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author duran
  */
-public class loginController extends HttpServlet {
+public class loginAdminController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,18 +35,18 @@ public class loginController extends HttpServlet {
 
         String user = request.getParameter("user");
         String password = request.getParameter("password");
+
         if (user != null && password != null) {
-            
+
             ControllerJPAUsuario controllerJPAUsuario = new ControllerJPAUsuario();
             Usuario us = controllerJPAUsuario.getUsuario(user);
-            if (us != null){
-                if (us.getPassword().equals(password)){
-                    if (us.getIdTipoUsuario().getIdTipoUsuario() == 1){
+            if (us != null) {
+                if (us.getPassword().equals(password)) {
+                    if (us.getIdTipoUsuario().getIdTipoUsuario() == 1) {
                         HttpSession session = request.getSession(true);
                         session.setAttribute("Administrador", us);
                         request.getRequestDispatcher("admin_system.jsp").forward(request, response);
-                    }
-                    else{
+                    } else {
                         request.setAttribute("mensaje", "Usuario o contraseña inválidos");
                         request.getRequestDispatcher("login.jsp").forward(request, response);
                     }
@@ -54,9 +54,7 @@ public class loginController extends HttpServlet {
                     request.setAttribute("mensaje", "Contraseña inválida");
                     request.getRequestDispatcher("login.jsp").forward(request, response);
                 }
-            }
-            else
-            {
+            } else {
                 request.setAttribute("mensaje", "Usuario o contraseña inválidos");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }

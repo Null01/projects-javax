@@ -14,13 +14,13 @@
     <section>
         <header class="major">
             <h2><%=request.getParameter("titulo")%></h2>
-        </header>
-    </section>
-    <div align="center"> 
-        <form id="formLogin" name="login" action="registerController">
-            <table border="1" style="width:500px" >
-                <tbody>
-                    <tr>
+    </header>
+</section>
+<div align="center"> 
+    <form id="formLogin" name="login" action="registerController">
+        <table border="1" style="width:500px" >
+            <tbody>
+                <tr>
                     <%
                         int estadoMascotas = Integer.parseInt(request.getParameter("estado"));
                         ControllerJPAMascota controllerJPAMascota = new ControllerJPAMascota();

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Servlets;
 
 import java.io.IOException;
@@ -33,12 +32,13 @@ public class logoutController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(false);
-        
-        if(session != null)
+
+        if (session != null) {
             session.invalidate();
-        
-        request.getRequestDispatcher("index.jsp").forward(request,response);
         }
+
+        request.getRequestDispatcher("index.jsp").forward(request, response);
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

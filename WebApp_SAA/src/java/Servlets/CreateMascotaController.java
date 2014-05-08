@@ -5,21 +5,10 @@
  */
 package Servlets;
 
-import ControllerJPA.exceptions.RollbackFailureException;
-import Entities.EstadoMascota;
-import Entities.Mascota;
-import Entities.Raza;
-import Entities.Solicitud;
-import Entities.TipoMascota;
 import Facade.ControllerJPAMascota;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -50,14 +39,12 @@ public class CreateMascotaController extends HttpServlet {
         int raza = Integer.parseInt(request.getParameter("raza"));
         int mascota = Integer.parseInt(request.getParameter("mascota"));
 
-        System.out.println("INICIA");
         ControllerJPAMascota controller = new ControllerJPAMascota();
         try {
             controller.createMascota(nombre, edad, mascota, raza, 2);
         } catch (Exception ex) {
             Logger.getLogger(CreateMascotaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("FINALIZA");
 
         response.sendRedirect("admin_system.jsp");
     }

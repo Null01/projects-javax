@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Servlets;
 
 import Entities.Usuario;
@@ -42,26 +41,22 @@ public class registerController extends HttpServlet {
         direccion = request.getParameter("direccion");
         telefono1 = request.getParameter("telefono1");
         telefono2 = request.getParameter("telefono2");
-        
-        if (password.equals(confirmacionPassword))
-        {
+
+        if (password.equals(confirmacionPassword)) {
             ControllerJPAUsuario controllerJPAUsuario = new ControllerJPAUsuario();
             Usuario usuario = controllerJPAUsuario.createUsuario(nombres, apellidos, email, password,
                     direccion, telefono1, telefono2);
-            
-            if (usuario != null)
-            {
+
+            if (usuario != null) {
                 HttpSession session = request.getSession(true);
                 session.setAttribute("Usuario", usuario);
                 request.setAttribute("mensaje", "Registro procesado exitosamente");
                 request.getRequestDispatcher("confirmacion.jsp").forward(request, response);
-            }
-            else{
+            } else {
                 request.setAttribute("mensaje", "Error registrando usuario... Por favor revise los datos");
                 request.getRequestDispatcher("registro.jsp").forward(request, response);
             }
-        }
-        else{
+        } else {
             request.setAttribute("mensaje", "Error al validar confirmación de contraseña... Ingrese nuevamente");
             request.getRequestDispatcher("registro.jsp").forward(request, response);
         }

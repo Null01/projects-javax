@@ -64,7 +64,7 @@
                             </header>
                         </section>
                         <div align="center"> 
-                            <form id="formLogin" name="login" action="loginController">
+                            <form id="formLogin" name="login" action="loginAdminController" method="post">
                                 <table border="1" style="width:500px" >
                                     <tbody>
                                         <tr>
@@ -75,22 +75,19 @@
                                             <td><h2>CONTRASEÑA: </h2></td>
                                             <td><input type="password" name="password" class="rounded_corners" required /></td>
                                         </tr>
-                                        <tr>
-                                            <% if (request.getAttribute("mensaje") != null) {%>
-                                            <td> <%=request.getAttribute("mensaje")%> </td>
-                                            <%}%>
-                                        </tr>
                                     </tbody>
                                 </table>
+
+                                <% if (request.getAttribute("mensaje") != null) {%>
+                                <h1> <%=request.getAttribute("mensaje")%> </h1>
+                                <%}%>
+                                <br/>
                                 <input type="submit" class="button alt" />
 
                             </form>
                         </div> 
                     </div>
                 </div>
-
-
-
             </div>
         </div>
 

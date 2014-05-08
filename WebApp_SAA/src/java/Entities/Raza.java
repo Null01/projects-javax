@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Entities;
 
 import java.io.Serializable;
@@ -25,26 +24,28 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Duran
+ * @author duran
+ * @version 1.0
  */
 @Entity
-@Table(name = "raza")
+@Table(name = "RAZA")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Raza.findAll", query = "SELECT r FROM Raza r"),
     @NamedQuery(name = "Raza.findByIdRaza", query = "SELECT r FROM Raza r WHERE r.idRaza = :idRaza"),
     @NamedQuery(name = "Raza.findByNombre", query = "SELECT r FROM Raza r WHERE r.nombre = :nombre")})
 public class Raza implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "id_raza")
+    @Column(name = "ID_RAZA")
     private Integer idRaza;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "nombre")
+    @Column(name = "NOMBRE")
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRaza", fetch = FetchType.LAZY)
     private List<Mascota> mascotaList;
@@ -110,5 +111,5 @@ public class Raza implements Serializable {
     public String toString() {
         return "Entities.Raza[ idRaza=" + idRaza + " ]";
     }
-    
+
 }
