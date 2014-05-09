@@ -82,4 +82,27 @@ public class ControllerJPAMascota {
 
         return true;
     }
+
+    public boolean deleteMascota(int id) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Mascota find = em.find(Mascota.class, id);
+        em.remove(find);
+        em.getTransaction().commit();
+        return true;
+    }
+
+    public void updateMascota(int id_, String nombre, int edad_, int raza_, int mascota_) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Mascota find = em.find(Mascota.class, id_);
+        find.setNombre(nombre);
+        find.setEdad(edad_);
+        find.setIdRaza(em.getReference(Raza.class, raza_));
+        find.setIdTipoMascota(em.getReference(TipoMascota.class, mascota_));
+        em.merge(find);
+        em.getTransaction().commit();
+
+    }
+
 }

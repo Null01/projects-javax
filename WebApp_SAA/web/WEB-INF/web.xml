@@ -32,6 +32,10 @@
         <servlet-name>logoutController</servlet-name>
         <servlet-class>Servlets.logoutController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>OperationMascotaController</servlet-name>
+        <servlet-class>Servlets.OperationMascotaController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>loginAdminController</servlet-name>
         <url-pattern>/loginAdminController</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>logoutController</servlet-name>
         <url-pattern>/logoutController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OperationMascotaController</servlet-name>
+        <url-pattern>/OperationMascotaController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

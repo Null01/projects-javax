@@ -46,7 +46,7 @@
             } else {
         %>
 
-        <form id="form-view">
+        <form id="form-view"  action="OperationMascotaController">
             <b> Filtro de busqueda: </b> 
             <input id="date_min" type="date" name="date_min" style="width:220px ;height:25px"> <b> a </b>
             <input id="date_max" type="date" name="date_max" style="width:220px ;height:25px">
@@ -58,28 +58,29 @@
                     <td><h1> ID_MASCOTA </h1></td>
                     <td><h1> NOMBRE </h1></td>
                     <td><h1> EDAD </h1></td>
+                    <td><h1> RAZA </h1></td>
                     <td><h1> ESTADO MASCOTA </h1></td>
                     <td><h1> TIPO MASCOTA </h1></td>
-                    <td><h1> </h1></td>
                 </tr>
 
                 <%
+                    int i = 0;
                     for (Mascota row : listaMascotas) {
                         out.print("<tr>");
                         out.print("<td> " + row.getIdMascota() + "</td>");
                         out.print("<td> " + row.getNombre() + "</td>");
                         out.print("<td> " + row.getEdad() + "</td>");
+                        out.print("<td> " + row.getIdRaza().getNombre() + "</td>");
                         out.print("<td> " + row.getIdEstadoMascota().getNombre() + "</td>");
                         out.print("<td> " + row.getIdTipoMascota().getNombre() + "</td>");
                 %>
                 <td>
-                    <button id="btn-update" type="submit" name="update" style="width:65px; height:30px">
+                    <button id="btn-update" type="submit" name="update" value="<%=row.getIdMascota()%>" style="width:65px; height:30px">
                         <i class="fa fa-refresh fa-spin"> </i>
                     </button>
                 </td>
-
                 <td>
-                    <button id="btn-delete" type="submit" name="delete" style="width:65px; height:30px">
+                    <button id="btn-delete" type="submit" name="delete-submit" value="<%=row.getIdMascota()%>" style="width:65px; height:30px">
                         <i class="fa fa-trash-o fa-lg"> </i>
                     </button>
                 </td>
@@ -90,11 +91,10 @@
                 %>
 
             </table>
-            <br/>
             <button id="btn-create" type="button" style="width:150px; height:30px">
                 <i class="fa fa-user fa-fw"> <b>Crear mascota. </b></i>
             </button>
-
+            <br/> <br/>
         </form>
 
         <%}
@@ -116,7 +116,7 @@
                 <tr>
                     <td> TIPO DE RAZA</td>
                     <td> 
-                        <select style="width:300px" name="raza" required>
+                        <select style="width:300px; height:35px;" name="raza" required>
                             <%
                                 List<Raza> listaRazas = controllerJPAMascota.getListaRazas();
                                 if (listaRazas == null || listaRazas.isEmpty()) {
@@ -134,7 +134,7 @@
                     </td>
                 </tr>
                 <td> TIPO DE MASCOTA</td>
-                <td> <select style="width:300px" name="mascota" required>
+                <td> <select style="width:300px; height:35px;" name="mascota" required>
                         <%
                             List<TipoMascota> listaTipoMascota = controllerJPAMascota.getListaTipoMascota();
                             if (listaTipoMascota == null || listaTipoMascota.isEmpty()) {
@@ -143,7 +143,7 @@
                                 for (TipoMascota tipoMascota : listaTipoMascota) {
                         %>
 
-                            <option value ="<%= tipoMascota.getIdTipoMascota()%>"> <% out.print(tipoMascota.getNombre()
+                        <option value ="<%= tipoMascota.getIdTipoMascota()%>"> <% out.print(tipoMascota.getNombre()
                                 );  %> </option>
 
                         <%      }
@@ -155,12 +155,6 @@
             <button id="btn-create-submit" type="submit"  style="width:150px; height:30px; text-align:center; ">
                 <i>Crear Mascota</i>
             </button>
-        </form>
-    </div>
-
-    <div id="dialog-delete" title="ELIMINAR UNA MASCOTA">
-        <form id="form-delete" action="" method="post">
-            hello
         </form>
     </div>
 
@@ -178,6 +172,83 @@
             });
         });
     </script>
+
+    <%
+        Mascota active = (Mascota) request.getAttribute("update_active");
+        if (active != null) {
+    %>
+
+    <div id="dialog-update" title="MODIFICAR UNA MASCOTA" align="center">
+        <form id="form-update" action="OperationMascotaController" method="get">
+            <br/>
+            <table style="width:450px">
+                <tr>
+                    <td>NOMBRE </td>
+                    <td> <input type="text" name="nombre" value="<%= active.getNombre()%>" required></td>
+                </tr>
+                <tr>
+                    <td>EDAD</td>
+                    <td> <input type="number" name="edad" min="1" max="20" value="<%= active.getEdad()%>" required></td>
+                </tr>
+                <tr>
+                    <td> TIPO DE RAZA</td>
+                    <td> 
+                        <select style="width:300px; height:35px;" name="raza" required>
+                            <%
+                                listaRazas = controllerJPAMascota.getListaRazas();
+                                if (listaRazas == null || listaRazas.isEmpty()) {
+                                    out.print("- NO HAY RAZAS - ");
+                                } else {
+                                    for (Raza raza : listaRazas) {
+                                        if (raza.getIdRaza() == active.getIdRaza().getIdRaza()) {
+                            %>
+                            <option value ="<%= raza.getIdRaza()%>"selected="selected"> <% out.print(raza.getNombre());  %> </option>
+                            <%
+                            } else {
+                            %>
+
+                            <option value ="<%= raza.getIdRaza()%>"> <% out.print(raza.getNombre());  %> </option>
+
+                            <%      }
+                                    }
+                                }
+                            %>                                                
+                        </select>
+                    </td>
+                </tr>
+                <td> TIPO DE MASCOTA</td>
+                <td> <select style="width:300px; height:35px;" name="mascota" required>
+                        <%
+                            listaTipoMascota = controllerJPAMascota.getListaTipoMascota();
+                            if (listaTipoMascota == null || listaTipoMascota.isEmpty()) {
+                                out.print("- NO HAY RAZAS - ");
+                            } else {
+                                for (TipoMascota tipoMascota : listaTipoMascota) {
+                                    if (tipoMascota.getIdTipoMascota() == active.getIdTipoMascota().getIdTipoMascota()) {
+                        %>
+                        <option value ="<%= tipoMascota.getIdTipoMascota()%>"selected="selected"> <% out.print(tipoMascota.getNombre()); %> </option>
+                        <%
+                        } else {
+                        %>
+
+                            <option value ="<%= tipoMascota.getIdTipoMascota()%>"> <% out.print(tipoMascota.getNombre()
+                                );  %> </option>
+
+                        <%      }
+                                }
+                            }
+                        %>                                                
+                    </select>
+                </td>
+            </table>
+            <button id="btn-update-submit" type="submit" name="update-submit" value="<%= active.getIdMascota()%>" style="width:180px; height:30px; text-align:center; ">
+                <i><h1>Modificar Mascota</h1></i>
+            </button>
+        </form>
+    </div>
+    <%
+        }
+    %>
 
 </section>
 
