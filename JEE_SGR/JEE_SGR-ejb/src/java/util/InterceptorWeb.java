@@ -17,15 +17,16 @@ public class InterceptorWeb {
 
     @AroundInvoke
     public Object intercept(InvocationContext context) throws Exception {
-
+        
         String nameClass = context.getMethod().getDeclaringClass().getName();
         String methodClass = context.getMethod().getName();
         String name = context.getTarget().getClass().getName();
+                
         try {
+           
             System.out.println("Before: " + nameClass + "  " + name + "  " + methodClass);
-            Object result = context.proceed();
-            System.out.println("After:  " + nameClass + "  " + name + "  " + methodClass);
-            return result;
+         
+            return  context.proceed();
         } catch (Exception e) {
             throw e;
         }

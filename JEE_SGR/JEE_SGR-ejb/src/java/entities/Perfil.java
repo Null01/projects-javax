@@ -21,7 +21,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -39,7 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Perfil.findAll", query = "SELECT p FROM Perfil p"),
     @NamedQuery(name = "Perfil.findByIdPerfil", query = "SELECT p FROM Perfil p WHERE p.idPerfil = :idPerfil"),
     @NamedQuery(name = "Perfil.findByNamePerfil", query = "SELECT p FROM Perfil p WHERE p.namePerfil = :namePerfil"),
-    @NamedQuery(name = "Perfil.findByDescPerfil", query = "SELECT p FROM Perfil p WHERE p.descPerfil = :descPerfil")})
+    @NamedQuery(name = "Perfil.findByDescPerfil", query = "SELECT p FROM Perfil p WHERE p.descPerfil = :descPerfil"),
+    @NamedQuery(name = "Perfil.findByVersion", query = "SELECT p FROM Perfil p WHERE p.version = :version")})
 public class Perfil implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -57,7 +57,9 @@ public class Perfil implements Serializable {
     @Size(min = 1, max = 256)
     @Column(name = "desc_perfil")
     private String descPerfil;
-    @Version
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "version")
     private int version;
     @ManyToMany(mappedBy = "perfilList", fetch = FetchType.LAZY)
     private List<Funcion> funcionList;
@@ -71,10 +73,11 @@ public class Perfil implements Serializable {
         this.idPerfil = idPerfil;
     }
 
-    public Perfil(Integer idPerfil, String namePerfil, String descPerfil) {
+    public Perfil(Integer idPerfil, String namePerfil, String descPerfil, int version) {
         this.idPerfil = idPerfil;
         this.namePerfil = namePerfil;
         this.descPerfil = descPerfil;
+        this.version = version;
     }
 
     public Integer getIdPerfil() {

@@ -89,11 +89,9 @@
                         <p:inputTextarea id="descripcion" value="#{beanAdminPerfiles.descPerfil}"  label="descripcion" autoResize="false" cols="40"/>
                     </h:panelGrid>
 
-                    <!--  itemLabel="#{beanAdminPerfiles.problemPickList(function)}"  itemValue="#{function}" -->
                     <h:panelGrid columns="1">
-                        <p:pickList id="listaFunciones" value="#{beanAdminPerfiles.listFuncion}" var="function"
-                                    itemLabel="REVISAR"  itemValue="REVISAR" >
-                            <!-- OJO... REVISAR PICKLIST    -->
+                        <p:pickList id="listaFunciones"  value="#{beanAdminPerfiles.listFuncion}" var="function"
+                                    itemLabel="#{beanAdminPerfiles.problemPickList(function)}"  itemValue="#{function}" >
                             <f:facet name="sourceCaption">Disponibles</f:facet>  
                             <f:facet name="targetCaption">Asignados</f:facet>  
                         </p:pickList>

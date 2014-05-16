@@ -21,7 +21,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -40,7 +39,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre"),
     @NamedQuery(name = "Usuario.findByApellido", query = "SELECT u FROM Usuario u WHERE u.apellido = :apellido"),
     @NamedQuery(name = "Usuario.findByEdad", query = "SELECT u FROM Usuario u WHERE u.edad = :edad"),
-    @NamedQuery(name = "Usuario.findByCorreo", query = "SELECT u FROM Usuario u WHERE u.correo = :correo")})
+    @NamedQuery(name = "Usuario.findByCorreo", query = "SELECT u FROM Usuario u WHERE u.correo = :correo"),
+    @NamedQuery(name = "Usuario.findByVersion", query = "SELECT u FROM Usuario u WHERE u.version = :version")})
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -69,7 +69,9 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 40)
     @Column(name = "correo")
     private String correo;
-    @Version
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "version")
     private int version;
     @JoinColumn(name = "id_perfil", referencedColumnName = "id_perfil")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -87,12 +89,13 @@ public class Usuario implements Serializable {
         this.nameUser = nameUser;
     }
 
-    public Usuario(String nameUser, String nombre, String apellido, Date edad, String correo) {
+    public Usuario(String nameUser, String nombre, String apellido, Date edad, String correo, int version) {
         this.nameUser = nameUser;
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
         this.correo = correo;
+        this.version = version;
     }
 
     public String getNameUser() {

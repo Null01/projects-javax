@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,6 +7,7 @@
 package entities;
 
 import java.io.Serializable;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -35,7 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Articulo.findByIdRecurso", query = "SELECT a FROM Articulo a WHERE a.articuloPK.idRecurso = :idRecurso"),
     @NamedQuery(name = "Articulo.findByMarca", query = "SELECT a FROM Articulo a WHERE a.marca = :marca"),
     @NamedQuery(name = "Articulo.findByDisponible", query = "SELECT a FROM Articulo a WHERE a.disponible = :disponible"),
-    @NamedQuery(name = "Articulo.findByNotes", query = "SELECT a FROM Articulo a WHERE a.notes = :notes")})
+    @NamedQuery(name = "Articulo.findByNotes", query = "SELECT a FROM Articulo a WHERE a.notes = :notes"),
+    @NamedQuery(name = "Articulo.findByVersion", query = "SELECT a FROM Articulo a WHERE a.version = :version")})
 public class Articulo implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -48,17 +49,24 @@ public class Articulo implements Serializable {
     @Size(max = 256)
     @Column(name = "notes")
     private String notes;
-    @Version
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "version")
     private int version;
     @JoinColumn(name = "id_recurso", referencedColumnName = "id_recurso", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Recurso recurso;
-    
+
     public Articulo() {
     }
 
     public Articulo(ArticuloPK articuloPK) {
         this.articuloPK = articuloPK;
+    }
+
+    public Articulo(ArticuloPK articuloPK, int version) {
+        this.articuloPK = articuloPK;
+        this.version = version;
     }
 
     public Articulo(int idArticulo, int idRecurso) {

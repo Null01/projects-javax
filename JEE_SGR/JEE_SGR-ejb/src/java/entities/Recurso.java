@@ -20,7 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -37,7 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Recurso.findAll", query = "SELECT r FROM Recurso r"),
     @NamedQuery(name = "Recurso.findByIdRecurso", query = "SELECT r FROM Recurso r WHERE r.idRecurso = :idRecurso"),
     @NamedQuery(name = "Recurso.findByNombre", query = "SELECT r FROM Recurso r WHERE r.nombre = :nombre"),
-    @NamedQuery(name = "Recurso.findByDescripcion", query = "SELECT r FROM Recurso r WHERE r.descripcion = :descripcion")})
+    @NamedQuery(name = "Recurso.findByDescripcion", query = "SELECT r FROM Recurso r WHERE r.descripcion = :descripcion"),
+    @NamedQuery(name = "Recurso.findByVersion", query = "SELECT r FROM Recurso r WHERE r.version = :version")})
 public class Recurso implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -51,7 +52,9 @@ public class Recurso implements Serializable {
     @Size(max = 256)
     @Column(name = "descripcion")
     private String descripcion;
-    @Version
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "version")
     private int version;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recurso", fetch = FetchType.LAZY)
     private List<Articulo> articuloList;
@@ -61,6 +64,11 @@ public class Recurso implements Serializable {
 
     public Recurso(Integer idRecurso) {
         this.idRecurso = idRecurso;
+    }
+
+    public Recurso(Integer idRecurso, int version) {
+        this.idRecurso = idRecurso;
+        this.version = version;
     }
 
     public Integer getIdRecurso() {
@@ -94,7 +102,7 @@ public class Recurso implements Serializable {
     public void setVersion(int version) {
         this.version = version;
     }
-   
+
     @XmlTransient
     public List<Articulo> getArticuloList() {
         return articuloList;

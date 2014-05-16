@@ -60,6 +60,7 @@ public class BeanAdminPerfiles implements Serializable {
         if (findAll != null) {
             listaPerfiles = new ArrayList<>(findAll);
         }
+        onClickPreCreateProfile(null);
     }
 
     public void onClickShowDialog(Perfil perfil1) {
@@ -107,7 +108,6 @@ public class BeanAdminPerfiles implements Serializable {
                 Object object = listFuncion.getTarget().get(i);
                 String nameFuncion = problemPickList(object.toString());
                 if (!nameFuncion.isEmpty()) {
-                    System.out.println(nameFuncion);
                     Funcion funcion = funcionFacade.findByNameFuncion(nameFuncion);
                     if (funcion != null) {
                         target.add(funcion);
@@ -140,13 +140,14 @@ public class BeanAdminPerfiles implements Serializable {
     }
 
     // This is a problem of framework - PickList - itemLabel()
+    // Funciona a agregando el parametro nameFuncion al metodo @overide toString() de funcion
     public String problemPickList(String bug) {
         String key = "nameFuncion=";
         if (bug.contains(key)) {
             int index = bug.lastIndexOf(key) + key.length();
             return bug.subSequence(index, bug.length() - 1).toString();
         } else {
-            return "-none-";
+            return "<none>";
         }
     }
 

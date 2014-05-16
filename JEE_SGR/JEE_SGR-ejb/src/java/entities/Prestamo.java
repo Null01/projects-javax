@@ -8,6 +8,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -16,7 +17,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -33,7 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Prestamo.findByIdArticulo", query = "SELECT p FROM Prestamo p WHERE p.prestamoPK.idArticulo = :idArticulo"),
     @NamedQuery(name = "Prestamo.findByIdUsuario", query = "SELECT p FROM Prestamo p WHERE p.prestamoPK.idUsuario = :idUsuario"),
     @NamedQuery(name = "Prestamo.findByFechaPrestamo", query = "SELECT p FROM Prestamo p WHERE p.prestamoPK.fechaPrestamo = :fechaPrestamo"),
-    @NamedQuery(name = "Prestamo.findByFechaEntrega", query = "SELECT p FROM Prestamo p WHERE p.fechaEntrega = :fechaEntrega")})
+    @NamedQuery(name = "Prestamo.findByFechaEntrega", query = "SELECT p FROM Prestamo p WHERE p.fechaEntrega = :fechaEntrega"),
+    @NamedQuery(name = "Prestamo.findByVersion", query = "SELECT p FROM Prestamo p WHERE p.version = :version")})
 public class Prestamo implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
@@ -41,14 +43,21 @@ public class Prestamo implements Serializable {
     @Column(name = "fecha_entrega")
     @Temporal(TemporalType.DATE)
     private Date fechaEntrega;
-    @Version
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "version")
     private int version;
-    
+
     public Prestamo() {
     }
 
     public Prestamo(PrestamoPK prestamoPK) {
         this.prestamoPK = prestamoPK;
+    }
+
+    public Prestamo(PrestamoPK prestamoPK, int version) {
+        this.prestamoPK = prestamoPK;
+        this.version = version;
     }
 
     public Prestamo(int idRecurso, int idArticulo, String idUsuario, Date fechaPrestamo) {
@@ -79,8 +88,6 @@ public class Prestamo implements Serializable {
         this.version = version;
     }
 
-    
-    
     @Override
     public int hashCode() {
         int hash = 0;
