@@ -31,7 +31,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Prestamo.findAll", query = "SELECT p FROM Prestamo p"),
     @NamedQuery(name = "Prestamo.findByIdRecurso", query = "SELECT p FROM Prestamo p WHERE p.prestamoPK.idRecurso = :idRecurso"),
-    @NamedQuery(name = "Prestamo.findByIdArticulo", query = "SELECT p FROM Prestamo p WHERE p.prestamoPK.idArticulo = :idArticulo"),
     @NamedQuery(name = "Prestamo.findByIdUsuario", query = "SELECT p FROM Prestamo p WHERE p.prestamoPK.idUsuario = :idUsuario"),
     @NamedQuery(name = "Prestamo.findByFechaPrestamo", query = "SELECT p FROM Prestamo p WHERE p.prestamoPK.fechaPrestamo = :fechaPrestamo"),
     @NamedQuery(name = "Prestamo.findByFechaEntrega", query = "SELECT p FROM Prestamo p WHERE p.fechaEntrega = :fechaEntrega"),
@@ -60,8 +59,8 @@ public class Prestamo implements Serializable {
         this.version = version;
     }
 
-    public Prestamo(int idRecurso, int idArticulo, String idUsuario, Date fechaPrestamo) {
-        this.prestamoPK = new PrestamoPK(idRecurso, idArticulo, idUsuario, fechaPrestamo);
+    public Prestamo(int idRecurso, String idUsuario, Date fechaPrestamo) {
+        this.prestamoPK = new PrestamoPK(idRecurso, idUsuario, fechaPrestamo);
     }
 
     public PrestamoPK getPrestamoPK() {

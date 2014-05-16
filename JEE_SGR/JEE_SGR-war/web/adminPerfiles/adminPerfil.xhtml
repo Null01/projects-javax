@@ -48,7 +48,7 @@
                     <p:column width="5">
                         <div align="center">
                             <p:commandButton id="buttonViewProfile" icon="ui-icon ui-icon-extlink" action="#{beanAdminPerfiles.onClickShowDialog(perfil)}"
-                                             oncomplete="dialogViewProfile.show();" update=":formViewUsers"/>
+                                             oncomplete="dialogViewUser.show();" update=":formViewUsers"/>
                             <p:tooltip for="buttonViewProfile" value="Ver" showEffect="fade" hideEffect="fade" />  
                         </div>
                     </p:column>
@@ -102,7 +102,7 @@
                 </h:form>
             </p:dialog>
 
-            <p:dialog id="dialogViewProfileId" widgetVar="dialogViewProfile"  draggable="false" resizable="false" width="1000"
+            <p:dialog id="dialogViewUserId" widgetVar="dialogViewUser"  draggable="false" resizable="false" width="1000"
                       modal="true" appendTo="@(body)">
                 <h:form id="formViewUsers" >
                     <p:dataTable id="dataTableView" var="usuario" value="#{beanAdminPerfiles.usersList}"  rowKey="#{user.nameUser}" 

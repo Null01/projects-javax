@@ -60,7 +60,6 @@ public class BeanAdminPerfiles implements Serializable {
         if (findAll != null) {
             listaPerfiles = new ArrayList<>(findAll);
         }
-        onClickPreCreateProfile(null);
     }
 
     public void onClickShowDialog(Perfil perfil1) {

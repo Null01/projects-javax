@@ -7,23 +7,19 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.math.BigInteger;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,6 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Recurso.findAll", query = "SELECT r FROM Recurso r"),
     @NamedQuery(name = "Recurso.findByIdRecurso", query = "SELECT r FROM Recurso r WHERE r.idRecurso = :idRecurso"),
+    @NamedQuery(name = "Recurso.findByCodigoBarras", query = "SELECT r FROM Recurso r WHERE r.codigoBarras = :codigoBarras"),
     @NamedQuery(name = "Recurso.findByNombre", query = "SELECT r FROM Recurso r WHERE r.nombre = :nombre"),
     @NamedQuery(name = "Recurso.findByDescripcion", query = "SELECT r FROM Recurso r WHERE r.descripcion = :descripcion"),
     @NamedQuery(name = "Recurso.findByVersion", query = "SELECT r FROM Recurso r WHERE r.version = :version")})
@@ -46,6 +43,10 @@ public class Recurso implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_recurso")
     private Integer idRecurso;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "codigo_barras")
+    private BigInteger codigoBarras;
     @Size(max = 30)
     @Column(name = "nombre")
     private String nombre;
@@ -56,8 +57,6 @@ public class Recurso implements Serializable {
     @NotNull
     @Column(name = "version")
     private int version;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recurso", fetch = FetchType.LAZY)
-    private List<Articulo> articuloList;
 
     public Recurso() {
     }
@@ -66,8 +65,9 @@ public class Recurso implements Serializable {
         this.idRecurso = idRecurso;
     }
 
-    public Recurso(Integer idRecurso, int version) {
+    public Recurso(Integer idRecurso, BigInteger codigoBarras, int version) {
         this.idRecurso = idRecurso;
+        this.codigoBarras = codigoBarras;
         this.version = version;
     }
 
@@ -77,6 +77,14 @@ public class Recurso implements Serializable {
 
     public void setIdRecurso(Integer idRecurso) {
         this.idRecurso = idRecurso;
+    }
+
+    public BigInteger getCodigoBarras() {
+        return codigoBarras;
+    }
+
+    public void setCodigoBarras(BigInteger codigoBarras) {
+        this.codigoBarras = codigoBarras;
     }
 
     public String getNombre() {
@@ -101,15 +109,6 @@ public class Recurso implements Serializable {
 
     public void setVersion(int version) {
         this.version = version;
-    }
-
-    @XmlTransient
-    public List<Articulo> getArticuloList() {
-        return articuloList;
-    }
-
-    public void setArticuloList(List<Articulo> articuloList) {
-        this.articuloList = articuloList;
     }
 
     @Override

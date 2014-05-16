@@ -3,7 +3,6 @@ DROP TABLE FUNCION;
 DROP TABLE USUARIO;
 DROP TABLE PERFIL;
 DROP TABLE LOGIN;
-DROP TABLE ARTICULO;
 DROP TABLE RECURSO;
 DROP TABLE PRESTAMO;
 
@@ -74,51 +73,29 @@ INSERT INTO usuario VALUES (2,'usuario','usuario','Pedro','Pedraza','2000-01-01'
 INSERT INTO usuario VALUES (1,'admin','admin','Admin','Super','1992-03-26','superadmin@correo.com',0);
 
 CREATE TABLE RECURSO(
-  id_recurso     serial not null,
-  nombre         character varying(30),
-  descripcion    character varying(256),
-  version      integer not null,
+  id_recurso        serial not null,
+  codigo_barras     numeric(20) not null,
+  nombre            character varying(30),
+  descripcion       character varying(256),
+  version           integer not null,
   primary key(id_recurso)
 );
 
--- RELACION MANYTOONE
-CREATE TABLE ARTICULO(
-  id_articulo    serial not null,
-  id_recurso     integer not null,
-  marca          character varying(30),
-  disponible     smallint,  
-  notes          character varying(256),
-  version      integer not null,
-  primary key (id_articulo, id_recurso),
-  foreign key (id_recurso) references RECURSO(id_recurso)  
-);
 
-
-INSERT INTO recurso VALUES (DEFAULT,'CAMARA','DESCRIPCION CAMARA',0);
-INSERT INTO recurso VALUES (DEFAULT,'COMPUTADORES','DESCRIPCION COMPURADORES',0);
-INSERT INTO recurso VALUES (DEFAULT,'PARLANTES','DESCRIPCION PARLANTES',0);
-INSERT INTO recurso VALUES (DEFAULT,'VIDEOBEAM','DESCRIPCION VIDEOBEAM',0);
-INSERT INTO recurso VALUES (DEFAULT,'SALAS AUDIVISUALES','DESCRIPCION AUDIOVISUALES',0);
-INSERT INTO recurso VALUES (DEFAULT,'OTROS','',0);
-
-
-INSERT INTO articulo VALUES (DEFAULT,1,'SONY',1,'<comentarios>',0);
-INSERT INTO articulo VALUES (DEFAULT,1,'VIO',1,'<comentarios>',0);
-INSERT INTO articulo VALUES (DEFAULT,2,'LENOVO',1,'<comentarios>',0);
-INSERT INTO articulo VALUES (DEFAULT,2,'TOSHIBA',1,'<comentarios>',0);
-INSERT INTO articulo VALUES (DEFAULT,2,'COMPAQ',1,'<comentarios>',0);
-INSERT INTO articulo VALUES (DEFAULT,2,'MAC',1,'<comentarios>',0);
+INSERT INTO recurso VALUES (DEFAULT,123456,'CAMARA','DESCRIPCION CAMARA',0);
+INSERT INTO recurso VALUES (DEFAULT,123457,'COMPUTADORES','DESCRIPCION COMPURADORES',0);
+INSERT INTO recurso VALUES (DEFAULT,123458,'PARLANTES','DESCRIPCION PARLANTES',0);
+INSERT INTO recurso VALUES (DEFAULT,123459,'VIDEOBEAM','DESCRIPCION VIDEOBEAM',0);
+INSERT INTO recurso VALUES (DEFAULT,123450,'SALAS AUDIVISUALES','DESCRIPCION AUDIOVISUALES',0);
 
 CREATE TABLE PRESTAMO(
   id_recurso     integer not null,
-  id_articulo    integer not null,
   id_usuario     character varying(30) not null,
   fecha_prestamo date,
   fecha_entrega  date,
   version      integer not null,
-  primary key (id_usuario,id_recurso,id_articulo,fecha_prestamo)
+  primary key (id_usuario,id_recurso,fecha_prestamo)
 );
 
-INSERT INTO prestamo VALUES (1,2,'usuario','2014-02-28','2014-02-03',0);
-INSERT INTO prestamo VALUES (2,2,'usuario','2014-02-28','2014-02-03',0);
-INSERT INTO prestamo VALUES (2,3,'usuario','2014-02-28','2014-02-03',0);
+INSERT INTO prestamo VALUES (1,'usuario','2014-02-28','2014-02-03',0);
+INSERT INTO prestamo VALUES (2,'usuario','2014-02-28','2014-02-03',0);

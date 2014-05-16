@@ -29,10 +29,6 @@ public class PrestamoPK implements Serializable {
     private int idRecurso;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "id_articulo")
-    private int idArticulo;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 30)
     @Column(name = "id_usuario")
     private String idUsuario;
@@ -45,9 +41,8 @@ public class PrestamoPK implements Serializable {
     public PrestamoPK() {
     }
 
-    public PrestamoPK(int idRecurso, int idArticulo, String idUsuario, Date fechaPrestamo) {
+    public PrestamoPK(int idRecurso, String idUsuario, Date fechaPrestamo) {
         this.idRecurso = idRecurso;
-        this.idArticulo = idArticulo;
         this.idUsuario = idUsuario;
         this.fechaPrestamo = fechaPrestamo;
     }
@@ -58,14 +53,6 @@ public class PrestamoPK implements Serializable {
 
     public void setIdRecurso(int idRecurso) {
         this.idRecurso = idRecurso;
-    }
-
-    public int getIdArticulo() {
-        return idArticulo;
-    }
-
-    public void setIdArticulo(int idArticulo) {
-        this.idArticulo = idArticulo;
     }
 
     public String getIdUsuario() {
@@ -88,7 +75,6 @@ public class PrestamoPK implements Serializable {
     public int hashCode() {
         int hash = 0;
         hash += (int) idRecurso;
-        hash += (int) idArticulo;
         hash += (idUsuario != null ? idUsuario.hashCode() : 0);
         hash += (fechaPrestamo != null ? fechaPrestamo.hashCode() : 0);
         return hash;
@@ -104,9 +90,6 @@ public class PrestamoPK implements Serializable {
         if (this.idRecurso != other.idRecurso) {
             return false;
         }
-        if (this.idArticulo != other.idArticulo) {
-            return false;
-        }
         if ((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario))) {
             return false;
         }
@@ -118,7 +101,7 @@ public class PrestamoPK implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.PrestamoPK[ idRecurso=" + idRecurso + ", idArticulo=" + idArticulo + ", idUsuario=" + idUsuario + ", fechaPrestamo=" + fechaPrestamo + " ]";
+        return "entities.PrestamoPK[ idRecurso=" + idRecurso + ", idUsuario=" + idUsuario + ", fechaPrestamo=" + fechaPrestamo + " ]";
     }
 
 }

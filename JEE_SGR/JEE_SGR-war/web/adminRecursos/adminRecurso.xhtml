@@ -14,8 +14,8 @@
         </h:head>
 
         <h:body>
-            <h:form id="formViewResource">
-                <p:dataTable id="dataPrestamo" var="recurso" value="#{beanAdminRecurso.listaRecursos}" paginator="true" rows="4"
+            <h:form id="formAdminResource">
+                <p:dataTable id="dataTableResource" var="recurso" value="#{beanAdminRecurso.listaRecursos}" paginator="true" rows="10"
                              rowKey="#{recurso.idRecurso}" selectionMode="single" selection="#{beanAdminRecurso.resourceSelected}" editable="true"> 
 
                     <f:facet name="header">  
@@ -25,13 +25,19 @@
                     <p:ajax event="rowEdit" listener="#{beanAdminRecurso.onClickEditAccept}" update="@this"/>  
                     <p:ajax event="rowEditCancel" listener="#{beanAdminRecurso.onClickEditCancel}" />
 
-                    <p:column sortBy="idRecurso" headerText="ID" width="30"> 
+                    <p:column sortBy="idRecurso" headerText="ID" width="30">
                         <div align="center">
                             #{recurso.idRecurso}
                         </div>
-                    </p:column>  
+                    </p:column>
 
-                    <p:column sortBy="nombre" headerText="OBJETO" width="100">               
+                    <p:column sortBy="codigoBarras" filterBy="codigoBarras" headerText="CODIGO" width="250" filterMatchMode="contains">
+                        <div align="center">
+                            #{recurso.codigoBarras}
+                        </div>
+                    </p:column>
+
+                    <p:column sortBy="nombre" filterBy="nombre" headerText="OBJETO" width="250" filterMatchMode="contains">               
                         <p:cellEditor>  
                             <f:facet name="output">  
                                 <div align="center"> <h:outputText value="#{recurso.nombre}" />  </div>
@@ -42,19 +48,12 @@
                         </p:cellEditor>
                     </p:column>
 
-                    <p:column  headerText="STOCK" width="30">
-                        <div align="center">
-                            #{beanAdminRecurso.countArticle(recurso)}
-                        </div>
-                    </p:column>
-
                     <p:column headerText="DISPONIBLES" width="40">  
                         <div align="center">
-                            #{beanAdminRecurso.countArticleEnable(recurso)}
                         </div>                        
                     </p:column>
 
-                    <p:column headerText="DESCRIPCION" width="300">
+                    <p:column headerText="DESCRIPCION" >
                         <p:cellEditor>  
                             <f:facet name="output">  
                                 <div align="center"> <h:outputText value="#{recurso.descripcion}" />  </div>
@@ -63,13 +62,6 @@
                                 <div align="center"> <p:inputTextarea value="#{recurso.descripcion}"  style="width:80%" cols="80" rows="2" autoResize="false" />  </div>
                             </f:facet>
                         </p:cellEditor>
-                    </p:column>
-
-                    <p:column width="10">
-                        <div align="center">
-                            <p:commandButton icon="ui-icon ui-icon-extlink" actionListener="#{beanAdminRecurso.onClickShowDialog(recurso)}"
-                                             oncomplete="dialogViewArticle.show()" />
-                        </div>
                     </p:column>
 
                     <p:column width="10">               
@@ -83,10 +75,14 @@
             </h:form>
 
 
-            <p:dialog id="dialogCreateResource1" widgetVar="dialogCreateResource" modal="true" draggable="false" appendTo="@(body)" resizable="false" width="550">
+            <p:dialog id="dialogCreateResourceId" widgetVar="dialogCreateResource" modal="true" draggable="false" appendTo="@(body)" resizable="false" width="550">
                 <h:form id="formCreateResource">
                     <p:panel id="panelCreate">
                         <h:panelGrid columns="2">
+
+                            <h:outputLabel value="Codigo Barras* " />
+                            <p:inputText id="codigoBarras" value="#{beanAdminRecurso.recurso.codigoBarras}"  label="codigo"  size="40"/>
+
                             <h:outputLabel value="Objeto:* " />
                             <p:inputText id="objeto" value="#{beanAdminRecurso.recurso.nombre}"  label="alias" size="40" />
 
@@ -99,37 +95,6 @@
 
                         <p:commandButton value="Crear"  update="@this" actionListener="#{beanAdminRecurso.onClickCreateResource}" />
                     </p:panel>
-                </h:form>
-            </p:dialog>
-
-
-
-            <p:dialog id="dialogViewArticle1" widgetVar="dialogViewArticle" modal="true" draggable="false" appendTo="@(body)" resizable="false" width="1000">
-                <h:form id="formViewPrestamoArticle">              
-                    <p:dataTable id="dataTable3" var="articulo" value="#{beanAdminRecurso.articleList}"  rowKey="#{articulo.articuloPK.idArticulo}" 
-                                 paginator="true" rows="10">   
-                        <f:facet name="header">  
-                            ARTICULO ASOCIADOS A ... #{beanAdminRecurso.resourceSelected.nombre}
-                        </f:facet>
-
-                        <p:column sortBy="articuloPK.idArticulo" headerText="ID">
-                            <div align="center">
-                                <h:outputText value="#{articulo.articuloPK.idArticulo}" />
-                            </div>
-                        </p:column>  
-
-                        <p:column sortBy="marca" headerText="OBJETO">
-                            <div align="center">
-                                <h:outputText value="#{articulo.marca}" />  
-                            </div>
-                        </p:column>
-
-                        <p:column headerText="OBSERVACIONES">
-                            <div align="center">
-                                <h:outputText value="#{articulo.notes}" />  
-                            </div>
-                        </p:column>
-                    </p:dataTable>
                 </h:form>
             </p:dialog>
 
