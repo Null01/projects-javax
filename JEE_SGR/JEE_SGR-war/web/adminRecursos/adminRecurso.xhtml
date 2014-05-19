@@ -16,14 +16,14 @@
         <h:body>
             <h:form id="formAdminResource">
                 <p:dataTable id="dataTableResource" var="recurso" value="#{beanAdminRecurso.listaRecursos}" paginator="true" rows="10"
-                             rowKey="#{recurso.idRecurso}" selectionMode="single" selection="#{beanAdminRecurso.resourceSelected}" editable="true"> 
+                             rowKey="#{recurso.idRecurso}"  editable="true"  emptyMessage=" - No existen informacion. -" > 
 
                     <f:facet name="header">  
                         ADMINISTRACION DE RECURSOS
                     </f:facet>  
 
                     <p:ajax event="rowEdit" listener="#{beanAdminRecurso.onClickEditAccept}" update="@this"/>  
-                    <p:ajax event="rowEditCancel" listener="#{beanAdminRecurso.onClickEditCancel}" />
+                    <p:ajax event="rowEditCancel" />
 
                     <p:column sortBy="idRecurso" headerText="ID" width="30">
                         <div align="center">
@@ -53,7 +53,7 @@
                         </div>                        
                     </p:column>
 
-                    <p:column headerText="DESCRIPCION" >
+                    <p:column headerText="DESCRIPCION">
                         <p:cellEditor>  
                             <f:facet name="output">  
                                 <div align="center"> <h:outputText value="#{recurso.descripcion}" />  </div>
@@ -68,10 +68,23 @@
                         <p:rowEditor />            
                     </p:column>
 
+                    <p:column width="5">
+                        <div align="center">
+                            <p:commandButton id="buttonDeleteProfile" icon="ui-icon-close" action="#{beanAdminRecurso.onClickDeleteProfile(perfil)}" >
+                                <p:confirm header="Eliminar perfil" message="  Esta usted seguro?" icon="ui-icon-alert" />  
+                            </p:commandButton>
+                        </div>
+                    </p:column>
                 </p:dataTable>
 
-                <p:commandButton value="Crear Recurso" actionListener="#{beanAdminRecurso.onClickPreCreateResource}" 
-                                 oncomplete="dialogCreateResource.show()" />
+                <!-- DIALOGO DE CONFIRMACION A LA HORA DE ELIMINAR UN RECURSO -->
+                <p:confirmDialog  id="confirmDialogDelete" global="true" showEffect="fade" hideEffect="fade" width="220" >
+                    <div align="center">
+                        <p:commandButton id="buttonYes"  value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
+                        <p:commandButton id="buttonNo" value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </div>
+                </p:confirmDialog>
+                <p:commandButton value="Crear Recurso" oncomplete="dialogCreateResource.show()" />
             </h:form>
 
 
@@ -81,19 +94,19 @@
                         <h:panelGrid columns="2">
 
                             <h:outputLabel value="Codigo Barras* " />
-                            <p:inputText id="codigoBarras" value="#{beanAdminRecurso.recurso.codigoBarras}"  label="codigo"  size="40"/>
+                            <p:inputText id="codigoBarras" value="#{beanAdminRecurso.codigoBarras}"  label="codigo"  size="40"/>
 
                             <h:outputLabel value="Objeto:* " />
-                            <p:inputText id="objeto" value="#{beanAdminRecurso.recurso.nombre}"  label="alias" size="40" />
+                            <p:inputText id="objeto" value="#{beanAdminRecurso.nombre}"  label="alias" size="40" />
 
                             <h:outputLabel value="Descripcion:* " />
-                            <p:inputTextarea id="descripcion" value="#{beanAdminRecurso.recurso.descripcion}"  label="descripcion" autoResize="false" cols="40"/>              
+                            <p:inputTextarea id="descripcion" value="#{beanAdminRecurso.descripcion}"  label="descripcion" autoResize="false" cols="40"/>              
 
                         </h:panelGrid>
-
                         <p:spacer/>
-
-                        <p:commandButton value="Crear"  update="@this" actionListener="#{beanAdminRecurso.onClickCreateResource}" />
+                        <p:commandButton value="Crear" actionListener="#{beanAdminRecurso.onClickCreateResource}" 
+                                         update=":formAdminResource:dataTableResource"
+                                         oncomplete="dialogCreateResource.hide()"/>
                     </p:panel>
                 </h:form>
             </p:dialog>

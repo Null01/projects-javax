@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package session;
 
 import java.util.List;
@@ -15,6 +14,7 @@ import javax.persistence.EntityManager;
  * @version 1.0
  */
 public abstract class AbstractFacade<T> {
+
     private Class<T> entityClass;
 
     public AbstractFacade(Class<T> entityClass) {
@@ -25,6 +25,10 @@ public abstract class AbstractFacade<T> {
 
     public void create(T entity) {
         getEntityManager().persist(entity);
+    }
+
+    public T getReference(Object primaryKey) {
+        return getEntityManager().getReference(entityClass, primaryKey);
     }
 
     public void edit(T entity) {

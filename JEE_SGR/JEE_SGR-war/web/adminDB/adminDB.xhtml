@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>GestionRecursos</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+            <h:form id="formAdminBD">
+                <p:messages id="messages" autoUpdate="true" closable="true" />
+                <h3 style="margin-top: 0">Execute Command</h3>
+                <p>Escriba el query que desea ejecutar directamente contra una base de datos.</p>
+                <p:inputTextarea rows="10" value="#{beanAdminDB.query}" completeMethod="#{beanAdminDB.completeTextArea}" minQueryLength="1" style="width:95%; height:70px;"/> 
+                <p:commandButton id="buttonExecuteQuery" value="Execute" actionListener="#{beanAdminDB.onClickViewResult}" 
+                                 update=":formAdminDBResult" />
+            </h:form>
+
+            <h:form id="formAdminDBResult">
+                <c:if id="booleanHide" test="#{beanAdminDB.hideForm}" >
+                    <br/><br/>
+                    <p:dataTable id="dataTableDBResult" var="result" value="#{beanAdminDB.listResultSet}"
+                                 paginator="true" rows="10" emptyMessage=" - No existen informacion. -" >
+                        <p:column>
+                            <div style="alignment-adjust: central;">
+                                <h:outputText value="#{result}" />
+                            </div>
+                        </p:column>
+                    </p:dataTable>
+                </c:if>
+            </h:form>            
+        </h:body>
+    </f:view>
+</html>

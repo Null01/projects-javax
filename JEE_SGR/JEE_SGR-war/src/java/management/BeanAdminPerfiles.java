@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package management;
 
 import entities.Funcion;
@@ -102,14 +97,13 @@ public class BeanAdminPerfiles implements Serializable {
         // REVISAR, no existe coherencia en el objeto Funcion y la lista de target del DualListModel
         List<Funcion> target = new ArrayList<>();
         if (listFuncion != null) {
-
             for (int i = 0; i < listFuncion.getTarget().size(); i++) {
                 Object object = listFuncion.getTarget().get(i);
                 String nameFuncion = problemPickList(object.toString());
                 if (!nameFuncion.isEmpty()) {
                     Funcion funcion = funcionFacade.findByNameFuncion(nameFuncion);
                     if (funcion != null) {
-                        target.add(funcion);
+                        target.add(funcionFacade.getReference(funcion.getIdFuncion()));
                     }
                 }
             }

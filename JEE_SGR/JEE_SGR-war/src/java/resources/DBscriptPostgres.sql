@@ -9,7 +9,7 @@ DROP TABLE PRESTAMO;
 CREATE TABLE FUNCION(
   id_funcion       serial not null,
   name_funcion     character varying(30) not null,
-  url_funcion      character varying(50) not null,
+  url_funcion      character varying(50),
   id_funcion_padre integer not null,
   primary key(id_funcion)  
 );
@@ -35,6 +35,8 @@ CREATE TABLE FUNCION_USUARIO(
 INSERT INTO funcion VALUES (1,'Administracion perfiles','/adminPerfiles/adminPerfil.xhtml',1);
 INSERT INTO funcion VALUES (2,'Administracion recursos','/adminRecursos/adminRecurso.xhtml',2);
 INSERT INTO funcion VALUES (3,'Administracion Prestamo','/adminPrestamos/adminPrestamo.xhtml',3);
+INSERT INTO funcion VALUES (4,'Administracion DB', null , 4);
+INSERT INTO funcion VALUES (5,'Ejecutar comandos SQL','/adminDB/adminDB.xhtml',4);
 
 INSERT INTO perfil VALUES (1,'ADMINISTRADOR','PERFIL QUE POSEE TODOS LOS PERMISOS DE LA APLICACION.',0);
 INSERT INTO perfil VALUES (2,'CLIENTE','PERFIL USUARIO FINAL.',0);
@@ -43,6 +45,8 @@ INSERT INTO funcion_usuario VALUES (1,1);
 INSERT INTO funcion_usuario VALUES (1,2);
 INSERT INTO funcion_usuario VALUES (2,1);
 INSERT INTO funcion_usuario VALUES (1,3);
+INSERT INTO funcion_usuario VALUES (1,4);
+INSERT INTO funcion_usuario VALUES (1,5);
 
  CREATE TABLE LOGIN(
   name_user     character varying(30) not null,

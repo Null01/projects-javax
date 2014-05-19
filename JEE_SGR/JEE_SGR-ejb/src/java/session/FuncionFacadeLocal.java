@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package session;
 
 import entities.Funcion;
@@ -19,6 +18,8 @@ public interface FuncionFacadeLocal {
 
     void create(Funcion funcion);
 
+    Funcion getReference(Object primaryKey);
+
     void edit(Funcion funcion);
 
     void remove(Funcion funcion);
@@ -32,5 +33,4 @@ public interface FuncionFacadeLocal {
     int count();
 
     public Funcion findByNameFuncion(String nameFuncion);
-    
 }

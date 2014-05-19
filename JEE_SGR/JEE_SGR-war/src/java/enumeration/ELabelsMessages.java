@@ -11,7 +11,9 @@ package enumeration;
  */
 public enum ELabelsMessages {
 
-    SUCCESSFULL_LOGIN("Bienvenido.");
+    SUCCESSFULL_LOGIN("Bienvenido."),
+    SUCCESSFULL_ACTION_QUERY("La accion se realizo exitosamente."),
+    FAILURE_ACTION_QUERY("Error ejecutando el query.");
 
     private String string;
 

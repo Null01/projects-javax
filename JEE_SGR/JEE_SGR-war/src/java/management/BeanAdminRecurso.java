@@ -1,12 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package management;
 
+import entities.Perfil;
 import entities.Recurso;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -23,15 +20,15 @@ public class BeanAdminRecurso implements Serializable {
 
     @EJB
     private RecursoFacadeLocal recursoFacade;
-   
 
     // Consulta de recursos
     private Recurso resourceSelected;
     private List<Recurso> listaRecursos;
 
-
     // Creacion de un recurso
-    private Recurso recurso;
+    private String codigoBarras;
+    private String descripcion;
+    private String nombre;
 
     public BeanAdminRecurso() {
     }
@@ -44,31 +41,22 @@ public class BeanAdminRecurso implements Serializable {
         }
     }
 
-
-
     public void onClickEditAccept(RowEditEvent event) {
-
-    }
-
-    public void onClickEditCancel(RowEditEvent event) {
-
-    }
-
-
-    public void onClickPreCreateResource(ActionEvent event) {
+        System.out.println("edit");
 
     }
 
     public void onClickCreateResource(ActionEvent event) {
-        System.out.println("create");
+        Recurso recurso = new Recurso();
+        recurso.setCodigoBarras(new BigInteger(codigoBarras));
+        recurso.setDescripcion(descripcion);
+        recurso.setNombre(nombre);
+        recursoFacade.create(recurso);
+        listaRecursos.add(recurso);
     }
 
-    public Recurso getRecurso() {
-        return recurso;
-    }
-
-    public void setRecurso(Recurso recurso) {
-        this.recurso = recurso;
+    public void onClickDeleteProfile(Perfil perfil) {
+        System.out.println("delete");
     }
 
     public List<Recurso> getListaRecursos() {
@@ -86,4 +74,29 @@ public class BeanAdminRecurso implements Serializable {
     public void setResourceSelected(Recurso resourceSelected) {
         this.resourceSelected = resourceSelected;
     }
+
+    public String getCodigoBarras() {
+        return codigoBarras;
+    }
+
+    public void setCodigoBarras(String codigoBarras) {
+        this.codigoBarras = codigoBarras;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
 }

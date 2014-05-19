@@ -23,6 +23,11 @@
         <managed-bean-class>management.BeanAdminPerfiles</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
+      <managed-bean>
+        <managed-bean-name>beanAdminDB</managed-bean-name>
+        <managed-bean-class>management.BeanAdminDB</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
     <application>
         <action-listener>org.primefaces.application.DialogActionListener</action-listener>
         <navigation-handler>org.primefaces.application.DialogNavigationHandler</navigation-handler>
