@@ -33,5 +33,14 @@
         <navigation-handler>org.primefaces.application.DialogNavigationHandler</navigation-handler>
         <view-handler>org.primefaces.application.DialogViewHandler</view-handler>
     </application>
-    
+    <managed-bean>
+        <managed-bean-name>beanAdminPrestamo</managed-bean-name>
+        <managed-bean-class>management.BeanAdminPrestamo</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>beanPrestamoUsuario</managed-bean-name>
+        <managed-bean-class>management.BeanPrestamoUsuario</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
 </faces-config>

@@ -13,7 +13,8 @@ public enum ELabelsMessages {
 
     SUCCESSFULL_LOGIN("Bienvenido."),
     SUCCESSFULL_ACTION_QUERY("La accion se realizo exitosamente."),
-    FAILURE_ACTION_QUERY("Error ejecutando el query.");
+    FAILURE_ACTION_QUERY("Error ejecutando el query."),
+    SUCCESSFULL_LOAN("Prestamo realizado.");
 
     private String string;
 

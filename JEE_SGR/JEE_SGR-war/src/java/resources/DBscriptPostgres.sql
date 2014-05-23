@@ -37,7 +37,7 @@ INSERT INTO funcion VALUES (2,'Administracion recursos','/adminRecursos/adminRec
 INSERT INTO funcion VALUES (3,'Administracion Prestamo','/adminPrestamos/adminPrestamo.xhtml',3);
 INSERT INTO funcion VALUES (4,'Administracion DB', null , 4);
 INSERT INTO funcion VALUES (5,'Ejecutar comandos SQL','/adminDB/adminDB.xhtml',4);
-INSERT INTO funcion VALUES (6,'Realizar Prestamo','/adminPrestamos/prestamoUsuario.xhtml',6);
+INSERT INTO funcion VALUES (6,'Prestamo recursos','/adminPrestamos/prestamoUsuario.xhtml',6);
 
 INSERT INTO perfil VALUES (1,'ADMINISTRADOR','PERFIL QUE POSEE TODOS LOS PERMISOS DE LA APLICACION.',0);
 INSERT INTO perfil VALUES (2,'CLIENTE','PERFIL USUARIO FINAL.',0);
@@ -47,7 +47,6 @@ INSERT INTO funcion_usuario VALUES (1,2);
 INSERT INTO funcion_usuario VALUES (1,3);
 INSERT INTO funcion_usuario VALUES (1,4);
 INSERT INTO funcion_usuario VALUES (1,5);
-INSERT INTO funcion_usuario VALUES (2,1);
 INSERT INTO funcion_usuario VALUES (2,6);
 
  CREATE TABLE LOGIN(
@@ -107,4 +106,3 @@ CREATE TABLE PRESTAMO(
 
 INSERT INTO prestamo VALUES (3,'usuario','2014-05-20','14:00:00','15:00:00',0);
 INSERT INTO prestamo VALUES (1,'usuario','2014-05-22','12:00:00',null,0);
-INSERT INTO prestamo VALUES (2,'usuario','2014-05-22','14:00:00',null,0);

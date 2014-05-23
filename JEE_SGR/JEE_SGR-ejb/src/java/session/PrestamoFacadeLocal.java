@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package session;
 
 import entities.Prestamo;
+import entities.Recurso;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,5 +25,12 @@ public interface PrestamoFacadeLocal {
     List<Prestamo> findRange(int[] range);
 
     int count();
-    
+
+    List<Recurso> getResourceEnable();
+
+    public int countResourceLoanByUser(String nameUser);
+
+    public List<Recurso> getMyResourceLoan(String nameUser);
+
+    public Prestamo getLoanByIdRecurso(Integer idRecurso, String nameUser);
 }

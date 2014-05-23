@@ -63,10 +63,10 @@
                     </p:column>
                 </p:dataTable>
 
-                <p:commandButton id="buttonCreateProfile" value="Crear Perfil" actionListener="#{beanAdminPerfiles.onClickPreCreateProfile}" 
+                <p:commandButton id="buttonShowCreateProfile" value="Crear Perfil" actionListener="#{beanAdminPerfiles.onClickPreCreateProfile}" 
                                  oncomplete="dialogCreateProfile.show();" update=":formCreateProfile">
                 </p:commandButton>
-                <p:tooltip for="buttonCreateProfile" value="Crear" showEffect="fade" hideEffect="fade" />
+                <p:tooltip for="buttonShowCreateProfile" value="Crear" showEffect="fade" hideEffect="fade" />
 
                 <!-- DIALOGO DE CONFIRMACION A LA HORA DE ELIMINAR UN PERFIL -->
                 <p:confirmDialog  id="confirmDialogDelete" global="true" showEffect="fade" hideEffect="fade" width="220" >
@@ -97,7 +97,7 @@
                         </p:pickList>
                     </h:panelGrid>
                     <br/>
-                    <p:commandButton id="buttonCreate1"  value="Crear" actionListener="#{beanAdminPerfiles.onClickCreateProfile}"
+                    <p:commandButton id="buttonCreateProfile"  value="Crear" actionListener="#{beanAdminPerfiles.onClickCreateProfile}"
                                      oncomplete="dialogCreateProfile.hide();" update=":formAdminProfile"/>
                 </h:form>
             </p:dialog>

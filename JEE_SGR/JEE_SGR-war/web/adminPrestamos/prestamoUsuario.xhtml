@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <f:view contentType="text/html">
+        <h:head> 
+        </h:head>
+        <h:body>
+            <h:form id="formLoanUser">
+                <p:messages id="messages" autoUpdate="true" closable="true" />
+                <p:dataTable id="dataTableLoanUser" var="recurso" value="#{beanPrestamoUsuario.listaRecursoDisponible}" editable="true"
+                             paginator="true" rows="7" emptyMessage=" - No existen informacion. -" >
+                    <f:facet name="header">  
+                        RECURSOS DISPONIBLES.
+                    </f:facet>  
+                    <p:column width="40" >
+                        <p:selectBooleanCheckbox value="#{beanPrestamoUsuario.seleccionItem}" >
+                            <p:ajax update="@this" listener="#{beanPrestamoUsuario.seleccionarRecurso(recurso)}" />
+                        </p:selectBooleanCheckbox>
+                    </p:column>
+
+                    <p:column  headerText="ID" width="100">
+                        <div align="center">  <h:outputText value="#{recurso.idRecurso}" /> </div>
+                    </p:column>
+
+                    <p:column  headerText="CODIGO BARRAS" width="200">
+                        <div align="center">  <h:outputText value="#{recurso.codigoBarras}" /> </div>
+                    </p:column>
+
+                    <p:column  headerText="NOMBRE" width="250">
+                        <div align="center">  <h:outputText value="#{recurso.nombre}" /> </div>
+                    </p:column>
+
+                    <p:column  headerText="DESCRIPCION">
+                        <div align="center">  <h:outputText value="#{recurso.descripcion}" /> </div>
+                    </p:column>
+
+                </p:dataTable>
+                <p:commandButton id="buttonShowCreateLoan" value="Solicitar Prestamo" oncomplete="dialogCreateLoan.show();" update=":formCreateLoan :formLoanUserView"/>
+
+            </h:form>
+
+            <p:spacer/><p:spacer/>
+            <p:separator/>
+            <p:spacer/><p:spacer/>
+
+            <h:form id="formLoanUserView">
+                <p:messages id="messages" autoUpdate="true" closable="true" />
+                <p:dataTable id="dataTableLoanUser" var="recursoView" value="#{beanPrestamoUsuario.misRecursosEnPrestamo}" editable="true"
+                             paginator="true" rows="7" emptyMessage=" - No existen informacion. -" >
+                    <f:facet name="header">  
+                        MIS RECURSOS EN PRESTAMO.
+                    </f:facet>  
+                    <p:column  headerText="ID" width="100">
+                        <div align="center">  <h:outputText value="#{recursoView.idRecurso}" /> </div>
+                    </p:column>
+
+                    <p:column  headerText="CODIGO BARRAS" width="200">
+                        <div align="center">  <h:outputText value="#{recursoView.codigoBarras}" /> </div>
+                    </p:column>
+
+                    <p:column  headerText="NOMBRE" width="250">
+                        <div align="center">  <h:outputText value="#{recursoView.nombre}" /> </div>
+                    </p:column>
+
+                    <p:column  headerText="DESCRIPCION">
+                        <div align="center">  <h:outputText value="#{recursoView.descripcion}" /> </div>
+                    </p:column>
+
+                    <p:column  headerText="FECHA PRESTAMO">
+                        <div align="center">  <h:outputText value="#{beanPrestamoUsuario.obtenerFechaPrestamo(recursoView)}" /> </div>
+                    </p:column>
+
+                    <p:column  headerText="HORA PRESTAMO">
+                        <div align="center">  <h:outputText value="#{beanPrestamoUsuario.obtenerHoraPrestamo(recursoView)}" /> </div>
+                    </p:column>
+
+
+                </p:dataTable>
+            </h:form>
+
+
+            <p:dialog id="dialogCreateLoanId" widgetVar="dialogCreateLoan" draggable="false" resizable="false" width="410"
+                      modal="true" appendTo="@(body)">
+                <h:form id="formCreateLoan" style="alignment-adjust:  central;">
+                    <c:if id="empty" test="#{beanPrestamoUsuario.resourceSelected.size() != 0}">
+                        <p:dataTable id="dataTableLoanUserLoad" var="resourceLoad" value="#{beanPrestamoUsuario.resourceSelectedList}" >
+                            <f:facet name="header">  
+                                RECURSOS SELECCIONADOS
+                            </f:facet>  
+                            <p:column>
+                                <h:outputText value="#{resourceLoad.codigoBarras}"/>
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{resourceLoad.nombre}"/>
+                            </p:column>
+                        </p:dataTable>
+                        <br/>
+                    </c:if>
+                    <c:if id="empty" test="#{beanPrestamoUsuario.resourceSelected.size() == 0}">
+                        <h3 style="text-align: center">NO HAY ELEMENTOS SELECCIONADOS</h3>
+                    </c:if>
+
+                    <h:panelGrid columns="2">
+                        <h:outputLabel value="Fecha* " />
+                        <p:autoComplete id="fecha" dropdown="true" forceSelection="true" value="#{beanPrestamoUsuario.fechaPrestamo}" 
+                                        completeMethod="#{beanPrestamoUsuario.completarFechasPrestamo}" size="30" />
+                        <p:outputLabel value="Hora* " />
+                        <p:calendar id="hora" value="#{beanPrestamoUsuario.horaPrestamo}" pattern="HH:mm a" timeOnly="true" size="30" />
+                    </h:panelGrid>
+                    <br/>
+
+                    <p:commandButton id="buttonCreateLoan"  value="Crear" oncomplete="dialogCreateLoan.hide();"
+                                     actionListener="#{beanPrestamoUsuario.onClickCreateLoad}"  update=":formLoanUser"/>
+                </h:form>
+            </p:dialog>
+        </h:body>
+    </f:view>
+</html>

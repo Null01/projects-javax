@@ -7,7 +7,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class Security {
 
-    public String encriptar(String clave) throws NoSuchAlgorithmException {
+    public String encrypt(String clave) throws NoSuchAlgorithmException {
         String md5Clave = MD5(MD5(MD5(clave)));
         return md5Clave;
     }

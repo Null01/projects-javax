@@ -30,8 +30,8 @@ public class BeanIndex implements Serializable {
 
     private static final Logger LOGGER = Logger.getLogger(BeanIndex.class);
 
-    private String user = "admin";
-    private String password = "admin";
+    private String user = "usuario";
+    private String password = "usuario";
 
     private final String forward = "faces/home.xhtml";  // navegate next page
 

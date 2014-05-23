@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package enumeration;
 
 /**
@@ -10,9 +5,12 @@ package enumeration;
  * @author duran
  */
 public enum ELabelsError {
-    
+
     ERROR_AUTENTICACION_USUARIO_BLOQUEADO("USUARIO BLOQUEADO."),
-    ERROR_AUTENTICACION("ERROR AUTENTICACION. POR FAVOR REVISE SUS DATOS. ");
+    ERROR_AUTENTICACION("ERROR AUTENTICACION. POR FAVOR REVISE SUS DATOS."),
+    ERROR_PRESTAMO_SELECCION_VACIA("SELECCIONE AL MENOS UN ELEMENTO."),
+    ERROR_PRESTAMO_MAX_ARTICULOS("UDTED YA POSEE PRESTAMOS PENDIENTES."),
+    ERROR_PRESTAMO_CAMPOS_INCORRECTOS("DATOS INGRESADOS - INCORRECTOS.");
 
     private ELabelsError(String string) {
         this.string = string;

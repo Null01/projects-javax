@@ -52,9 +52,7 @@ public class Funcion implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "name_funcion")
     private String nameFuncion;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     @Column(name = "url_funcion")
     private String urlFuncion;
     @Basic(optional = false)
@@ -74,10 +72,9 @@ public class Funcion implements Serializable {
         this.idFuncion = idFuncion;
     }
 
-    public Funcion(Integer idFuncion, String nameFuncion, String urlFuncion, int idFuncionPadre) {
+    public Funcion(Integer idFuncion, String nameFuncion, int idFuncionPadre) {
         this.idFuncion = idFuncion;
         this.nameFuncion = nameFuncion;
-        this.urlFuncion = urlFuncion;
         this.idFuncionPadre = idFuncionPadre;
     }
 
