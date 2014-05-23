@@ -37,20 +37,22 @@ INSERT INTO funcion VALUES (2,'Administracion recursos','/adminRecursos/adminRec
 INSERT INTO funcion VALUES (3,'Administracion Prestamo','/adminPrestamos/adminPrestamo.xhtml',3);
 INSERT INTO funcion VALUES (4,'Administracion DB', null , 4);
 INSERT INTO funcion VALUES (5,'Ejecutar comandos SQL','/adminDB/adminDB.xhtml',4);
+INSERT INTO funcion VALUES (6,'Realizar Prestamo','/adminPrestamos/prestamoUsuario.xhtml',6);
 
 INSERT INTO perfil VALUES (1,'ADMINISTRADOR','PERFIL QUE POSEE TODOS LOS PERMISOS DE LA APLICACION.',0);
 INSERT INTO perfil VALUES (2,'CLIENTE','PERFIL USUARIO FINAL.',0);
 
 INSERT INTO funcion_usuario VALUES (1,1);
 INSERT INTO funcion_usuario VALUES (1,2);
-INSERT INTO funcion_usuario VALUES (2,1);
 INSERT INTO funcion_usuario VALUES (1,3);
 INSERT INTO funcion_usuario VALUES (1,4);
 INSERT INTO funcion_usuario VALUES (1,5);
+INSERT INTO funcion_usuario VALUES (2,1);
+INSERT INTO funcion_usuario VALUES (2,6);
 
  CREATE TABLE LOGIN(
-  name_user     character varying(30) not null,
-  pass_user     character varying(30) not null,
+  name_user     character varying(60) not null,
+  pass_user     character varying(60) not null,
   count_trys    smallint not null,
   date_last_try date,
   primary key(name_user,pass_user)
@@ -59,9 +61,9 @@ INSERT INTO funcion_usuario VALUES (1,5);
 CREATE TABLE USUARIO(
   id_perfil     serial not null,
   foreign key (id_perfil)  references PERFIL(id_perfil),
-  name_user     character varying(30) not null,
+  name_user     character varying(60) not null,
   primary key(name_user),
-  pass_user     character varying(30) not null,
+  pass_user     character varying(60) not null,
   foreign key (name_user,pass_user)  references LOGIN(name_user,pass_user),  
   nombre        character varying(30) not null,
   apellido      character varying(30) not null,
@@ -70,11 +72,11 @@ CREATE TABLE USUARIO(
   version      integer not null
 );
 
-INSERT INTO login VALUES ('usuario','usuario',0,null);
-INSERT INTO login VALUES ('admin','admin',0,null);
+INSERT INTO login VALUES ('usuario','7ce5fc91006811437bb1496e1e1afaf4',0,null);
+INSERT INTO login VALUES ('admin','77e2edcc9b40441200e31dc57dbb8829',0,null);
 
-INSERT INTO usuario VALUES (2,'usuario','usuario','Pedro','Pedraza','2000-01-01','pedropedraza@correo.com',0);
-INSERT INTO usuario VALUES (1,'admin','admin','Admin','Super','1992-03-26','superadmin@correo.com',0);
+INSERT INTO usuario VALUES (2,'usuario','7ce5fc91006811437bb1496e1e1afaf4','Pedro','Pedraza','2000-01-01','pedropedraza@correo.com',0);
+INSERT INTO usuario VALUES (1,'admin','77e2edcc9b40441200e31dc57dbb8829','Admin','Super','1992-03-26','superadmin@correo.com',0);
 
 CREATE TABLE RECURSO(
   id_recurso        serial not null,
@@ -93,13 +95,16 @@ INSERT INTO recurso VALUES (DEFAULT,123459,'VIDEOBEAM','DESCRIPCION VIDEOBEAM',0
 INSERT INTO recurso VALUES (DEFAULT,123450,'SALAS AUDIVISUALES','DESCRIPCION AUDIOVISUALES',0);
 
 CREATE TABLE PRESTAMO(
-  id_recurso     integer not null,
-  id_usuario     character varying(30) not null,
-  fecha_prestamo date,
-  fecha_entrega  date,
-  version      integer not null,
+  id_recurso        integer not null,
+  id_usuario        character varying(30) not null,
+  fecha_prestamo    date not null,
+  hora_prestamo     time not null,
+  hora_entrega      time,
+  version           integer not null,
   primary key (id_usuario,id_recurso,fecha_prestamo)
 );
 
-INSERT INTO prestamo VALUES (1,'usuario','2014-02-28','2014-02-03',0);
-INSERT INTO prestamo VALUES (2,'usuario','2014-02-28','2014-02-03',0);
+
+INSERT INTO prestamo VALUES (3,'usuario','2014-05-20','14:00:00','15:00:00',0);
+INSERT INTO prestamo VALUES (1,'usuario','2014-05-22','12:00:00',null,0);
+INSERT INTO prestamo VALUES (2,'usuario','2014-05-22','14:00:00',null,0);
