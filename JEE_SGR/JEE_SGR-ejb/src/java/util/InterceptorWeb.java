@@ -32,10 +32,10 @@ import session.LoginFacadeLocal;
  */
 public class InterceptorWeb {
 
-    @Resource(lookup = "jdbc/sgrDS")
+    @Resource(lookup = "ds_sgr")
     javax.sql.DataSource data;
 
-    String query = "INSERT INTO auditor (nameClass, namemethod, named) VALUES (?,?,?)";
+    private final String query = "INSERT INTO auditor (nameClass, namemethod, named) VALUES (?,?,?)";
 
     @AroundInvoke
     public Object intercept(InvocationContext context) throws Exception {
@@ -45,8 +45,7 @@ public class InterceptorWeb {
         String name = context.getTarget().getClass().getName();
 
         Connection connection = data.getConnection();
-        PreparedStatement statement = connection.prepareStatement(query);
-        try {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, nameClass);
             statement.setString(2, name);
@@ -64,7 +63,6 @@ public class InterceptorWeb {
         } catch (Exception e) {
             throw e;
         } finally {
-            statement.close();
             connection.close();
         }
 
