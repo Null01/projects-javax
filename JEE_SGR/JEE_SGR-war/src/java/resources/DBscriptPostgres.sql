@@ -38,6 +38,7 @@ INSERT INTO funcion VALUES (3,'Administracion Prestamo','/adminPrestamos/adminPr
 INSERT INTO funcion VALUES (4,'Administracion DB', null , 4);
 INSERT INTO funcion VALUES (5,'Ejecutar comandos SQL','/adminDB/adminDB.xhtml',4);
 INSERT INTO funcion VALUES (6,'Prestamo recursos','/adminPrestamos/prestamoUsuario.xhtml',6);
+INSERT INTO funcion VALUES (7,'Administracion usuarios','/adminUsuario/adminUsuario.xhtml',7);
 
 INSERT INTO perfil VALUES (1,'ADMINISTRADOR','PERFIL QUE POSEE TODOS LOS PERMISOS DE LA APLICACION.',0);
 INSERT INTO perfil VALUES (2,'CLIENTE','PERFIL USUARIO FINAL.',0);
@@ -48,6 +49,7 @@ INSERT INTO funcion_usuario VALUES (1,3);
 INSERT INTO funcion_usuario VALUES (1,4);
 INSERT INTO funcion_usuario VALUES (1,5);
 INSERT INTO funcion_usuario VALUES (2,6);
+INSERT INTO funcion_usuario VALUES (1,7);
 
  CREATE TABLE LOGIN(
   name_user     character varying(60) not null,
@@ -96,13 +98,13 @@ INSERT INTO recurso VALUES (DEFAULT,123450,'SALAS AUDIVISUALES','DESCRIPCION AUD
 CREATE TABLE PRESTAMO(
   id_recurso        integer not null,
   id_usuario        character varying(30) not null,
-  fecha_prestamo    date not null,
-  hora_prestamo     time not null,
-  hora_entrega      time,
+  fecha_prestamo    timestamp not null,  
+  fecha_devolucion  timestamp,
+  fecha_solicitud   timestamp not null,
   version           integer not null,
   primary key (id_usuario,id_recurso,fecha_prestamo)
 );
 
 
-INSERT INTO prestamo VALUES (3,'usuario','2014-05-20','14:00:00','15:00:00',0);
-INSERT INTO prestamo VALUES (1,'usuario','2014-05-22','12:00:00',null,0);
+--INSERT INTO prestamo VALUES (3,'usuario','2014-05-20','14:00:00','15:00:00',0);
+--INSERT INTO prestamo VALUES (1,'usuario','2014-05-22','12:00:00',null,0);

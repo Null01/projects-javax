@@ -33,7 +33,7 @@ public class BeanAdminRecurso implements Serializable {
     private String nombre;
 
     private static final Logger LOGGER = Logger.getLogger(BeanAdminRecurso.class);
-    
+
     public BeanAdminRecurso() {
     }
 
@@ -43,29 +43,45 @@ public class BeanAdminRecurso implements Serializable {
         if (findAll != null) {
             listaRecursos = new ArrayList<>(findAll);
         }
+        codigoBarras = descripcion = nombre = "";
     }
 
     public void onClickEditAccept(RowEditEvent event) {
-        System.out.println("edit");
-        LOGGER.info(ELabelsCommon.END.getString() + ELabelsCommon.UPDATE.getString()+" de un recurso");
+        Recurso recurso = (Recurso) event.getObject();
+        recurso.setDescripcion(recurso.getDescripcion().trim());
+        recurso.setNombre(recurso.getNombre().trim());
+        recursoFacade.edit(recurso);
+        LOGGER.info(ELabelsCommon.END.getString() + ELabelsCommon.UPDATE.getString() + " de un recurso");
 
     }
 
     public void onClickCreateResource(ActionEvent event) {
         Recurso recurso = new Recurso();
-        LOGGER.info(ELabelsCommon.INIT.getString() + ELabelsCommon.CREATE.getString()+" de un recurso");
+        LOGGER.info(ELabelsCommon.INIT.getString() + ELabelsCommon.CREATE.getString() + " de un recurso");
         recurso.setCodigoBarras(new BigInteger(codigoBarras));
         recurso.setDescripcion(descripcion);
         recurso.setNombre(nombre);
         recursoFacade.create(recurso);
         listaRecursos.add(recurso);
-        LOGGER.info(ELabelsCommon.END.getString() + ELabelsCommon.CREATE.getString() +"del recurso "+recurso.getNombre());
+        LOGGER.info(ELabelsCommon.END.getString() + ELabelsCommon.CREATE.getString() + "del recurso " + recurso.getNombre());
         initialize();
     }
 
-    public void onClickDeleteProfile(Perfil perfil) {
-        System.out.println("delete");
-        LOGGER.info(ELabelsCommon.END.getString() + ELabelsCommon.DELETE.getString()+" de un recurso");
+    public void onClickDeleteResource(Recurso recurso) {
+
+        if (recurso != null) {
+            boolean resourceIsEnable = recursoFacade.resourceIsEnable(recurso.getIdRecurso());
+            if (!resourceIsEnable) {
+                recursoFacade.remove(recurso);
+                listaRecursos.remove(recurso);
+            }
+        }
+        LOGGER.info(ELabelsCommon.END.getString() + ELabelsCommon.DELETE.getString() + " de un recurso");
+    }
+
+    public String obtenerEstadoDelRecurso(Recurso recurso) {
+        boolean estado = recursoFacade.resourceIsEnable(recurso.getIdRecurso());
+        return (estado) ? "PRESTADO" : "LIBRE";
     }
 
     public List<Recurso> getListaRecursos() {

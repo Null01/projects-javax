@@ -8,9 +8,35 @@
     <f:view contentType="text/html">
         <h:head> 
         </h:head>
-        
-
         <h:body>
+            <h:form id="formLoanAdminUser">
+                <p:messages id="messages" autoUpdate="true" closable="true" />
+                <p:dataTable id="dataTableLoanUser" var="prestamo" value="#{beanAdminPrestamo.listaPrestamos}" editable="true"
+                             paginator="true" rows="7" emptyMessage=" - No existen informacion. -" filteredValue="#{beanAdminPrestamo.listFilteredLoan}">
+                    <f:facet name="header">  
+                        PRESTAMOS SOLICITADOS Y APROBADOS.
+                    </f:facet>
+
+                    <p:column  headerText="FECHA SOLICITUD" >
+                        <div align="center">  <h:outputText value="#{beanAdminPrestamo.obtenerFormatoFecha(prestamo.fechaSolicitud)}"/> </div>                   
+                    </p:column>
+
+                    <p:column  headerText="ID USUARIO" sortBy="prestamoPK.idUsuario" filterBy="prestamoPK.idUsuario" filterMatchMode="contains" >
+                        <div align="center">  <h:outputText value="#{prestamo.prestamoPK.idUsuario}"/>   </div>                     
+                    </p:column>
+
+
+                    <p:column  headerText="ID RECURSO"  sortBy="prestamoPK.idRecurso" filterBy="prestamoPK.idRecurso" filterMatchMode="contains">
+                        <div align="center">   <h:outputText value="#{prestamo.prestamoPK.idRecurso}"/> </div>               
+                    </p:column>
+
+
+                    <p:column  headerText="FECHA PRESTAMO" >
+                        <div align="center">  <h:outputText value="#{beanAdminPrestamo.obtenerFormatoFecha(prestamo.prestamoPK.fechaPrestamo)}"/> </div>                    
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
         </h:body>
     </f:view>
 </html>

@@ -12,6 +12,12 @@ public class Security {
         return md5Clave;
     }
 
+    /**
+     * Algoritmo de encriptamiento - tipo hash
+     * @param string llave de encriptacion
+     * @return informacion encriptada
+     * @throws NoSuchAlgorithmException 
+     */
     private String MD5(String string) throws NoSuchAlgorithmException {
         String encryptMD5 = "";
         try {

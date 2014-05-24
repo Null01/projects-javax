@@ -39,7 +39,7 @@
                     </p:column>
 
                 </p:dataTable>
-                <p:commandButton id="buttonShowCreateLoan" value="Solicitar Prestamo" oncomplete="dialogCreateLoan.show();" update=":formCreateLoan :formLoanUserView"/>
+                <p:commandButton id="buttonShowCreateLoan" value="Solicitar Prestamo" oncomplete="dialogCreateLoan.show();" update=":formCreateLoan"/>
 
             </h:form>
 
@@ -48,12 +48,15 @@
             <p:spacer/><p:spacer/>
 
             <h:form id="formLoanUserView">
-                <p:messages id="messages" autoUpdate="true" closable="true" />
+
                 <p:dataTable id="dataTableLoanUser" var="recursoView" value="#{beanPrestamoUsuario.misRecursosEnPrestamo}" editable="true"
                              paginator="true" rows="7" emptyMessage=" - No existen informacion. -" >
                     <f:facet name="header">  
                         MIS RECURSOS EN PRESTAMO.
-                    </f:facet>  
+                    </f:facet>
+                    <p:column  headerText="FECHA SOLICITUD" width="200">
+                        <div align="center">  <h:outputText value="#{beanPrestamoUsuario.obtenerFechaSolicitud(recursoView)}" /> </div>
+                    </p:column>
                     <p:column  headerText="ID" width="100">
                         <div align="center">  <h:outputText value="#{recursoView.idRecurso}" /> </div>
                     </p:column>
@@ -70,14 +73,9 @@
                         <div align="center">  <h:outputText value="#{recursoView.descripcion}" /> </div>
                     </p:column>
 
-                    <p:column  headerText="FECHA PRESTAMO">
+                    <p:column  headerText="FECHA PRESTAMO" width="200">
                         <div align="center">  <h:outputText value="#{beanPrestamoUsuario.obtenerFechaPrestamo(recursoView)}" /> </div>
                     </p:column>
-
-                    <p:column  headerText="HORA PRESTAMO">
-                        <div align="center">  <h:outputText value="#{beanPrestamoUsuario.obtenerHoraPrestamo(recursoView)}" /> </div>
-                    </p:column>
-
 
                 </p:dataTable>
             </h:form>
@@ -114,7 +112,7 @@
                     <br/>
 
                     <p:commandButton id="buttonCreateLoan"  value="Crear" oncomplete="dialogCreateLoan.hide();"
-                                     actionListener="#{beanPrestamoUsuario.onClickCreateLoad}"  update=":formLoanUser"/>
+                                     actionListener="#{beanPrestamoUsuario.onClickCreateLoad}"  update=":formLoanUser :formLoanUserView" />
                 </h:form>
             </p:dialog>
         </h:body>

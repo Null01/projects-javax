@@ -26,5 +26,7 @@ public interface RecursoFacadeLocal {
 
     int count();
 
+    public boolean resourceIsEnable(Integer idRecurso);
+
     
 }

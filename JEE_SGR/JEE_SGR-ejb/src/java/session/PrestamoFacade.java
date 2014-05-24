@@ -32,10 +32,11 @@ public class PrestamoFacade extends AbstractFacade<Prestamo> implements Prestamo
 
     @Override
     public List<Recurso> getResourceEnable() {
-        Query query = em.createQuery("SELECT p.prestamoPK FROM Prestamo p WHERE p.horaEntrega is null");
+        Query query = em.createQuery("SELECT p.prestamoPK FROM Prestamo p WHERE p.fechaDevolucion is null");
         List<PrestamoPK> list = query.getResultList();
+
         List<Recurso> resultList;
-        String queryString = "SELECT p FROM Recurso p WHERE "; // Build query
+        String queryString = "SELECT p FROM Recurso p " + ((!list.isEmpty()) ? " WHERE " : ""); // Build query
         boolean first = false;
         for (PrestamoPK key : list) {
             if (first) {
@@ -53,14 +54,14 @@ public class PrestamoFacade extends AbstractFacade<Prestamo> implements Prestamo
 
     @Override
     public int countResourceLoanByUser(String nameUser) {
-        Query query = em.createQuery("SELECT COUNT(p) FROM Prestamo p WHERE p.horaEntrega is null and p.prestamoPK.idUsuario = :nameUser ");
+        Query query = em.createQuery("SELECT COUNT(p) FROM Prestamo p WHERE p.fechaDevolucion is null and p.prestamoPK.idUsuario = :nameUser ");
         Long count = (Long) query.setParameter("nameUser", nameUser).getSingleResult();
         return count.intValue();
     }
 
     @Override
     public List<Recurso> getMyResourceLoan(String nameUser) {
-        Query query = em.createQuery("SELECT p.prestamoPK FROM Prestamo p WHERE p.horaEntrega is null and p.prestamoPK.idUsuario = :nameUser ");
+        Query query = em.createQuery("SELECT p.prestamoPK FROM Prestamo p WHERE p.fechaDevolucion is null and p.prestamoPK.idUsuario = :nameUser ");
         List<PrestamoPK> list = query.setParameter("nameUser", nameUser).getResultList();
         List<Recurso> resultQuery = new ArrayList<>();
         for (PrestamoPK pk : list) {

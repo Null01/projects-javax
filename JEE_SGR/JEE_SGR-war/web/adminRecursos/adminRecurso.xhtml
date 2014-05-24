@@ -50,6 +50,7 @@
 
                     <p:column headerText="DISPONIBLES" width="40">  
                         <div align="center">
+                            <h:outputText value="#{beanAdminRecurso.obtenerEstadoDelRecurso(recurso)}" /> 
                         </div>                        
                     </p:column>
 
@@ -70,7 +71,7 @@
 
                     <p:column width="5">
                         <div align="center">
-                            <p:commandButton id="buttonDeleteProfile" icon="ui-icon-close" action="#{beanAdminRecurso.onClickDeleteProfile(perfil)}" >
+                            <p:commandButton id="buttonDeleteProfile" icon="ui-icon-close" action="#{beanAdminRecurso.onClickDeleteResource(recurso)}" update=":formAdminResource">
                                 <p:confirm header="Eliminar perfil" message="  Esta usted seguro?" icon="ui-icon-alert" />  
                             </p:commandButton>
                         </div>
@@ -84,7 +85,7 @@
                         <p:commandButton id="buttonNo" value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                     </div>
                 </p:confirmDialog>
-                <p:commandButton value="Crear Recurso" oncomplete="dialogCreateResource.show()" />
+                <p:commandButton value="Crear Recurso" oncomplete="dialogCreateResource.show()" update=":formCreateResource"/>
             </h:form>
 
 

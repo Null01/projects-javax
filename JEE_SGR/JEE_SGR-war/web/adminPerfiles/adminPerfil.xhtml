@@ -105,7 +105,7 @@
             <p:dialog id="dialogViewUserId" widgetVar="dialogViewUser"  draggable="false" resizable="false" width="1000"
                       modal="true" appendTo="@(body)">
                 <h:form id="formViewUsers" >
-                    <p:dataTable id="dataTableView" var="usuario" value="#{beanAdminPerfiles.usersList}"  rowKey="#{user.nameUser}" 
+                    <p:dataTable id="dataTableView" var="usuario" value="#{beanAdminPerfiles.usersList}"  rowKey="#{usuario.nameUser}" 
                                  paginator="true" rows="7" emptyMessage=" - No existen informacion. -" filteredValue="#{beanAdminPerfiles.listaFilteredUsuario}">   
                         <f:facet name="header">  
                             USUARIO ASOCIADOS A #{beanAdminPerfiles.profileSelected.namePerfil}

@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head> 
+        </h:head>
+
+        <h:body>
+            <h:form id="formAdminUser">
+                <p:messages id="messages" autoUpdate="true" closable="true" />
+                <p:dataTable id="dataTableUser" var="usuario" value="#{beanAdminUsuario.listaUsuarios}" editable="true"
+                             rowKey="#{usuario.nameUser}" paginator="true" rows="7" emptyMessage=" - No existen informacion. -" >
+
+                    <f:facet name="header">  
+                        ADMINISTRACION DE USUARIOS
+                    </f:facet>  
+
+                    <p:ajax event="rowEdit" listener="#{beanAdminUsuario.onClickEditAccept}" update="@this"/>  
+                    <p:ajax event="rowEditCancel" />
+
+                    <p:column sortBy="idPerfil.namePerfil" headerText="PERFIL" width="100">
+                        <div align="center"> <h:outputText value="#{usuario.idPerfil.namePerfil}" /> </div>
+                    </p:column>
+
+                    <p:column sortBy="nameUser" headerText="USERNAME" width="80">
+                        <div align="center"> <h:outputText value="#{usuario.nameUser}" /> </div>
+                    </p:column>
+
+                    <p:column  headerText="NOMBRE" width="350">
+                        <p:cellEditor>  
+                            <f:facet name="output">  
+                                <div align="center"> <h:outputText value="#{usuario.nombre}"  style="width: 85%" />  </div>
+                            </f:facet>  
+                            <f:facet name="input">  
+                                <div align="center"> <p:inputText value="#{usuario.nombre}" style="width: 85%"  />  </div>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column  headerText="APELLIDO" width="350">
+                        <p:cellEditor>  
+                            <f:facet name="output">  
+                                <div align="center"> <h:outputText value="#{usuario.apellido}"  style="width: 85%" />  </div>
+                            </f:facet>  
+                            <f:facet name="input">  
+                                <div align="center"> <p:inputText value="#{usuario.apellido}"  style="width: 85%" />  </div>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column  headerText="CORREO ELECTRONICO" width="350">
+                        <p:cellEditor>  
+                            <f:facet name="output">  
+                                <div align="center"> <h:outputText value="#{usuario.correo}" style="width: 85%" />  </div>
+                            </f:facet>  
+                            <f:facet name="input">  
+                                <div align="center"><p:inputText value="#{usuario.correo}" style="width: 85%"  />  </div>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column  headerText="EDAD" width="100">
+                        <div align="center">  <h:outputText value="#{beanAdminUsuario.obtenerFormatoEdad(usuario.edad)}" /> </div>
+                    </p:column>
+
+                    <p:column width="5">               
+                        <p:rowEditor id="rowEditProfile" />
+                    </p:column>
+                </p:dataTable>
+
+                <p:commandButton id="buttonShowCreateUser" value="Crear Usuario" 
+                                 oncomplete="dialogCreateUser.show();" update=":formCreateUser">
+                </p:commandButton>
+                <p:tooltip for="buttonShowCreateUser" value="Crear" showEffect="fade" hideEffect="fade" />
+
+            </h:form>
+
+
+
+            <p:dialog id="dialogCreateUserId" widgetVar="dialogCreateUser" draggable="false" resizable="false" width="550"
+                      modal="true" appendTo="@(body)">
+                <h:form id="formCreateUser">
+                    <h:panelGrid columns="2">
+
+                        <h:outputLabel value="Perfil* " />
+                        <p:autoComplete id="perfil" dropdown="true" forceSelection="true" value="#{beanAdminUsuario.nameProfile}" 
+                                        completeMethod="#{beanAdminUsuario.completarListaPerfiles}" size="30" />
+                        <h:outputLabel value="Alias* " />
+                        <p:inputText id="alias" value="#{beanAdminUsuario.username}"  label="alias" size="40"/>
+                        <h:outputLabel value="Nombre* " />
+                        <p:inputText id="username" value="#{beanAdminUsuario.firstNameUser}"  label="nombre" size="40"/>
+                        <h:outputLabel value="Apellido* " />
+                        <p:inputText id="apellido" value="#{beanAdminUsuario.lastNameUser}"  label="apellido" size="40"/>
+                        <h:outputLabel value="Edad* " />
+                        <p:calendar id="edad" value="#{beanAdminUsuario.age}" pattern="dd-MM-yyyy" size="40" />
+                        <h:outputLabel value="CorreoElectronico* " />
+                        <p:inputText id="correo" value="#{beanAdminUsuario.email}"  label="correo" size="40"/>
+                    </h:panelGrid>
+
+                    <br/>
+                    <p:commandButton id="buttonCreateUser"  value="Crear" actionListener="#{beanAdminUsuario.onClickCreateUser}"
+                                     oncomplete="dialogCreateUser.hide();" update=":formAdminUser"/>
+                </h:form>
+            </p:dialog>
+
+        </h:body>
+    </f:view>
+</html>

@@ -77,9 +77,14 @@ public class BeanAdminPerfiles implements Serializable {
         perfil.setDescPerfil(perfil.getDescPerfil().trim());
         perfil.setNamePerfil(perfil.getNamePerfil().trim());
         perfilFacade.edit(perfil);
-        LOGGER.info(ELabelsCommon.END.getString() + ELabelsCommon.UPDATE.getString()+" DE UN PERFIL DE USUARIO");
+        LOGGER.info(ELabelsCommon.END.getString() + ELabelsCommon.UPDATE.getString() + " DE UN PERFIL DE USUARIO");
     }
 
+    /**
+     * Este metodo debe mejorarse a futuro.
+     *
+     * @param event
+     */
     public void onClickPreCreateProfile(ActionEvent event) {
         List<Funcion> source = funcionFacade.findAll();  // <-- Mejorar
         if (source == null) {

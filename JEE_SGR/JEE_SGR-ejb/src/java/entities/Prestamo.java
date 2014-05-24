@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 package entities;
 
@@ -28,21 +33,21 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Prestamo.findByIdRecurso", query = "SELECT p FROM Prestamo p WHERE p.prestamoPK.idRecurso = :idRecurso"),
     @NamedQuery(name = "Prestamo.findByIdUsuario", query = "SELECT p FROM Prestamo p WHERE p.prestamoPK.idUsuario = :idUsuario"),
     @NamedQuery(name = "Prestamo.findByFechaPrestamo", query = "SELECT p FROM Prestamo p WHERE p.prestamoPK.fechaPrestamo = :fechaPrestamo"),
-    @NamedQuery(name = "Prestamo.findByHoraPrestamo", query = "SELECT p FROM Prestamo p WHERE p.horaPrestamo = :horaPrestamo"),
-    @NamedQuery(name = "Prestamo.findByHoraEntrega", query = "SELECT p FROM Prestamo p WHERE p.horaEntrega = :horaEntrega"),
+    @NamedQuery(name = "Prestamo.findByFechaDevolucion", query = "SELECT p FROM Prestamo p WHERE p.fechaDevolucion = :fechaDevolucion"),
+    @NamedQuery(name = "Prestamo.findByFechaSolicitud", query = "SELECT p FROM Prestamo p WHERE p.fechaSolicitud = :fechaSolicitud"),
     @NamedQuery(name = "Prestamo.findByVersion", query = "SELECT p FROM Prestamo p WHERE p.version = :version")})
 public class Prestamo implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected PrestamoPK prestamoPK;
+    @Column(name = "fecha_devolucion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaDevolucion;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "hora_prestamo")
-    @Temporal(TemporalType.TIME)
-    private Date horaPrestamo;
-    @Column(name = "hora_entrega")
-    @Temporal(TemporalType.TIME)
-    private Date horaEntrega;
+    @Column(name = "fecha_solicitud")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaSolicitud;
     @Basic(optional = false)
     @NotNull
     @Column(name = "version")
@@ -55,9 +60,9 @@ public class Prestamo implements Serializable {
         this.prestamoPK = prestamoPK;
     }
 
-    public Prestamo(PrestamoPK prestamoPK, Date horaPrestamo, int version) {
+    public Prestamo(PrestamoPK prestamoPK, Date fechaSolicitud, int version) {
         this.prestamoPK = prestamoPK;
-        this.horaPrestamo = horaPrestamo;
+        this.fechaSolicitud = fechaSolicitud;
         this.version = version;
     }
 
@@ -73,20 +78,20 @@ public class Prestamo implements Serializable {
         this.prestamoPK = prestamoPK;
     }
 
-    public Date getHoraPrestamo() {
-        return horaPrestamo;
+    public Date getFechaDevolucion() {
+        return fechaDevolucion;
     }
 
-    public void setHoraPrestamo(Date horaPrestamo) {
-        this.horaPrestamo = horaPrestamo;
+    public void setFechaDevolucion(Date fechaDevolucion) {
+        this.fechaDevolucion = fechaDevolucion;
     }
 
-    public Date getHoraEntrega() {
-        return horaEntrega;
+    public Date getFechaSolicitud() {
+        return fechaSolicitud;
     }
 
-    public void setHoraEntrega(Date horaEntrega) {
-        this.horaEntrega = horaEntrega;
+    public void setFechaSolicitud(Date fechaSolicitud) {
+        this.fechaSolicitud = fechaSolicitud;
     }
 
     public int getVersion() {

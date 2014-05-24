@@ -35,7 +35,7 @@ public class PrestamoPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha_prestamo")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaPrestamo;
 
     public PrestamoPK() {

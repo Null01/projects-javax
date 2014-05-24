@@ -43,4 +43,9 @@
         <managed-bean-class>management.BeanPrestamoUsuario</managed-bean-class>
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>beanAdminUsuario</managed-bean-name>
+        <managed-bean-class>management.BeanAdminUsuario</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
 </faces-config>
