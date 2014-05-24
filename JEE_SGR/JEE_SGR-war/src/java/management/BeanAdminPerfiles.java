@@ -77,6 +77,7 @@ public class BeanAdminPerfiles implements Serializable {
         perfil.setDescPerfil(perfil.getDescPerfil().trim());
         perfil.setNamePerfil(perfil.getNamePerfil().trim());
         perfilFacade.edit(perfil);
+        LOGGER.info(ELabelsCommon.END.getString() + ELabelsCommon.UPDATE.getString()+" DE UN PERFIL DE USUARIO");
     }
 
     public void onClickPreCreateProfile(ActionEvent event) {
@@ -120,6 +121,7 @@ public class BeanAdminPerfiles implements Serializable {
     }
 
     public void onClickDeleteProfile(Perfil perfil1) {
+        LOGGER.info(ELabelsCommon.INIT.getString() + ELabelsCommon.DELETE.getString() + "DE UN PERFIL DE USUARIO");
         List<Usuario> usuarioList = perfil1.getUsuarioList();
         for (Usuario usuario : usuarioList) {
             loginFacade.remove(usuario.getLogin());
