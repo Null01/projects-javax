@@ -4,6 +4,7 @@ import entities.Prestamo;
 import entities.PrestamoPK;
 import entities.Recurso;
 import entities.Usuario;
+import enumeration.ELabelsCommon;
 import enumeration.ELabelsError;
 import enumeration.ELabelsMessages;
 import java.io.Serializable;
@@ -55,6 +56,7 @@ public class BeanPrestamoUsuario implements Serializable {
 
     @PostConstruct
     public void initialize() {
+        LOGGER.info(ELabelsCommon.INIT.getString()+ELabelsCommon.READ.getString()+" DE RECURSOS DISPONIBLES");
         if (usuario == null) {
             this.usuario = (Usuario) FacesUtil.getFacesUtil().getSession().getAttribute("session");
         }
@@ -81,6 +83,7 @@ public class BeanPrestamoUsuario implements Serializable {
         if (misRecursosEnPrestamo == null) {
             this.misRecursosEnPrestamo = prestamoFacade.getMyResourceLoan(usuario.getNameUser());
         }
+        LOGGER.info(ELabelsCommon.END.getString()+ELabelsCommon.READ.getString()+" DE RECURSOS DISPONIBLES");
     }
 
     public void onClickCreateLoad(ActionEvent event) {
@@ -95,16 +98,20 @@ public class BeanPrestamoUsuario implements Serializable {
                         prestamo.setHoraEntrega(null);
                         prestamo.setHoraPrestamo(horaPrestamo);
                         prestamoFacade.create(prestamo);
+                        LOGGER.info(ELabelsCommon.END.getString()+ELabelsCommon.CREATE.getString()+" DE UN PRÉSTAMO");
                     }
                     FacesUtil.getFacesUtil().addMessage(FacesMessage.SEVERITY_INFO, ELabelsMessages.SUCCESSFULL_LOAN.getString(), "");
                 } else {
                     FacesUtil.getFacesUtil().addMessage(FacesMessage.SEVERITY_INFO, ELabelsError.ERROR_PRESTAMO_CAMPOS_INCORRECTOS.getString(), "");
+                    LOGGER.warn(ELabelsError.ERROR_PRESTAMO_CAMPOS_INCORRECTOS.getString());
                 }
             } else {
                 FacesUtil.getFacesUtil().addMessage(FacesMessage.SEVERITY_INFO, ELabelsError.ERROR_PRESTAMO_MAX_ARTICULOS.getString(), "");
+                LOGGER.warn(ELabelsError.ERROR_PRESTAMO_MAX_ARTICULOS.getString());
             }
         } else {
             FacesUtil.getFacesUtil().addMessage(FacesMessage.SEVERITY_INFO, ELabelsError.ERROR_PRESTAMO_SELECCION_VACIA.getString(), "");
+            LOGGER.warn(ELabelsError.ERROR_PRESTAMO_SELECCION_VACIA.getString());
         }
 
         resourceSelected.clear();
