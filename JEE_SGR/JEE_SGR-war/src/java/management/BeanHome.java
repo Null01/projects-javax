@@ -3,6 +3,7 @@ package management;
 
 import entities.Funcion;
 import entities.Usuario;
+import enumeration.ELabelsMessages;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -11,6 +12,7 @@ import java.util.Queue;
 import java.util.TreeMap;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
@@ -26,6 +28,7 @@ public class BeanHome implements Serializable {
     private TreeNode selectedNode;
     private String pathForward;
 
+    private static final Logger LOGGER = Logger.getLogger(BeanHome.class);
     public BeanHome() {
     }
 
@@ -36,6 +39,7 @@ public class BeanHome implements Serializable {
         if (usuario != null) {
             menu = buildTree(usuario.getIdPerfil().getFuncionList());
         }
+        LOGGER.info(ELabelsMessages.SUCCESSFULL_LOGIN.getString());
     }
 
     private TreeNode buildTree(List<Funcion> funcionList) {
