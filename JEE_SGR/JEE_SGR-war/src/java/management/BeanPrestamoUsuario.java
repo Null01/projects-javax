@@ -56,7 +56,7 @@ public class BeanPrestamoUsuario implements Serializable {
 
     @PostConstruct
     public void initialize() {
-        LOGGER.info(ELabelsCommon.INIT.getString()+ELabelsCommon.READ.getString()+" DE RECURSOS DISPONIBLES");
+        LOGGER.info(ELabelsCommon.INIT.getString() + ELabelsCommon.READ.getString() + " DE RECURSOS DISPONIBLES");
         if (usuario == null) {
             this.usuario = (Usuario) FacesUtil.getFacesUtil().getSession().getAttribute("session");
         }
@@ -83,7 +83,7 @@ public class BeanPrestamoUsuario implements Serializable {
         if (misRecursosEnPrestamo == null) {
             this.misRecursosEnPrestamo = prestamoFacade.getMyResourceLoan(usuario.getNameUser());
         }
-        LOGGER.info(ELabelsCommon.END.getString()+ELabelsCommon.READ.getString()+" DE RECURSOS DISPONIBLES");
+        LOGGER.info(ELabelsCommon.END.getString() + ELabelsCommon.READ.getString() + " DE RECURSOS DISPONIBLES");
     }
 
     public void onClickCreateLoad(ActionEvent event) {
@@ -95,10 +95,12 @@ public class BeanPrestamoUsuario implements Serializable {
                     for (Recurso recurso : resourceSelected.values()) {
                         Prestamo prestamo = new Prestamo();
                         prestamo.setPrestamoPK(new PrestamoPK(recurso.getIdRecurso(), usuario.getNameUser(), buildDate()));
-                        prestamo.setHoraEntrega(null);
-                        prestamo.setHoraPrestamo(horaPrestamo);
+                        Date currentDate = Calendar.getInstance().getTime();
+                        currentDate.setTime(System.currentTimeMillis());
+                        prestamo.setFechaSolicitud(currentDate);
+                        prestamo.setFechaDevolucion(null);
                         prestamoFacade.create(prestamo);
-                        LOGGER.info(ELabelsCommon.END.getString()+ELabelsCommon.CREATE.getString()+" DE UN PRÉSTAMO");
+                        LOGGER.info(ELabelsCommon.END.getString() + ELabelsCommon.CREATE.getString() + " DE UN PRÉSTAMO");
                     }
                     FacesUtil.getFacesUtil().addMessage(FacesMessage.SEVERITY_INFO, ELabelsMessages.SUCCESSFULL_LOAN.getString(), "");
                 } else {
@@ -116,6 +118,7 @@ public class BeanPrestamoUsuario implements Serializable {
 
         resourceSelected.clear();
         listaRecursoDisponible = prestamoFacade.getResourceEnable();
+        misRecursosEnPrestamo = prestamoFacade.getMyResourceLoan(usuario.getNameUser());
         seleccionItem = false;
         horaPrestamo = new Date();
         fechaPrestamo = "";
@@ -162,12 +165,12 @@ public class BeanPrestamoUsuario implements Serializable {
 
     public String obtenerFechaPrestamo(Recurso recurso) {
         Prestamo prestamo = prestamoFacade.getLoanByIdRecurso(recurso.getIdRecurso(), usuario.getNameUser());
-        return new SimpleDateFormat("d/MM/yyyy", new Locale("es", "ES")).format(prestamo.getPrestamoPK().getFechaPrestamo());
+        return new SimpleDateFormat("d/MM/yyyy - HH:mm", new Locale("es", "ES")).format(prestamo.getPrestamoPK().getFechaPrestamo());
     }
 
-    public String obtenerHoraPrestamo(Recurso recurso) {
+    public String obtenerFechaSolicitud(Recurso recurso) {
         Prestamo prestamo = prestamoFacade.getLoanByIdRecurso(recurso.getIdRecurso(), usuario.getNameUser());
-        return new SimpleDateFormat("HH:mm:ss", new Locale("es", "ES")).format(prestamo.getHoraPrestamo());
+        return new SimpleDateFormat("d/MM/yyyy - HH:mm", new Locale("es", "ES")).format(prestamo.getFechaSolicitud());
     }
 
     public List<Recurso> getMisRecursosEnPrestamo() {
