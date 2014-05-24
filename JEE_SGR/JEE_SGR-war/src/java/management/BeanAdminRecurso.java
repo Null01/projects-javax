@@ -1,6 +1,5 @@
 package management;
 
-import entities.Perfil;
 import entities.Recurso;
 import enumeration.ELabelsCommon;
 import java.io.Serializable;
