@@ -3,8 +3,10 @@ package session;
 import entities.Recurso;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import util.InterceptorWeb;
 
 /**
  *
@@ -12,6 +14,7 @@ import javax.persistence.PersistenceContext;
  * @version 1.0
  */
 @Stateless
+@Interceptors(InterceptorWeb.class)
 public class RecursoFacade extends AbstractFacade<Recurso> implements RecursoFacadeLocal {
 
     @PersistenceContext(unitName = "JEE_SGR-ejbPU2")

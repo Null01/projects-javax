@@ -28,10 +28,11 @@ public class BeanAdminUsuario implements Serializable {
 
     @EJB
     private PerfilFacadeLocal perfilFacade;
-
+    private Perfil perfil;
     @EJB
     private UsuarioFacadeLocal usuarioFacade;
-
+    private Usuario usuario;
+    
     private List<Usuario> listaUsuarios;
     private String nameProfile;
     private String username;
@@ -66,11 +67,12 @@ public class BeanAdminUsuario implements Serializable {
     }
 
     public void onClickCreateUser(ActionEvent event) {
-
+        this.usuario.setIdPerfil(perfil);
+        
     }
 
     public String obtenerFormatoEdad(Date date) {
-        return new SimpleDateFormat("d/MM/yyyy", new Locale("es", "ES")).format(date).toString();
+        return new SimpleDateFormat("d/MM/yyyy", new Locale("es", "ES")).format(date);
     }
 
     public List<Usuario> getListaUsuarios() {

@@ -7,8 +7,10 @@ package session;
 
 import entities.Funcion;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import util.InterceptorWeb;
 
 /**
  *
@@ -16,6 +18,7 @@ import javax.persistence.PersistenceContext;
  * @version 1.0
  */
 @Stateless
+@Interceptors(InterceptorWeb.class)
 public class FuncionFacade extends AbstractFacade<Funcion> implements FuncionFacadeLocal {
 
     @PersistenceContext(unitName = "JEE_SGR-ejbPU2")

@@ -6,9 +6,11 @@ import entities.Recurso;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import util.InterceptorWeb;
 
 /**
  *
@@ -16,6 +18,7 @@ import javax.persistence.Query;
  * @version 1.0
  */
 @Stateless
+@Interceptors(InterceptorWeb.class)
 public class PrestamoFacade extends AbstractFacade<Prestamo> implements PrestamoFacadeLocal {
 
     @PersistenceContext(unitName = "JEE_SGR-ejbPU2")

@@ -88,7 +88,7 @@
 
                         <h:outputLabel value="Perfil* " />
                         <p:autoComplete id="perfil" dropdown="true" forceSelection="true" value="#{beanAdminUsuario.nameProfile}" 
-                                        completeMethod="#{beanAdminUsuario.completarListaPerfiles}" size="30" />
+                                        completeMethod="#{beanAdminUsuario.completarListaPerfiles()}" size="30" />
                         <h:outputLabel value="Alias* " />
                         <p:inputText id="alias" value="#{beanAdminUsuario.username}"  label="alias" size="40"/>
                         <h:outputLabel value="Nombre* " />

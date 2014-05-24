@@ -38,7 +38,7 @@ INSERT INTO funcion VALUES (3,'Administracion Prestamo','/adminPrestamos/adminPr
 INSERT INTO funcion VALUES (4,'Administracion DB', null , 4);
 INSERT INTO funcion VALUES (5,'Ejecutar comandos SQL','/adminDB/adminDB.xhtml',4);
 INSERT INTO funcion VALUES (6,'Prestamo recursos','/adminPrestamos/prestamoUsuario.xhtml',6);
-INSERT INTO funcion VALUES (7,'Administracion usuarios','/adminUsuario/adminUsuario.xhtml',7);
+--INSERT INTO funcion VALUES (7,'Administracion usuarios','/adminUsuario/adminUsuario.xhtml',7);
 
 INSERT INTO perfil VALUES (1,'ADMINISTRADOR','PERFIL QUE POSEE TODOS LOS PERMISOS DE LA APLICACION.',0);
 INSERT INTO perfil VALUES (2,'CLIENTE','PERFIL USUARIO FINAL.',0);
@@ -108,3 +108,13 @@ CREATE TABLE PRESTAMO(
 
 --INSERT INTO prestamo VALUES (3,'usuario','2014-05-20','14:00:00','15:00:00',0);
 --INSERT INTO prestamo VALUES (1,'usuario','2014-05-22','12:00:00',null,0);
+
+DROP TABLE AUDITOR;
+
+create table AUDITOR(
+	idAuditoria serial,
+	nameClass character varying(100) not null,
+	nameMethod character varying(100) not null,
+	named character varying(100) not null,
+	primary key(idAuditoria)
+)

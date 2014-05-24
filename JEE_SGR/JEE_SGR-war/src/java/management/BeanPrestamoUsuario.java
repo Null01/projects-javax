@@ -97,12 +97,18 @@ public class BeanPrestamoUsuario implements Serializable {
                         prestamo.setPrestamoPK(new PrestamoPK(recurso.getIdRecurso(), usuario.getNameUser(), buildDate()));
                         Date currentDate = Calendar.getInstance().getTime();
                         currentDate.setTime(System.currentTimeMillis());
-                        prestamo.setFechaSolicitud(currentDate);
-                        prestamo.setFechaDevolucion(null);
-                        prestamoFacade.create(prestamo);
-                        LOGGER.info(ELabelsCommon.END.getString() + ELabelsCommon.CREATE.getString() + " DE UN PRÉSTAMO");
+
+                        if (prestamo.getPrestamoPK().getFechaPrestamo().after(new Date())) {
+                            prestamo.setFechaSolicitud(currentDate);
+                            prestamo.setFechaDevolucion(null);
+                            prestamoFacade.create(prestamo);
+                            LOGGER.info(ELabelsCommon.END.getString() + ELabelsCommon.CREATE.getString() + " DE UN PRÉSTAMO");
+                            FacesUtil.getFacesUtil().addMessage(FacesMessage.SEVERITY_INFO, ELabelsMessages.SUCCESSFULL_LOAN.getString(), "");
+                        } else {
+                            FacesUtil.getFacesUtil().addMessage(FacesMessage.SEVERITY_INFO, " LA FECHA DEBE SER MAYOR A LA DE HOY", "");
+                        }
                     }
-                    FacesUtil.getFacesUtil().addMessage(FacesMessage.SEVERITY_INFO, ELabelsMessages.SUCCESSFULL_LOAN.getString(), "");
+
                 } else {
                     FacesUtil.getFacesUtil().addMessage(FacesMessage.SEVERITY_INFO, ELabelsError.ERROR_PRESTAMO_CAMPOS_INCORRECTOS.getString(), "");
                     LOGGER.warn(ELabelsError.ERROR_PRESTAMO_CAMPOS_INCORRECTOS.getString());
