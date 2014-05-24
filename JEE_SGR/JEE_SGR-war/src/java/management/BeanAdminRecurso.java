@@ -47,25 +47,25 @@ public class BeanAdminRecurso implements Serializable {
 
     public void onClickEditAccept(RowEditEvent event) {
         System.out.println("edit");
-        LOGGER.info(ELabelsCommon.END.getString()+ELabelsCommon.UPDATE.getString()+" de un recurso");
+        LOGGER.info(ELabelsCommon.END.getString() + ELabelsCommon.UPDATE.getString()+" de un recurso");
 
     }
 
     public void onClickCreateResource(ActionEvent event) {
         Recurso recurso = new Recurso();
-        LOGGER.info(ELabelsCommon.INIT.getString()+ELabelsCommon.CREATE.getString()+" de un recurso");
+        LOGGER.info(ELabelsCommon.INIT.getString() + ELabelsCommon.CREATE.getString()+" de un recurso");
         recurso.setCodigoBarras(new BigInteger(codigoBarras));
         recurso.setDescripcion(descripcion);
         recurso.setNombre(nombre);
         recursoFacade.create(recurso);
         listaRecursos.add(recurso);
-        LOGGER.info(ELabelsCommon.END.getString()+ELabelsCommon.CREATE.getString()+"del recurso "+recurso.getNombre());
+        LOGGER.info(ELabelsCommon.END.getString() + ELabelsCommon.CREATE.getString() +"del recurso "+recurso.getNombre());
         initialize();
     }
 
     public void onClickDeleteProfile(Perfil perfil) {
         System.out.println("delete");
-        LOGGER.info(ELabelsCommon.END.getString()+ELabelsCommon.DELETE.getString()+"de un recurso");
+        LOGGER.info(ELabelsCommon.END.getString() + ELabelsCommon.DELETE.getString()+" de un recurso");
     }
 
     public List<Recurso> getListaRecursos() {
