@@ -22,6 +22,7 @@ public class AnalyzeSyntactic extends Analyze implements IAnalyze {
 
     private Set<String> setWordsReserve;
     private Set<String> setWordsOperators;
+    private ArrayList<String> listPhrase;
 
     public Set<String> getSetWordsReserve() {
         return setWordsReserve;
@@ -49,8 +50,6 @@ public class AnalyzeSyntactic extends Analyze implements IAnalyze {
             System.err.println(ex);
         } catch (IOException ex) {
             System.out.println(ex);
-        } catch (Exception e) {
-            System.out.println(e);
         }
     }
 
@@ -113,15 +112,14 @@ public class AnalyzeSyntactic extends Analyze implements IAnalyze {
                         String key = "";
                         while (++index < l.size() && l.get(index).compareTo(EExpress.INICIO.getExpress()) != 0) {
                             if (type_data) {
-                                state = isVariable(l.get(index), false);
+                                state = isVariable(l.get(index), false) && !isExpress(l.get(index));
                                 if (state) {
                                     if (map.get(l.get(index)) == null) {
                                         map.put(l.get(index), key);
                                     } else {
-                                        motiveError = "ERROR VARIABLE YA EXISTENTE.";
+                                        motiveError = "ERROR VARIABLE YA EXISTENTE. ";
                                         causeError = l.get(index);
                                         throw new IllegalAccessException();
-
                                     }
                                     bufferedWriter.write(interpreter(l.get(index)));
                                     state = l.get(index + 1).compareTo(EOperators.IGUAL.getOperator()) == 0
@@ -169,7 +167,7 @@ public class AnalyzeSyntactic extends Analyze implements IAnalyze {
                                         throw new IllegalAccessException();
                                     }
                                 } else {
-                                    motiveError = "ERROR TIPO DE DATO.";
+                                    motiveError = "ERROR TIPO DE DATO - MAL USO DE UNA PALABRA RESERVADA.";
                                     causeError = l.get(index) + " " + l.get(index + 1);
                                     throw new IllegalAccessException();
                                 }
@@ -246,6 +244,11 @@ public class AnalyzeSyntactic extends Analyze implements IAnalyze {
                     System.out.println(ex);
                 }
             }
+
+            if (textValid) {
+                this.listPhrase = new ArrayList<>(l);
+            }
+
             return textValid;
         }
     }
@@ -388,4 +391,9 @@ public class AnalyzeSyntactic extends Analyze implements IAnalyze {
         File f = new File(file.getName() + "-out");
         return new FileReader(f);
     }
+
+    public ArrayList<String> getListPhrase() {
+        return listPhrase;
+    }
+
 }

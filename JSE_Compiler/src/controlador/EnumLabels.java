@@ -21,7 +21,9 @@ public enum EnumLabels {
     INFO_NUMERO_PALABRAS_TIPODATO("Palabras tipo de dato: "),
     INFO_NUMERO_PALABRAS_OPERADORES("Palabras tipo operadores: "),
     INFO_NUMERO_PALABRAS_IDENTIFICADORES("Palabras tipo identificadores: "),
-    INFO_COMPILE_SUCCESSFUL("Compilacion exitosa.");
+    INFO_COMPILE_SUCCESSFUL("Compilacion exitosa."),
+    INFO_GUARDAR_PARA_ANALIZAR("Antes de analizar, guarde los cambios hechos."),
+    INFO_SAY_OK_COMPILATION("Compile: Ok.\nRun:\n");
 
     private EnumLabels(String string) {
         this.string = string;

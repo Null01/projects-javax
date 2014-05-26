@@ -8,20 +8,22 @@ package vista;
 import controlador.ControladorFrameApplication;
 import controlador.EnumLabels;
 import java.awt.Color;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Document;
+import javax.swing.text.Position;
+import modelo.AnalyzeSemantic;
 import modelo.AnalyzeSyntactic;
+import modelo.InterpreterExecute;
 
 /**
  *
@@ -32,12 +34,17 @@ public class FrameApplication extends javax.swing.JFrame {
     /**
      * Creates new form NewApplication
      */
-    private ControladorFrameApplication cfa;
+    private final ControladorFrameApplication cfa;
 
     public FrameApplication() {
         initComponents();
-        this.setLocationRelativeTo(this);
+        this.setLocationRelativeTo(rootPane);
         this.cfa = new ControladorFrameApplication();
+        try {
+            textAreaIn.read(new FileReader("input.txt"), null);
+        } catch (IOException ex) {
+            Logger.getLogger(FrameApplication.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -60,6 +67,8 @@ public class FrameApplication extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         textAreaOut = new javax.swing.JTextArea();
         jSeparator1 = new javax.swing.JSeparator();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        textAreaOutExecute = new javax.swing.JTextArea();
         menuBar = new javax.swing.JMenuBar();
         menuArchivo = new javax.swing.JMenu();
         newMenuItem = new javax.swing.JMenuItem();
@@ -124,6 +133,12 @@ public class FrameApplication extends javax.swing.JFrame {
         textAreaOut.setRows(5);
         jScrollPane2.setViewportView(textAreaOut);
 
+        textAreaOutExecute.setEditable(true);
+        textAreaOutExecute.setColumns(20);
+        textAreaOutExecute.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
+        textAreaOutExecute.setRows(5);
+        jScrollPane3.setViewportView(textAreaOutExecute);
+
         javax.swing.GroupLayout panelGeneralLayout = new javax.swing.GroupLayout(panelGeneral);
         panelGeneral.setLayout(panelGeneralLayout);
         panelGeneralLayout.setHorizontalGroup(
@@ -133,7 +148,8 @@ public class FrameApplication extends javax.swing.JFrame {
                 .addGroup(panelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1)
                     .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3)))
         );
         panelGeneralLayout.setVerticalGroup(
             panelGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,7 +160,8 @@ public class FrameApplication extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         menuArchivo.setMnemonic('f');
@@ -228,7 +245,7 @@ public class FrameApplication extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelGeneral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(21, 21, 21))
         );
 
         pack();
@@ -239,9 +256,9 @@ public class FrameApplication extends javax.swing.JFrame {
         if (cfa.existFileUsed()) {
             try {
                 if (ControladorFrameApplication.getFile().exists()) {
-                    BufferedWriter bf = new BufferedWriter(new FileWriter(ControladorFrameApplication.getFile()));
-                    bf.append(string);
-                    bf.close();
+                    try (BufferedWriter bf = new BufferedWriter(new FileWriter(ControladorFrameApplication.getFile()))) {
+                        bf.append(string);
+                    }
                 } else {
                     throw new Exception(EnumLabels.ERROR_ARCHIVO_NO_EXISTE.getString());
                 }
@@ -258,10 +275,9 @@ public class FrameApplication extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(rootPane, EnumLabels.ERROR_CREANDO_ARCHIVO_YA_EXISTENTE.getString());
                         saveFile_fileChosser(true);
                     } else {
-
-                        BufferedWriter bf = new BufferedWriter(new FileWriter(file));
-                        bf.append(string);
-                        bf.close();
+                        try (BufferedWriter bf = new BufferedWriter(new FileWriter(file))) {
+                            bf.append(string);
+                        }
                         if (!onlySave) {
                             this.setTitle(selectedFile.getName());
                             textAreaIn.read(new FileReader(file), null);
@@ -338,31 +354,52 @@ public class FrameApplication extends javax.swing.JFrame {
 
     private void compileMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compileMenuItemActionPerformed
         if (cfa.existFileUsed()) {
-            AnalyzeSyntactic as = new AnalyzeSyntactic(ControladorFrameApplication.getFile().getName());
-            boolean b = as.analyzeText();
+            AnalyzeSyntactic syntactic = new AnalyzeSyntactic(ControladorFrameApplication.getFile().getName());
+            boolean b = syntactic.analyzeText();
             textAreaOut.setText("");
             if (!b) {
                 textAreaOut.setText(EnumLabels.INFO_COMPILE_FAILURE.getString() + "\n");
-                textAreaOut.setForeground(Color.red);
-                for (String s : as.getStackError()) {
+                textAreaOut.setForeground(Color.RED);
+                for (String s : syntactic.getStackError()) {
                     textAreaOut.append(s + "\n");
                 }
-                as.clearAnalyze();
+                syntactic.clearAnalyze();
             } else {
                 try {
                     textAreaOut.setForeground(Color.DARK_GRAY);
-                    textAreaOut.append(EnumLabels.INFO_NUMERO_LINEAS.getString() + as.getNumberlines() + "\n");
-                    textAreaOut.append(EnumLabels.INFO_NUMERO_PALABRAS_RESERVADA.getString() + as.getSetWordsReserve() + "\n");
-                    textAreaOut.append(EnumLabels.INFO_NUMERO_PALABRAS_IDENTIFICADORES.getString() + as.getMap().keySet() + "\n");
-                    textAreaOut.append(EnumLabels.INFO_NUMERO_PALABRAS_TIPODATO.getString() + as.getMap().values() + "\n");
-                    textAreaOut.append(EnumLabels.INFO_NUMERO_PALABRAS_OPERADORES.getString() + as.getSetWordsOperators() + "\n");
+                    textAreaOut.append(EnumLabels.INFO_NUMERO_LINEAS.getString() + syntactic.getNumberlines() + "\n");
+                    textAreaOut.append(EnumLabels.INFO_NUMERO_PALABRAS_RESERVADA.getString() + syntactic.getSetWordsReserve() + "\n");
+                    textAreaOut.append(EnumLabels.INFO_NUMERO_PALABRAS_IDENTIFICADORES.getString() + syntactic.getMap().keySet() + "\n");
+                    textAreaOut.append(EnumLabels.INFO_NUMERO_PALABRAS_TIPODATO.getString() + syntactic.getMap().values() + "\n");
+                    textAreaOut.append(EnumLabels.INFO_NUMERO_PALABRAS_OPERADORES.getString() + syntactic.getSetWordsOperators() + "\n");
                     textAreaOut.append(EnumLabels.INFO_COMPILE_SUCCESSFUL.getString() + "\n");
-                    textAreaIn.read(as.ReformatFile(ControladorFrameApplication.getFile()), null);
+
+                    textAreaIn.read(syntactic.ReformatFile(ControladorFrameApplication.getFile()), null);
                     saveFile_fileChosser(true);
+
+                    AnalyzeSemantic semantic = new AnalyzeSemantic(syntactic.getListPhrase());
+                    boolean analyzeText = semantic.analyzeText();
+                    if (!analyzeText) {
+                        textAreaOutExecute.setText(EnumLabels.INFO_COMPILE_FAILURE.getString() + "\n");
+                        textAreaOutExecute.setForeground(Color.RED);
+                        for (String s : semantic.getStackError()) {
+                            textAreaOutExecute.append(s + "\n");
+                        }
+                        semantic.clearAnalyze();
+                    } else {
+                        textAreaOutExecute.setText("");
+                        textAreaOutExecute.setForeground(Color.BLACK);
+                        textAreaOutExecute.append(EnumLabels.INFO_SAY_OK_COMPILATION.getString());
+                        //Thread execute = new InterpreterExecute(jTextArea2, as.getListPhrase());
+                        //execute.start();
+                    }
+
                 } catch (IOException ex) {
                     System.out.println(ex);
                 }
             }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, EnumLabels.INFO_GUARDAR_PARA_ANALIZAR.getString());
         }
     }//GEN-LAST:event_compileMenuItemActionPerformed
 
@@ -436,6 +473,7 @@ public class FrameApplication extends javax.swing.JFrame {
     private javax.swing.JFileChooser fileChooserSave;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextArea jTextArea2;
@@ -448,6 +486,7 @@ public class FrameApplication extends javax.swing.JFrame {
     private javax.swing.JMenuItem saveMenuItem;
     private javax.swing.JTextArea textAreaIn;
     private javax.swing.JTextArea textAreaOut;
+    private javax.swing.JTextArea textAreaOutExecute;
     // End of variables declaration//GEN-END:variables
 
 }

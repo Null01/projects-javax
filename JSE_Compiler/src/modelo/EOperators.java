@@ -6,6 +6,7 @@ package modelo;
  */
 public enum EOperators {
 
+    DIFERENTE_IGUAL("!="),
     IGUAL_IGUAL("=="),
     MAYOR_IGUAL(">="),
     MENOR_IGUAL("<="),
@@ -22,7 +23,9 @@ public enum EOperators {
     PUNTO_PUNTO(":"),
     PAR_A("("),
     PAR_B(")"),
-    COMA(",");
+    COMA(","),
+    LOGIC_AND("&"),
+    LOGIC_OR("|");
 
     private final String operator;
 

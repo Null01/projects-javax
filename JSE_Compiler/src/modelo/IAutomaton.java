@@ -20,4 +20,6 @@ public interface IAutomaton {
 
     public boolean isTypeData(String string);
 
+    public boolean isSymbolLogic(String string);
+
 }

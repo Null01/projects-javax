@@ -17,7 +17,7 @@ public class ControladorFrameApplication {
     private static File file;
 
     public ControladorFrameApplication() {
-        file = null;
+        file = new File("input.txt");
     }
 
     public static void setFile(File file) {

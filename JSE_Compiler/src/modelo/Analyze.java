@@ -70,7 +70,7 @@ public class Analyze implements IAutomaton {
     @Override
     public boolean isVariable(String string, boolean doble_comilla) {
         boolean isAlphabetic = Character.isAlphabetic(string.charAt(0));
-        if (!isAlphabetic) {
+        if (!isAlphabetic && !doble_comilla) {
             return false;
         }
 
@@ -83,6 +83,12 @@ public class Analyze implements IAutomaton {
                 }
                 return true;
             }
+        } else {
+            char[] cs = string.trim().toCharArray();
+            if (cs != null) {
+                return (cs[0] == '\"' && cs[cs.length - 1] == '\"');
+            }
+            return false;
         }
         return true;
     }
@@ -103,19 +109,8 @@ public class Analyze implements IAutomaton {
 
     @Override
     public boolean isExpress(String string) {
-
         boolean contains = getExpress().contains(string);
         return contains;
-        /*  if (contains) {
-         return true;
-         }
-
-         for (String s : getExpress()) {
-         boolean startsWith = string.startsWith(s + " ");
-         if(startsWith)
-         return true;
-         }
-         return false;*/
     }
 
     @Override
@@ -129,6 +124,20 @@ public class Analyze implements IAutomaton {
         boolean b = string.compareTo(EExpress.ENTERO.getExpress()) == 0
                 || string.compareTo(EExpress.DECIMAL.getExpress()) == 0
                 || string.compareTo(EExpress.CADENA.getExpress()) == 0;
+        return b;
+    }
+
+    @Override
+    public boolean isSymbolLogic(String string) {
+        boolean b = string.compareTo(EOperators.MAYOR.getOperator()) == 0
+                || string.compareTo(EOperators.MAYOR_IGUAL.getOperator()) == 0
+                || string.compareTo(EOperators.MENOR.getOperator()) == 0
+                || string.compareTo(EOperators.MENOR_IGUAL.getOperator()) == 0
+                || string.compareTo(EOperators.IGUAL_IGUAL.getOperator()) == 0
+                || string.compareTo(EOperators.MENOR_IGUAL.getOperator()) == 0
+                || string.compareTo(EOperators.DIFERENTE_IGUAL.getOperator()) == 0
+                || string.compareTo(EOperators.LOGIC_AND.getOperator()) == 0
+                || string.compareTo(EOperators.LOGIC_OR.getOperator()) == 0;
         return b;
     }
 
