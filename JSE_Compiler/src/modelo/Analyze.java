@@ -62,6 +62,7 @@ public class Analyze implements IAutomaton {
     @Override
     public boolean isCadena(String string) {
         String dc = EOperators.COMILLA_DOBLE.getOperator();
+        string = string.trim();
         boolean first = dc.compareTo("" + string.charAt(0)) == 0
                 || dc.compareTo("" + string.charAt(string.length() - 1)) == 0;
         return first;
@@ -138,6 +139,16 @@ public class Analyze implements IAutomaton {
                 || string.compareTo(EOperators.DIFERENTE_IGUAL.getOperator()) == 0
                 || string.compareTo(EOperators.LOGIC_AND.getOperator()) == 0
                 || string.compareTo(EOperators.LOGIC_OR.getOperator()) == 0;
+        return b;
+    }
+
+    @Override
+    public boolean isSymbolOperator(String string) {
+        boolean b = string.compareTo(EOperators.MAS.getOperator()) == 0
+                || string.compareTo(EOperators.MENOR.getOperator()) == 0
+                || string.compareTo(EOperators.MULTIPLICACION.getOperator()) == 0
+                || string.compareTo(EOperators.DIVISION.getOperator()) == 0
+                || string.compareTo(EOperators.MODULO.getOperator()) == 0;
         return b;
     }
 

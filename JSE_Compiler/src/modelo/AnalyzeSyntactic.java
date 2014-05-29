@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -49,7 +50,7 @@ public class AnalyzeSyntactic extends Analyze implements IAnalyze {
         } catch (FileNotFoundException ex) {
             System.err.println(ex);
         } catch (IOException ex) {
-            System.out.println(ex);
+            System.out.println("AnalyzeSyntactic() " + ex);
         }
     }
 
@@ -90,12 +91,11 @@ public class AnalyzeSyntactic extends Analyze implements IAnalyze {
             }
 
         } catch (IOException ex) {
-            System.out.println(ex);
+            System.out.println("analyzeText() " + ex);
         } finally {
 
             String motiveError = "";
             String causeError = "";
-
             ArrayList<String> l = new ArrayList<>(stackymbols);
             try {
                 boolean step = (l.get(0).compareTo(EExpress.PRINCIPAL.getExpress()) == 0)
@@ -138,8 +138,9 @@ public class AnalyzeSyntactic extends Analyze implements IAnalyze {
                                                     || isEntero(l.get(index + 1));
                                             if (state) {
                                                 ++index;
+                                                String value = map.get(l.get(index - 2)) + "@" + l.get(index);
+                                                map.put(l.get(index - 2), value);
                                                 bufferedWriter.write(interpreter(l.get(index)));
-
                                                 state = l.get(index + 1).compareTo(EOperators.COMA.getOperator()) == 0
                                                         || l.get(index + 1).compareTo(EOperators.PUNTO_COMA.getOperator()) == 0;
 
@@ -196,6 +197,7 @@ public class AnalyzeSyntactic extends Analyze implements IAnalyze {
                                 state = isExpress(l.get(index)) || isSymbol(l.get(index))
                                         || map.containsKey(l.get(index)) || isCadena(l.get(index))
                                         || isEntero(l.get(index)) || isDecimal(l.get(index));
+
                                 if (state) {
                                     bufferedWriter.write(interpreter(l.get(index)));
                                 } else {
@@ -234,14 +236,13 @@ public class AnalyzeSyntactic extends Analyze implements IAnalyze {
                 }
                 printStackError(causeError);
                 textValid = false;
-                System.out.println(ex);
             }
 
             if (bufferedWriter != null) {
                 try {
                     bufferedWriter.close();
                 } catch (IOException ex) {
-                    System.out.println(ex);
+                    System.out.println("analyzeText() " + ex);
                 }
             }
 
@@ -260,9 +261,11 @@ public class AnalyzeSyntactic extends Analyze implements IAnalyze {
         int index = 0, flag, i = -1;
         Stack<String> stack = new Stack<>();
         while (!line.isEmpty()) {
+
             char array[] = line.toCharArray();
             key = ("" + array[++i]) + "" + array[(i + 1) % line.length()];
             key = (isSymbol(key)) ? key : ("" + array[i]);
+
             if (isSymbol(key)) {
                 setWordsOperators.add(key);
                 flag = isCaseSpecial(i, array);
@@ -316,8 +319,12 @@ public class AnalyzeSyntactic extends Analyze implements IAnalyze {
                             stack.push(temp);
                             stack.push(value); //ENTERO SIN SIGNO
                         } else {
+                            /**
+                             * El codigo de aqui en adelante esta muy parchado.
+                             * recomiendo re plantear, el analisis para realizar
+                             * parsing and match String
+                             */
                             if (isCadena(value)) {
-                                // System.out.println(temp + " isCadena " + value);
                                 if (temp.compareTo(value) != 0) {
                                     stack.push(temp);
                                 }
@@ -325,21 +332,29 @@ public class AnalyzeSyntactic extends Analyze implements IAnalyze {
                             } else {
                                 if (isExpress(value)) {
                                     setWordsReserve.add(value);
-                                    // System.out.println(temp + " isExpress " + value);
                                     if (temp.compareTo(value) != 0) {
                                         stack.push(temp);
                                     }
                                     stack.push(value);
                                 } else {
                                     if (isVariable(value, false)) {
-                                        //System.out.println(value + " isVariable ");
                                         if (temp.compareTo(value) != 0) {
                                             stack.push(temp);
                                         }
                                         stack.push(value);
                                     } else {
-                                        getStackError().push(EError.DEF_VAR_ASIG_STRING.getMessage());
-                                        return false;
+                                        if (!value.contains("\"") && value.contains(" ")) {
+                                            StringTokenizer st;
+                                            st = new StringTokenizer(value);
+                                            stack.push(temp);
+                                            while (st.hasMoreTokens()) {
+                                                stack.push(st.nextToken());
+                                            }
+                                            return validate(stack, "", stack.pop());
+                                        } else {
+                                            getStackError().push(EError.DEF_VAR_ASIG_STRING.getMessage());
+                                            return false;
+                                        }
                                     }
                                 }
                             }
@@ -372,7 +387,8 @@ public class AnalyzeSyntactic extends Analyze implements IAnalyze {
             return "\n" + target + "\n";
         }
         boolean endLine = string.compareTo(EExpress.ENTONCES.getExpress()) == 0
-                || string.compareTo(EExpress.FIN_SI.getExpress()) == 0;
+                || string.compareTo(EExpress.FIN_SI.getExpress()) == 0
+                || string.compareTo(EExpress.FIN_MIENTRAS.getExpress()) == 0;
         if (endLine) {
             return " " + target + "\n";
         }

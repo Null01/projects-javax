@@ -1,24 +1,14 @@
 program : Nombre_Programa
 data_type
- string: nombre;
- int: codigo;
- int: a = 500 , b = 200;
- float: dinero;
- string: s;
+ string: nombre , apellido;
+ int: a = 500 , b = 200 , codigo;
+ float: dinero = 0.55;
+ string: s = "<empty>";
  string: dato;
 
 begin
- read ( a , codigo );
- read ( a );
- if ( a != b != dato ) then
- end_if
- write ( "hola:" + nombre );
- read ( a );
- write ( codigo );
- write ( "Digita tu sueldo:" );
- read ( dinero );
- if ( dinero >= 1.0 & a | a ) then
- while ( nombre == nombre ) then
- end_if
- end_while
+ write ( "Digite su nombre y apellido:" );
+ read ( nombre , apellido );
+ write ( "Usted es: " + nombre + " " + apellido + " " + nombre );
+
 end

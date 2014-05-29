@@ -18,9 +18,6 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
-import javax.swing.text.Position;
 import modelo.AnalyzeSemantic;
 import modelo.AnalyzeSyntactic;
 import modelo.InterpreterExecute;
@@ -135,7 +132,7 @@ public class FrameApplication extends javax.swing.JFrame {
 
         textAreaOutExecute.setEditable(true);
         textAreaOutExecute.setColumns(20);
-        textAreaOutExecute.setFont(new java.awt.Font("DejaVu Sans", 0, 14)); // NOI18N
+        textAreaOutExecute.setFont(new java.awt.Font("Consolas", 1, 14)); // NOI18N
         textAreaOutExecute.setRows(5);
         jScrollPane3.setViewportView(textAreaOutExecute);
 
@@ -377,7 +374,7 @@ public class FrameApplication extends javax.swing.JFrame {
                     textAreaIn.read(syntactic.ReformatFile(ControladorFrameApplication.getFile()), null);
                     saveFile_fileChosser(true);
 
-                    AnalyzeSemantic semantic = new AnalyzeSemantic(syntactic.getListPhrase());
+                    AnalyzeSemantic semantic = new AnalyzeSemantic(syntactic.getListPhrase(), syntactic.getMap());
                     boolean analyzeText = semantic.analyzeText();
                     if (!analyzeText) {
                         textAreaOutExecute.setText(EnumLabels.INFO_COMPILE_FAILURE.getString() + "\n");
@@ -390,8 +387,8 @@ public class FrameApplication extends javax.swing.JFrame {
                         textAreaOutExecute.setText("");
                         textAreaOutExecute.setForeground(Color.BLACK);
                         textAreaOutExecute.append(EnumLabels.INFO_SAY_OK_COMPILATION.getString());
-                        //Thread execute = new InterpreterExecute(jTextArea2, as.getListPhrase());
-                        //execute.start();
+                        Thread execute = new InterpreterExecute(textAreaOutExecute, semantic.getListInterpreterExecute(), semantic.getData());
+                        execute.start();
                     }
 
                 } catch (IOException ex) {

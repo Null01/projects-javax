@@ -22,4 +22,6 @@ public interface IAutomaton {
 
     public boolean isSymbolLogic(String string);
 
+    public boolean isSymbolOperator(String string);
+
 }
