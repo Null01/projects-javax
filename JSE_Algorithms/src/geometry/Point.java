@@ -17,16 +17,18 @@ public class Point implements Comparable<Point> {
                 + (this.y - point.y) * (this.y - point.y));
     }
 
+    @Override
     public boolean equals(Object obj) {
         Point p = (Point) obj;
         return (this.x == p.x && this.y == p.y);
     }
 
+    @Override
     public int compareTo(Point o) {
-        if (o.y == this.y) {
-            return (int) (o.x - this.x);
+        if (Double.compare(o.x, this.x) == 0) {
+            return Double.compare(o.y, this.y);
         }
-        return 1;
+        return Double.compare(o.x, this.x);
     }
 
     public String signed(double r) {
