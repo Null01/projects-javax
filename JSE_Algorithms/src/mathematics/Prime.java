@@ -8,11 +8,6 @@ package mathematics;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author duran
- * @version 1.0
- */
 public class Prime {
 
     private final int MAX_COUNT_PRIME;

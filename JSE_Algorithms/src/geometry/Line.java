@@ -1,12 +1,6 @@
 
 package geometry;
 
-
-/**
- *
- * @author duran
- * @version 1.0
- */
 public class Line {
 
     public static final double EPSILON = 0.00000001;

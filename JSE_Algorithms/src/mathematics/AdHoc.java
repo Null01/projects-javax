@@ -4,10 +4,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 
-/**
- *
- * @author andresfelipegarciaduran
- */
 public class AdHoc {
 
     public BigInteger mcd(BigInteger num, BigInteger den) {
