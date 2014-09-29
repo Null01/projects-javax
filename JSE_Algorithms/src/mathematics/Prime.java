@@ -34,9 +34,16 @@ public class Prime {
         for (int i = 2; i < bs.length; i++) {
             if (!bs[i]) {
                 list.add(i);
+                System.out.println(i+", ");
+                
             }
         }
         return list;
+    }
+
+    public static void main(String args[]) {
+        Prime p = new Prime(10000);
+        p.getNumbersPrime(p.prime);
     }
 
 }
