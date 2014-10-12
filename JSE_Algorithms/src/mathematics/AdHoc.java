@@ -21,7 +21,27 @@ public class AdHoc {
         return n;
     }
 
-    public String DoubleParseFraction(double Double) {
+    public BigInteger mcm(BigInteger num, BigInteger den) {
+        if (num.compareTo(BigInteger.ZERO) == 0 || den.compareTo(BigInteger.ZERO) == 0) {
+            return BigInteger.ZERO;
+        }
+        return num.divide(mcd(num, den)).multiply(den);
+    }
+
+    public int count_divisors_not_primes(long n) {
+        int outcome = 2, top = (int) Math.sqrt(n);
+        for (int i = 2; i <= top; i++) {
+            if (n % i == 0) {
+                outcome += 2; // i + (n/i)
+            }
+        }
+        if (top * top == n) {
+            --outcome;  // top
+        }
+        return outcome;
+    }
+
+    public String double_parse_to_fraction(double Double) {
         String string_double = Double + "";
         int integer = string_double.indexOf('.');
         if (integer == -1) {
@@ -109,4 +129,27 @@ public class AdHoc {
         }
         return hamming;
     }
+
+    /*
+     * Hallar n cantidad de parejas que satisfagan la ecuacion 1/n = 1/x + 1/y, dado un n
+     */
+    public int find_n_pairs(int n) {
+        int count = 1;
+        for (int i = 2, end = (int) Math.sqrt(n); i <= end; i++) {
+            if (n % i == 0) {
+                int j = 0;
+                do {
+                    n /= i;
+                    j++;
+                } while (n % i == 0);
+                count *= j * 2 + 1;
+                end = (int) Math.sqrt(n);
+            }
+        }
+        if (n != 1) {
+            count *= 3; // Remaining largest prime factor
+        }
+        return (count + 1) / 2; // Sin repeticion
+    }
+
 }

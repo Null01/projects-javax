@@ -1,4 +1,3 @@
-
 package string;
 
 public class KnuthMorrisPratt {
@@ -33,8 +32,10 @@ public class KnuthMorrisPratt {
     /**
      * The algorithm's time complexity is O(n + m) if n and m are the lengths of
      * the pattern and the text. This is better than the trivial O(nm) solution.
-     * 
-     * Implementacion contruida para encontrar un substring dentro de un string.     *
+     *
+     * Implementacion contruida para encontrar un substring dentro de un string.
+     *
+     *
      * @param str_origin Cadena origen.
      * @param target Cadena origen al contrario.
      * @return
@@ -49,7 +50,6 @@ public class KnuthMorrisPratt {
             while (j >= 0 && str[j] != rev[i]) {
                 j = F[j];
             }
-
             ++i;
             ++j;
 
@@ -57,7 +57,6 @@ public class KnuthMorrisPratt {
                 subSize = j;
             }
         }
-
         String subString = str_origin.substring(0, subSize);
         return new StringBuilder(subString).reverse().toString();
     }

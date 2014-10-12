@@ -1,5 +1,6 @@
-
 package geometry;
+
+import java.util.List;
 
 public class Line {
 
@@ -25,9 +26,9 @@ public class Line {
         if (equals(m1, m2)) {
             // determina si la recta pertenese a la otra o existe intersepcion
             if (equals(l1.p1.y - m1 * l1.p1.x, l2.p1.y - m2 * l2.p1.x)) {
-                // EXISTE INTERSEPCION.
+                // LAS DOS RECTAS SON UNA SOLA.
             } else {
-                // NO LA INTERSEPCION.
+                // NO INTERSEPCION ENTRE LINEAS
             }
         }
 
@@ -50,6 +51,33 @@ public class Line {
 
     public boolean equals(double a, double b) {
         return (Math.abs((a) - (b)) < ZERO);
+    }
+
+    public long max_points_in_a_line(List<Point> points) {
+        long max_points = 0, max_temp;
+        int j;
+        double[] temp = new double[points.size()];
+        for (int i = 0; (max_points + 2) <= (points.size() - i); i++) {
+            for (j = i + 1; j < points.size(); j++) {
+                if (points.get(i).x == points.get(j).x) {
+                    temp[j] = INF;
+                } else {
+                    temp[j] = (points.get(i).y - points.get(j).y) / (points.get(i).x - points.get(j).x);
+                }
+            }
+            for (j = i + 1; j < points.size(); j++) {
+                max_temp = 0;
+                for (int k = j + 1; k < points.size(); k++) {
+                    if (Math.abs(temp[j] - temp[k]) < ZERO) {
+                        ++max_temp;
+                    }
+                }
+                if (max_temp > max_points) {
+                    max_points = max_temp;
+                }
+            }
+        }
+        return max_points + 2;
     }
 
 }
