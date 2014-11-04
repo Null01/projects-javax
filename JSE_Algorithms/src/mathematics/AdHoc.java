@@ -3,6 +3,7 @@ package mathematics;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.util.List;
 
 public class AdHoc {
 
@@ -26,6 +27,16 @@ public class AdHoc {
             return BigInteger.ZERO;
         }
         return num.divide(mcd(num, den)).multiply(den);
+    }
+
+    public BigInteger mcm_factors_prime(List<Long> num, List<Long> den) {
+        BigInteger outcome = BigInteger.ONE;
+        int size = Math.max(num.size(), den.size());
+        for (int i = 0; i < size; i++) {
+            BigInteger integer = BigInteger.valueOf(Math.max((i < num.size()) ? num.get(i) : 1, (i < den.size()) ? den.get(i) : 1));
+            outcome = outcome.multiply((integer == BigInteger.ZERO) ? BigInteger.ONE : integer);
+        }
+        return outcome;
     }
 
     public int count_divisors_not_primes(long n) {
@@ -151,5 +162,4 @@ public class AdHoc {
         }
         return (count + 1) / 2; // Sin repeticion
     }
-
 }
