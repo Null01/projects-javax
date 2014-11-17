@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title> PL/SQL </title>
+            </f:facet>
+            <style>
+                body  {
+                    background-image: url('img/backgroud_app.jpg');
+                }
+            </style>
+        </h:head>
+
+        <h:body id="mainBody">
+            <p:layout fullPage="true">
+                <p:layoutUnit position="north" size="100" closable="true" collapsible="true">
+                </p:layoutUnit>
+                <p:layoutUnit id="south" position="south" size="100" closable="true" collapsible="true">
+                </p:layoutUnit>
+                <p:layoutUnit id="west" position="west" size="315" closable="true" collapsible="true">
+                    <h:form id="form3">
+                        <p:tree value="#{beanHome.menu}" var="node" dynamic="true" cache="false"  
+                                selectionMode="single"  selection="#{beanHome.selectedNode}" id="tree" >
+                            <p:ajax event="select" update=":panelGroup" listener="#{beanHome.onNodeSelect}" />  
+                            <p:treeNode>
+                                <h:outputText value="#{node.nameFunction}"/>
+                            </p:treeNode>
+                        </p:tree>
+                    </h:form>
+                </p:layoutUnit>
+                <p:layoutUnit id="center" position="center">
+                    <h:panelGroup id="panelGroup" layout="block">
+                        <ui:include id="includeSrc" src="#{beanHome.pathForward}" />
+                    </h:panelGroup>
+                </p:layoutUnit>
+            </p:layout>
+        </h:body>
+    </f:view>
+</html>

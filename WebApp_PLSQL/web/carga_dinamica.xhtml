@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+                 xmlns:h="http://java.sun.com/jsf/html"
+                 xmlns:f="http://java.sun.com/jsf/core"
+                 xmlns:ui="http://java.sun.com/jsf/facelets"
+                 xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="formCreateTableDinamic">
+        <p:messages id="messages" showDetail="false"/>
+        <div align="center">
+            <p:spacer/>
+            <h:panelGrid columns="6" cellpadding="5" style="margin-bottom:10px">
+                <h:outputLabel value="Tables" for="tables" />
+                <p:selectOneMenu id="tables" value="#{beanLoadTableDinamic.tableSelected}" required="true" style="width: 250px;">
+                    <p:ajax event="change" update="fields" listener="#{beanLoadTableDinamic.loadNewsFields}" />
+                    <f:selectItems value="#{beanLoadTableDinamic.listTables}" />
+                </p:selectOneMenu>
+                <h:outputLabel value="Fields" for="fields" />
+                <p:selectOneMenu id="fields" value="#{beanLoadTableDinamic.fieldSelected}" required="true" style="width: 250px;">
+                    <f:selectItems value="#{beanLoadTableDinamic.listFields}" />
+                </p:selectOneMenu>
+                <h:outputLabel value="Value N" for="valueN" />
+                <p:inputText id="valueN" value="#{beanLoadTableDinamic.nFields}"  required="true" style="width: 50px;" size="5">
+                    <f:validateDoubleRange minimum="0" maximum="20" />
+                </p:inputText>
+            </h:panelGrid>
+
+            <p:commandButton id="buttonSearchPatent" value="Create Table Dinamic"  actionListener="#{beanLoadTableDinamic.createTableDinamic}" update="messages"/>  
+        </div>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <h:form id="formViewPatentsManagement">
+        <p:messages id="messages" showDetail="false" />
+        <div align="center">
+            <p:spacer/>
+            <h:panelGrid columns="5" cellpadding="5" style="margin-bottom:10px">
+                <h:outputLabel value="Campo:" for="fieldSearch" />
+                <p:selectOneMenu id="fieldSearch" value="#{beanPatentManagement.fieldKeywordSearch}" required="true" style="width: 250px;">
+                    <f:selectItems value="#{beanPatentManagement.listFieldKeywordSearch}" />
+                </p:selectOneMenu>
+                <h:outputLabel value="Search: " for="keywordSearch" />
+                <p:inputText id="keywordSearch" value="#{beanPatentManagement.keywordSearch}"  required="true"  style="width: 450px;" placeholder="Enter your keyword"/>
+                <p:commandButton id="buttonSearchPatent" value="Search"  actionListener="#{beanPatentManagement.searchPatent}" update="messages"/>  
+            </h:panelGrid>
+            <p:commandButton value="Create Patent"  type="button" onclick="PF('dlgCreatePatent').show();" update=":idDialogCreatePatent"/>
+        </div>
+    </h:form>
+
+    <p:dialog id="idDialogCreatePatent" header="Create Patent - Please fill the fields" widgetVar="dlgCreatePatent" modal="true" draggable="false" appendTo="@(body)" resizable="false" width="680">
+        <p:ajax event="close" update="formCreatePatent" listener="#{beanPatentManagement.clearDialog}" />
+        <h:form id="formCreatePatent" enctype="multipart/form-data" >
+            <p:panel id="panelCreate">
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Id Patent: " for="idPatent"/>
+                    <p:inputText id="idPatent" value="#{beanPatentManagement.idPatent}" required="true" label="idPatent"  size="40" style="width: 450px;"/>
+                    <h:outputLabel value="Title Patent: " for="titlePatent"/>
+                    <p:inputText id="titlePatent" value="#{beanPatentManagement.titlePatent}" required="true" label="titlePatent"  size="40" style="width: 450px;"/>
+                    <h:outputLabel value="Public Date: " for="publicDate"/>
+                    <p:calendar id="publicDate" value="#{beanPatentManagement.publicDate}" required="true" pattern="dd-MM-yyyy" mask="true" size="53"/>
+                    <h:outputLabel value="Description: " for="description"/>
+                    <p:inputTextarea id="description" value="#{beanPatentManagement.description}" required="true" label="description" autoResize="false" cols="80"  style="width: 450px;height: 200px;"/>
+                    <h:outputLabel value="Inventors: " for="inventors"/>
+                    <p:selectOneMenu id="inventors" value="#{beanPatentManagement.inventors}" required="true" style="width: 250px;">
+                        <f:selectItems value="#{beanPatentManagement.listInventors}" />
+                    </p:selectOneMenu>
+                    <h:outputLabel value="Classification: " for="classification"/>
+                    <p:selectOneMenu id="classification" value="#{beanPatentManagement.classification}" required="true" style="width: 250px;">
+                        <f:selectItems value="#{beanPatentManagement.listClassification}" />
+                    </p:selectOneMenu>
+                    <h:outputLabel value="Assignee " for="assignee"/>
+                    <p:selectOneMenu id="assignee" value="#{beanPatentManagement.assignee}" required="true" style="width: 250px;">
+                        <f:selectItems value="#{beanPatentManagement.listAssignee}" />
+                    </p:selectOneMenu>
+                    <p:spacer/>
+                    <p:spacer/>
+                    <h:outputLabel value="Attached File: " for="attached"/>
+                    <p:fileUpload id="attached" value="#{beanPatentManagement.file}" mode="simple" update=":messages" required="true" sizeLimit="1000000" />
+                </h:panelGrid>
+                <br/>
+                <div align="center">
+                    <p:commandButton value="Create" ajax="false" actionListener="#{beanPatentManagement.onClickCreatePatent}" 
+                                     oncomplete="dialogCreatePatent.hide()" update="messages"/>
+                </div>
+            </p:panel>
+        </h:form>
+    </p:dialog>
+</ui:composition>
