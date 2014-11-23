@@ -22,25 +22,25 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author duran
+ * @author andresfelipegarciaduran
  */
 @Entity
 @Table(name = "RELATED_PATENTS")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RelatedPatents.findAll", query = "SELECT r FROM RelatedPatents r"),
-    @NamedQuery(name = "RelatedPatents.findByRelationDir", query = "SELECT r FROM RelatedPatents r WHERE r.relationDir = :relationDir"),
-    @NamedQuery(name = "RelatedPatents.findByRelatedPatentId", query = "SELECT r FROM RelatedPatents r WHERE r.relatedPatentId = :relatedPatentId")})
+    @NamedQuery(name = "RelatedPatents.findByRelatedPatentId", query = "SELECT r FROM RelatedPatents r WHERE r.relatedPatentId = :relatedPatentId"),
+    @NamedQuery(name = "RelatedPatents.findByRelationDir", query = "SELECT r FROM RelatedPatents r WHERE r.relationDir = :relationDir")})
 public class RelatedPatents implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Size(max = 1)
-    @Column(name = "RELATION_DIR")
-    private String relationDir;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "RELATED_PATENT_ID")
     private Long relatedPatentId;
+    @Size(max = 1)
+    @Column(name = "RELATION_DIR")
+    private String relationDir;
     @JoinColumn(name = "PATENT_DST", referencedColumnName = "PATENT_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Patent patentDst;
@@ -55,20 +55,20 @@ public class RelatedPatents implements Serializable {
         this.relatedPatentId = relatedPatentId;
     }
 
-    public String getRelationDir() {
-        return relationDir;
-    }
-
-    public void setRelationDir(String relationDir) {
-        this.relationDir = relationDir;
-    }
-
     public Long getRelatedPatentId() {
         return relatedPatentId;
     }
 
     public void setRelatedPatentId(Long relatedPatentId) {
         this.relatedPatentId = relatedPatentId;
+    }
+
+    public String getRelationDir() {
+        return relationDir;
+    }
+
+    public void setRelationDir(String relationDir) {
+        this.relationDir = relationDir;
     }
 
     public Patent getPatentDst() {

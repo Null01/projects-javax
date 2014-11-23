@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author duran
+ * @author andresfelipegarciaduran
  */
 @Entity
 @Table(name = "CLASSIFICATION")

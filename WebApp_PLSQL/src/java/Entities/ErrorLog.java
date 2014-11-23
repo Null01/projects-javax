@@ -26,21 +26,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author duran
+ * @author andresfelipegarciaduran
  */
 @Entity
 @Table(name = "ERROR_LOG")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ErrorLog.findAll", query = "SELECT e FROM ErrorLog e"),
+    @NamedQuery(name = "ErrorLog.findByErrorLog", query = "SELECT e FROM ErrorLog e WHERE e.errorLog = :errorLog"),
     @NamedQuery(name = "ErrorLog.findByErrorDate", query = "SELECT e FROM ErrorLog e WHERE e.errorDate = :errorDate"),
     @NamedQuery(name = "ErrorLog.findByIssuedTable", query = "SELECT e FROM ErrorLog e WHERE e.issuedTable = :issuedTable"),
     @NamedQuery(name = "ErrorLog.findByIssuedColumn", query = "SELECT e FROM ErrorLog e WHERE e.issuedColumn = :issuedColumn"),
     @NamedQuery(name = "ErrorLog.findByRegId", query = "SELECT e FROM ErrorLog e WHERE e.regId = :regId"),
-    @NamedQuery(name = "ErrorLog.findByUserIpAdd", query = "SELECT e FROM ErrorLog e WHERE e.userIpAdd = :userIpAdd"),
-    @NamedQuery(name = "ErrorLog.findByErrorLog", query = "SELECT e FROM ErrorLog e WHERE e.errorLog = :errorLog")})
+    @NamedQuery(name = "ErrorLog.findByUserIpAdd", query = "SELECT e FROM ErrorLog e WHERE e.userIpAdd = :userIpAdd")})
 public class ErrorLog implements Serializable {
     private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ERROR_LOG")
+    private Long errorLog;
     @Column(name = "ERROR_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date errorDate;
@@ -57,11 +62,6 @@ public class ErrorLog implements Serializable {
     @Size(max = 10)
     @Column(name = "USER_IP_ADD")
     private String userIpAdd;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ERROR_LOG")
-    private Long errorLog;
     @JoinColumn(name = "EXCEPTION_ID", referencedColumnName = "EXCEPTION_ID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private ExceptionsPatents exceptionId;
@@ -76,6 +76,14 @@ public class ErrorLog implements Serializable {
     public ErrorLog(Long errorLog, BigInteger regId) {
         this.errorLog = errorLog;
         this.regId = regId;
+    }
+
+    public Long getErrorLog() {
+        return errorLog;
+    }
+
+    public void setErrorLog(Long errorLog) {
+        this.errorLog = errorLog;
     }
 
     public Date getErrorDate() {
@@ -116,14 +124,6 @@ public class ErrorLog implements Serializable {
 
     public void setUserIpAdd(String userIpAdd) {
         this.userIpAdd = userIpAdd;
-    }
-
-    public Long getErrorLog() {
-        return errorLog;
-    }
-
-    public void setErrorLog(Long errorLog) {
-        this.errorLog = errorLog;
     }
 
     public ExceptionsPatents getExceptionId() {
