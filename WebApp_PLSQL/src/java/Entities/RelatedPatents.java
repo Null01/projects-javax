@@ -42,10 +42,10 @@ public class RelatedPatents implements Serializable {
     @Column(name = "RELATION_DIR")
     private String relationDir;
     @JoinColumn(name = "PATENT_DST", referencedColumnName = "PATENT_ID")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Patent patentDst;
     @JoinColumn(name = "PATENT_SRC", referencedColumnName = "PATENT_ID")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Patent patentSrc;
 
     public RelatedPatents() {

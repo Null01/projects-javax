@@ -63,7 +63,7 @@ public class ErrorLog implements Serializable {
     @Column(name = "USER_IP_ADD")
     private String userIpAdd;
     @JoinColumn(name = "EXCEPTION_ID", referencedColumnName = "EXCEPTION_ID")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private ExceptionsPatents exceptionId;
 
     public ErrorLog() {

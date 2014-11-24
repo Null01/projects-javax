@@ -49,12 +49,12 @@ public class Assignee implements Serializable {
     @JoinTable(name = "INVENTOR_ASSIGNEE", joinColumns = {
         @JoinColumn(name = "ASSIGNEE_ID", referencedColumnName = "ASSIGNEE_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "INVENTOR_ID", referencedColumnName = "INVENTOR_ID")})
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Inventor> inventorList;
     @JoinTable(name = "ASSIGNEE_PATENT", joinColumns = {
         @JoinColumn(name = "ASSIGNEE_ID", referencedColumnName = "ASSIGNEE_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "PATENT_ID", referencedColumnName = "PATENT_ID")})
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Patent> patentList;
 
     public Assignee() {

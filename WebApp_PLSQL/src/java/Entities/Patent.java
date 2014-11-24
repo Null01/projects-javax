@@ -60,15 +60,15 @@ public class Patent implements Serializable {
     @Lob
     @Column(name = "DESCRIPTION")
     private String description;
-    @ManyToMany(mappedBy = "patentList", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "patentList", fetch = FetchType.EAGER)
     private List<Inventor> inventorList;
-    @ManyToMany(mappedBy = "patentList", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "patentList", fetch = FetchType.EAGER)
     private List<Classification> classificationList;
-    @ManyToMany(mappedBy = "patentList", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "patentList", fetch = FetchType.EAGER)
     private List<Assignee> assigneeList;
-    @OneToMany(mappedBy = "patentDst", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "patentDst", fetch = FetchType.EAGER)
     private List<RelatedPatents> relatedPatentsList;
-    @OneToMany(mappedBy = "patentSrc", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "patentSrc", fetch = FetchType.EAGER)
     private List<RelatedPatents> relatedPatentsList1;
 
     public Patent() {

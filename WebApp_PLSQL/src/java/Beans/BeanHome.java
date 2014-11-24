@@ -32,10 +32,9 @@ public class BeanHome implements Serializable {
     }
 
     public void executeLoad(ActionEvent actionEvent) {
-        System.out.println("init - executeLoad");
-
         try {
             Thread.sleep(4000);
+            System.out.println("hola mundo");
         } catch (InterruptedException ex) {
             Logger.getLogger(BeanHome.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -46,7 +45,6 @@ public class BeanHome implements Serializable {
         Node funcion = (Node) event.getTreeNode().getData();
         if (funcion != null) {
             setPathForward(funcion.getPathFunction());
-            System.out.println(funcion.getPathFunction());
         }
     }
 

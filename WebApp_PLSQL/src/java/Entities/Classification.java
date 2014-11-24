@@ -49,7 +49,7 @@ public class Classification implements Serializable {
     @JoinTable(name = "CLASSIFICATION_PATENT", joinColumns = {
         @JoinColumn(name = "CLASSIFICATION_ID", referencedColumnName = "CLASSIFICATION_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "PATENT_ID", referencedColumnName = "PATENT_ID")})
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Patent> patentList;
 
     public Classification() {

@@ -46,12 +46,12 @@ public class Inventor implements Serializable {
     @Size(max = 50)
     @Column(name = "NAME")
     private String name;
-    @ManyToMany(mappedBy = "inventorList", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "inventorList", fetch = FetchType.EAGER)
     private List<Assignee> assigneeList;
     @JoinTable(name = "INVENTOR_PATENT", joinColumns = {
         @JoinColumn(name = "INVENTOR_ID", referencedColumnName = "INVENTOR_ID")}, inverseJoinColumns = {
         @JoinColumn(name = "PATENT_ID", referencedColumnName = "PATENT_ID")})
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Patent> patentList;
 
     public Inventor() {

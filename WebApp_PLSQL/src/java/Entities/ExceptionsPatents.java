@@ -49,7 +49,7 @@ public class ExceptionsPatents implements Serializable {
     @Size(max = 200)
     @Column(name = "EXCEPTION_DESC")
     private String exceptionDesc;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "exceptionId", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "exceptionId", fetch = FetchType.EAGER)
     private List<ErrorLog> errorLogList;
 
     public ExceptionsPatents() {

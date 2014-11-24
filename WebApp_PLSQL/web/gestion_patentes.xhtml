@@ -15,11 +15,50 @@
                 </p:selectOneMenu>
                 <h:outputLabel value="Search: " for="keywordSearch" />
                 <p:inputText id="keywordSearch" value="#{beanPatentManagement.keywordSearch}"  required="true"  style="width: 450px;" placeholder="Enter your keyword"/>
-                <p:commandButton id="buttonSearchPatent" value="Search"  actionListener="#{beanPatentManagement.searchPatent}" update="messages"/>  
+                <p:commandButton id="buttonSearchPatent" value="Search"  actionListener="#{beanPatentManagement.searchPatent}" update="messages, dataTablePatent"/>  
             </h:panelGrid>
+            <p:dataTable id="dataTablePatent" var="patent" value="#{beanPatentManagement.listPatentsResultSet}" paginator="true" rows="15" editable="true"  emptyMessage="" >
+                <p:column headerText="ID" width="50">
+                    <div align="center">
+                        #{patent.patentId}
+                    </div>
+                </p:column>
+                <p:column  headerText="TITLE" width="200">
+                    <div align="center">
+                        #{patent.patentTitle}
+                    </div>
+                </p:column>
+                <p:column  headerText="PUBLISHED" width="200">
+                    <div align="center">
+                        #{patent.publicDate}
+                    </div>
+                </p:column>
+                <p:column  headerText="DESCRIPTION" width="200">
+                    <div align="center">
+                        #{patent.description}
+                    </div>
+                </p:column>
+                <p:column width="20">
+                    <div align="center">
+                        <p:commandButton id="buttonDeletePatent" icon="ui-icon-close" action="#{beanPatentManagement.onClickDeletePatent(patent)}" update=":formViewPatentsManagement">
+                            <p:confirm header="Delete Patent" message="Are you sure?" icon="ui-icon-alert" />  
+                        </p:commandButton>
+                    </div>
+                </p:column>
+            </p:dataTable>
+            <!-- DIALOGO DE CONFIRMACION A LA HORA DE ELIMINAR UN RECURSO -->
+            <p:confirmDialog  id="confirmDialogDelete" global="true" showEffect="fade" hideEffect="fade" style="text-align: center;" >
+                <div align="center">
+                    <p:commandButton id="buttonYes"  value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
+                    <p:commandButton id="buttonNo" value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </div>
+            </p:confirmDialog>
+
+            <br/>
             <p:commandButton value="Create Patent"  type="button" onclick="PF('dlgCreatePatent').show();" update=":idDialogCreatePatent"/>
         </div>
     </h:form>
+
 
     <p:dialog id="idDialogCreatePatent" header="Create Patent - Please fill the fields" widgetVar="dlgCreatePatent" modal="true" draggable="false" appendTo="@(body)" resizable="false" width="680">
         <p:ajax event="close" update="formCreatePatent" listener="#{beanPatentManagement.clearDialog}" />
@@ -31,7 +70,7 @@
                     <h:outputLabel value="Title Patent: " for="titlePatent"/>
                     <p:inputText id="titlePatent" value="#{beanPatentManagement.titlePatent}" required="true" label="titlePatent"  size="40" style="width: 450px;"/>
                     <h:outputLabel value="Public Date: " for="publicDate"/>
-                    <p:calendar id="publicDate" value="#{beanPatentManagement.publicDate}" required="true" pattern="dd-MM-yyyy" mask="true" size="53"/>
+                    <p:calendar id="publicDate" value="#{beanPatentManagement.publicDate}" required="true" pattern="dd-MM-yyyy" mask="true" size="38"/>
                     <h:outputLabel value="Description: " for="description"/>
                     <p:inputTextarea id="description" value="#{beanPatentManagement.description}" required="true" label="description" autoResize="false" cols="80"  style="width: 450px;height: 200px;"/>
                     <h:outputLabel value="Inventors: " for="inventors"/>
@@ -49,7 +88,7 @@
                     <p:spacer/>
                     <p:spacer/>
                     <h:outputLabel value="Attached File: " for="attached"/>
-                    <p:fileUpload id="attached" value="#{beanPatentManagement.file}" mode="simple" update=":messages" required="true" sizeLimit="1000000" />
+                    <h:inputFile id="attached" value="#{beanPatentManagement.file}" required="true" />
                 </h:panelGrid>
                 <br/>
                 <div align="center">

@@ -1,9 +1,13 @@
 package Beans;
 
+import Controller.ProcedureController;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
@@ -22,17 +26,39 @@ public class BeanLoadTableDinamic implements Serializable {
 
     private Integer nFields;
 
+    private String nameNewTable;
+
+    private ProcedureController controller = new ProcedureController();
+
     public BeanLoadTableDinamic() {
     }
 
     @PostConstruct
     public void initialize() {
         searchTables();
+        tableSelected = (listTables != null && listTables.size() >= 1) ? listTables.get(0).getLabel() : "";
         searchFieldsFromTable();
     }
 
-    public void createTableDinamic(ActionEvent actionEvent) {
-        System.out.println("asdasd");
+    public void createTableDinamic(ActionEvent actionEvent) throws SQLException {
+        boolean isValid = controller.isPossibleCreateTable(nameNewTable);
+        if (isValid) {
+            controller.callProcedureEncrypted(nameNewTable, tableSelected, fieldSelected, nFields);
+            searchTables();
+            searchFieldsFromTable();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "The procedure execute sucessfull", ""));
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "The name of table already exist", ""));
+        }
+
+    }
+
+    public String getNameNewTable() {
+        return nameNewTable;
+    }
+
+    public void setNameNewTable(String nameNewTable) {
+        this.nameNewTable = nameNewTable;
     }
 
     public String getTableSelected() {
@@ -83,13 +109,8 @@ public class BeanLoadTableDinamic implements Serializable {
             setListFields(new ArrayList<SelectItem>());
             for (int j = 0; j < items.length; j++) {
                 if (items[j].getLabel().compareTo(tableSelected) == 0) {
-                    if (j == 0) {
-                        newGroup.setSelectItems(new SelectItem[]{new SelectItem("Field1", "Field1"), new SelectItem("Field2", "Field2")});
-                    }
-                    if (j == 1) {
-                        newGroup.setSelectItems(new SelectItem[]{new SelectItem("Field3", "Field3"), new SelectItem("Field4", "Field4")});
-                    }
-                    getListFields().add(newGroup);
+                    searchFieldsFromTable();
+                    break;
                 }
             }
         }
@@ -99,15 +120,27 @@ public class BeanLoadTableDinamic implements Serializable {
     private void searchTables() {
         setListTables(new ArrayList<SelectItem>());
         SelectItemGroup group = new SelectItemGroup("");
-        group.setSelectItems(new SelectItem[]{new SelectItem("Tabla1", "Tabla1"), new SelectItem("Tabla2", "Tabla2")});
+        List<String> list = controller.getAllTables();
+        SelectItem items[] = new SelectItem[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            items[i] = new SelectItem(list.get(i), list.get(i));
+        }
+        group.setSelectItems(items);
         getListTables().add(group);
     }
 
     private void searchFieldsFromTable() {
         setListFields(new ArrayList<SelectItem>());
         SelectItemGroup group = new SelectItemGroup("");
-        group.setSelectItems(new SelectItem[]{new SelectItem("Field1", "Field1"), new SelectItem("Field2", "Field2")});
-        getListFields().add(group);
+        List<String> list = controller.getAllFieldsForTable(tableSelected);
+        if (list != null && !list.isEmpty()) {
+            SelectItem items[] = new SelectItem[list.size()];
+            for (int i = 0; i < list.size(); i++) {
+                items[i] = new SelectItem(list.get(i), list.get(i));
+            }
+            group.setSelectItems(items);
+            getListFields().add(group);
+        }
     }
 
 }
