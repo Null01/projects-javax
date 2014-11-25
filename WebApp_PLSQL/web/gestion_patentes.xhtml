@@ -3,7 +3,8 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:form id="formViewPatentsManagement">
         <p:messages id="messages" showDetail="false" />
         <div align="center">
@@ -17,26 +18,48 @@
                 <p:inputText id="keywordSearch" value="#{beanPatentManagement.keywordSearch}"  required="true"  style="width: 450px;" placeholder="Enter your keyword"/>
                 <p:commandButton id="buttonSearchPatent" value="Search"  actionListener="#{beanPatentManagement.searchPatent}" update="messages, dataTablePatent"/>  
             </h:panelGrid>
-            <p:dataTable id="dataTablePatent" var="patent" value="#{beanPatentManagement.listPatentsResultSet}" paginator="true" rows="15" editable="true"  emptyMessage="" >
-                <p:column headerText="ID" width="50">
+            <p:dataTable id="dataTablePatent" var="patent" value="#{beanPatentManagement.listPatentsResultSet}" paginator="true" rows="15" editable="true"  emptyMessage="" style="font-size:9px;">
+                <p:ajax event="rowEdit" listener="#{beanPatentManagement.onClickEditAccept}" update="@this"/>  
+                <p:ajax event="rowEditCancel" />
+
+
+                <p:column headerText="ID" width="100">
                     <div align="center">
                         #{patent.patentId}
                     </div>
                 </p:column>
                 <p:column  headerText="TITLE" width="200">
-                    <div align="center">
-                        #{patent.patentTitle}
-                    </div>
+                    <p:cellEditor>  
+                        <f:facet name="output">  
+                            <div align="center"> <h:outputText value="#{patent.patentTitle}" />  </div>
+                        </f:facet>  
+                        <f:facet name="input">  
+                            <div align="center"> <p:inputText value="#{patent.patentTitle}"  style="width:80%" />  </div>
+                        </f:facet>
+                    </p:cellEditor>
                 </p:column>
                 <p:column  headerText="PUBLISHED" width="200">
                     <div align="center">
                         #{patent.publicDate}
                     </div>
                 </p:column>
-                <p:column  headerText="DESCRIPTION" width="200">
+                <p:column  headerText="DESCRIPTION" width="800">
+                    <p:cellEditor>  
+                        <f:facet name="output">  
+                            <div align="center"> <h:outputText value="#{patent.description}" />  </div>
+                        </f:facet>  
+                        <f:facet name="input">  
+                            <div align="center"> <p:inputTextarea value="#{patent.description}"  style="width:80%" cols="80" rows="2" autoResize="false" />  </div>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column  headerText="DOCUMENT" width="100">
                     <div align="center">
-                        #{patent.description}
+                        <p:commandButton value="Download" ajax="false"  icon="ui-icon-arrowthick-1-s" action="#{beanPatentManagement.onClickDownload(patent)}"/>
                     </div>
+                </p:column>
+                <p:column width="20">
+                    <p:rowEditor />
                 </p:column>
                 <p:column width="20">
                     <div align="center">

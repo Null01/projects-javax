@@ -1,26 +1,32 @@
 package Beans;
 
+import Controller.FileController;
 import Controller.PatentController;
 import Entities.Patent;
+import Utils.FileUtils;
+import Utils.ServletUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.SelectItem;
 import javax.faces.model.SelectItemGroup;
-import javax.servlet.ServletContext;
 import javax.servlet.http.Part;
+import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
+import org.primefaces.event.RowEditEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
@@ -54,15 +60,19 @@ public class BeanPatentManagement implements Serializable {
 
     private PatentController controller = new PatentController();
 
+    private Patent patentUpdate = new Patent();
+
+    private FileUtils fileUtils = new FileUtils();
+
     public BeanPatentManagement() {
     }
 
     @PostConstruct
     public void initialize() {
         searchFields();
-        findValuesTableAssignee();
-        findValuesTableClassification();
-        findValuesTableInventor();
+        //findValuesTableAssignee();
+        //findValuesTableClassification();
+        //findValuesTableInventor();
     }
 
     private void searchFields() {
@@ -85,7 +95,7 @@ public class BeanPatentManagement implements Serializable {
         this.file = null;
     }
 
-    public void searchPatent(ActionEvent actionEvent) {
+    public void searchPatent(ActionEvent actionEvent) throws SQLException {
         listPatentsResultSet.clear();
         List<Patent> list = controller.searchPatents(fieldKeywordSearch, keywordSearch);
         if (list.isEmpty()) {
@@ -99,43 +109,21 @@ public class BeanPatentManagement implements Serializable {
 
         System.out.println(idPatent + " " + titlePatent + " " + publicDate + " " + description + " " + file);
 
-        InputStream inputStream = null;
-        OutputStream outputStream = null;
-        FacesContext context = FacesContext.getCurrentInstance();
-        ServletContext servletContext = (ServletContext) context
-                .getExternalContext().getContext();
-        String path = servletContext.getRealPath("");
-
-        byte[] buffer = null;
         File outputFile = null;
-        String fileName = "";
-        if (file.getSize() != 0) {
-            final String partHeader = file.getHeader("content-disposition");
-            for (String content : partHeader.split(";")) {
-                if (content.trim().startsWith("filename")) {
-                    fileName = content.substring(content.indexOf('=') + 1)
-                            .trim().replace("\"", "");
-                }
-            }
-            outputFile = new File(path + File.separator + "WEB-INF"
-                    + File.separator + fileName);
+        byte[] bufferOutputFile = null;
+        String contentType = null;
 
-            inputStream = file.getInputStream();
-            outputStream = new FileOutputStream(outputFile);
-            buffer = new byte[1024];
-            int bytesRead = 0;
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
-            }
-            if (outputStream != null) {
-                outputStream.close();
-            }
-            if (inputStream != null) {
-                inputStream.close();
-            }
+        if (file.getSize() != 0) {
+            FileUtils utils = new FileUtils();
+            String path = ServletUtils.getServletContext().getRealPath("");
+            String fileName = utils.getFileName(file);
+            contentType = ServletUtils.getServletContext().getMimeType(fileName);
+            Object[] targets = utils.createFile(file, path + File.separator + "WEB-INF" + File.separator + fileName);
+            outputFile = (File) targets[0];
+            bufferOutputFile = (byte[]) targets[1];
         }
 
-        boolean created = controller.createPatent(idPatent, titlePatent, publicDate, description, inventors, classification, assignee, outputFile, buffer);
+        boolean created = controller.createPatent(idPatent, titlePatent, publicDate, description, inventors, classification, assignee, contentType, outputFile, bufferOutputFile);
         if (created) {
             FacesMessage message = new FacesMessage("Succesful - Patent [" + idPatent + "-" + titlePatent + "] created.", "");
             FacesContext.getCurrentInstance().addMessage(null, message);
@@ -145,7 +133,7 @@ public class BeanPatentManagement implements Serializable {
         clearDialog();
     }
 
-    public void onClickDeletePatent(Patent patent) {
+    public void onClickDeletePatent(Patent patent) throws SQLException {
         boolean deletePatent = controller.deletePatent(patent.getPatentId());
         if (deletePatent) {
             FacesMessage message = new FacesMessage("Succesful - Patent [" + idPatent + "-" + titlePatent + "] deleted.", "");
@@ -157,6 +145,36 @@ public class BeanPatentManagement implements Serializable {
             }
         }
 
+    }
+
+    public void onClickDownload(Patent patent) throws FileNotFoundException {
+        if (patent.getDocument() == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "No existe ningun adjunto para la patente [" + patent.getPatentId() + "-" + patent.getPatentTitle() + "]", ""));
+        } else {
+            SerialBlob blob = (SerialBlob) patent.getDocument();
+            try {
+                int index = patent.getDocumentExt().indexOf("/");
+                String contentType = patent.getDocumentExt().substring(index + 1, patent.getDocumentExt().length());
+                String nameFile = ("DOWNLOAD-" + patent.getPatentId()).toLowerCase() + "." + contentType;
+                String pathComplete = ServletUtils.getServletContext().getRealPath("") + File.separator + "WEB-INF" + File.separator + nameFile;
+                File fileCreated = fileUtils.createFile(blob.getBinaryStream(), pathComplete);
+                FileController.downloadFile(nameFile, fileCreated);
+            } catch (SerialException ex) {
+                Logger.getLogger(BeanPatentManagement.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    public void onClickEditAccept(RowEditEvent event) {
+        Patent patent = (Patent) event.getObject();
+        patentUpdate.setPatentId(patent.getPatentId());
+        patentUpdate.setPatentTitle(patent.getPatentTitle());
+        patentUpdate.setDescription(patent.getDescription());
+        patentUpdate.setPublicDate(patent.getPublicDate());
+        patentUpdate.setAssigneeList(patent.getAssigneeList());
+        patentUpdate.setClassificationList(patent.getClassificationList());
+        patentUpdate.setInventorList(patent.getInventorList());
+        controller.updatePatent(patentUpdate);
     }
 
     public String getFieldKeywordSearch() {
@@ -269,6 +287,14 @@ public class BeanPatentManagement implements Serializable {
 
     public void setInventors(String inventors) {
         this.inventors = inventors;
+    }
+
+    public Patent getPatentUpdate() {
+        return patentUpdate;
+    }
+
+    public void setPatentUpdate(Patent patentUpdate) {
+        this.patentUpdate = patentUpdate;
     }
 
     public List<Patent> getListPatentsResultSet() {

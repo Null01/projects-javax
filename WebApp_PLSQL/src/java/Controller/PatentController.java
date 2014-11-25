@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -23,6 +24,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.sql.rowset.serial.SerialBlob;
 
 /**
  *
@@ -32,10 +34,9 @@ public class PatentController implements Serializable {
 
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("WebApp_PLSQLPU");
 
-    private static HashSet<String> set_type_data;
+    private static final HashSet<String> set_type_data = new HashSet<String>();
 
     static {
-        set_type_data = new HashSet<String>();
         set_type_data.add("NUMBER");
         set_type_data.add("DATE");
         set_type_data.add("VARCHAR");
@@ -105,13 +106,17 @@ public class PatentController implements Serializable {
         return outcome;
     }
 
-    public boolean createPatent(String idPatent, String titlePatent, Date publicDate, String description, String inventors, String classification, String assignee, File file, Object content) throws FileNotFoundException, SQLException {
+    public boolean createPatent(String idPatent, String titlePatent, Date publicDate, String description, String inventors, String classification, String assignee, String contentType, File file, Object content) throws FileNotFoundException, SQLException {
         EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
         Patent patent = new Patent(idPatent);
         patent.setPatentTitle(titlePatent);
         patent.setPublicDate(publicDate);
         patent.setDescription(description);
+        if (content != null) {
+            patent.setDocumentExt(contentType);
+        }
+
         StringTokenizer st;
 
         st = new StringTokenizer(inventors, "-");
@@ -140,7 +145,6 @@ public class PatentController implements Serializable {
         transaction.commit();
 
         if (content != null) {
-            byte[] contents = (byte[]) content;
             em = emf.createEntityManager();
             em.getTransaction().begin();
             Connection connection = em.unwrap(Connection.class);
@@ -151,7 +155,6 @@ public class PatentController implements Serializable {
             prepareStatement.executeUpdate();
             em.getTransaction().commit();
         }
-
         return true;
     }
 
@@ -164,7 +167,7 @@ public class PatentController implements Serializable {
         return true;
     }
 
-    public List<Patent> searchPatents(String field, String keyword) {
+    public List<Patent> searchPatents(String field, String keyword) throws SQLException {
         String str_search = "%";
         StringTokenizer st = new StringTokenizer(keyword);
         while (st.hasMoreTokens()) {
@@ -182,9 +185,51 @@ public class PatentController implements Serializable {
             Patent patent = new Patent(String.valueOf(array_objects[0]));
             patent.setPatentTitle(String.valueOf(array_objects[1]));
             patent.setPublicDate((Date) array_objects[2]);
+            patent.setDocument((array_objects[3] == null) ? null : new SerialBlob((byte[]) array_objects[3]));
             patent.setDescription(String.valueOf(array_objects[4]));
+            patent.setDocumentExt(String.valueOf(array_objects[5]));
             outcome.add(patent);
         }
         return outcome;
+    }
+
+    private void callProcedureOperationsDocument(String operation, Class typeClass, Object[] object) throws SQLException, FileNotFoundException {
+        if (typeClass.equals(Patent.class)) {
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+            Connection connection = em.unwrap(Connection.class);
+            if (operation.compareTo("CREATE") == 0) {
+                CallableStatement prepareCall = connection.prepareCall("{CALL LOAD_FILES_PACK.CREATE_FILE(?,?,?,?)}");
+                prepareCall.setString(1, "PATENT");
+                prepareCall.setString(2, "PATENT_ID");
+                prepareCall.setString(3, String.valueOf(object[0]));
+                File file = (File) object[1];
+                prepareCall.setBinaryStream(4, new FileInputStream(file), (int) file.length());
+                prepareCall.executeQuery();
+            }
+            em.getTransaction().commit();
+        }
+    }
+
+    public void updatePatent(Patent patentUpdate) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        /*Patent find = em.find(Patent.class, patentUpdate.getPatentId());
+         find.setPatentId(patentUpdate.getPatentId());
+         find.setPatentTitle(patentUpdate.getPatentTitle());
+         find.setDescription(patentUpdate.getDescription());
+         find.setPublicDate(patentUpdate.getPublicDate());
+         find.setAssigneeList(patentUpdate.getAssigneeList());
+         find.setClassificationList(patentUpdate.getClassificationList());
+         find.setInventorList(patentUpdate.getInventorList());
+         em.merge(find);*/
+
+        Query query = em.createNativeQuery("UPDATE " + Patent.class.getSimpleName() + " SET DESCRIPTION = ? , PATENT_TITLE = ? WHERE PATENT_ID = ?");
+        query.setParameter(1, patentUpdate.getDescription());
+        query.setParameter(2, patentUpdate.getPatentTitle());
+        query.setParameter(3, patentUpdate.getPatentId());
+        query.executeUpdate();
+        em.getTransaction().commit();
+
     }
 }

@@ -39,6 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Patent.findByPatentTitle", query = "SELECT p FROM Patent p WHERE p.patentTitle = :patentTitle"),
     @NamedQuery(name = "Patent.findByPublicDate", query = "SELECT p FROM Patent p WHERE p.publicDate = :publicDate")})
 public class Patent implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -70,6 +71,11 @@ public class Patent implements Serializable {
     private List<RelatedPatents> relatedPatentsList;
     @OneToMany(mappedBy = "patentSrc", fetch = FetchType.EAGER)
     private List<RelatedPatents> relatedPatentsList1;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 10)
+    @Column(name = "DOCUMENT_EXT")
+    private String documentExt;
 
     public Patent() {
     }
@@ -81,6 +87,14 @@ public class Patent implements Serializable {
     public Patent(String patentId, String patentTitle) {
         this.patentId = patentId;
         this.patentTitle = patentTitle;
+    }
+
+    public String getDocumentExt() {
+        return documentExt;
+    }
+
+    public void setDocumentExt(String documentExt) {
+        this.documentExt = documentExt;
     }
 
     public String getPatentId() {
@@ -192,5 +206,5 @@ public class Patent implements Serializable {
     public String toString() {
         return "Entities.Patent[ patentId=" + patentId + " ]";
     }
-    
+
 }

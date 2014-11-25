@@ -1,10 +1,11 @@
 package Beans;
 
-import java.io.IOException;
+import Utils.FileUtils;
+import Utils.ServletUtils;
+import java.io.File;
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.Part;
 import org.primefaces.event.NodeSelectEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
@@ -19,6 +20,8 @@ public class BeanHome implements Serializable {
     private TreeNode selectedNode;
     private String pathForward;
 
+    private Part file;
+
     public BeanHome() {
         this.menu = buildTree();
     }
@@ -32,13 +35,26 @@ public class BeanHome implements Serializable {
     }
 
     public void executeLoad(ActionEvent actionEvent) {
-        try {
-            Thread.sleep(4000);
-            System.out.println("hola mundo");
-        } catch (InterruptedException ex) {
-            Logger.getLogger(BeanHome.class.getName()).log(Level.SEVERE, null, ex);
+        if (file.getSize() != 0) {
+            FileUtils utils = new FileUtils();
+            String path = ServletUtils.getServletContext().getRealPath("");
+            String fileName = utils.getFileName(file);
+            System.out.println(path);
+            System.out.println(fileName);
+            String pathComplete = path + File.separator + "WEB-INF" + File.separator + fileName;
+            System.out.println(pathComplete);
+            Object[] targets = utils.createFile(file, pathComplete);
+            File outputFile = (File) targets[0];
+            //FileController.downloadFile(fileName, outputFile);
         }
+    }
 
+    public Part getFile() {
+        return file;
+    }
+
+    public void setFile(Part file) {
+        this.file = file;
     }
 
     public void onNodeSelect(NodeSelectEvent event) {

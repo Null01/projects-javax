@@ -1,5 +1,6 @@
 package Controller;
 
+import java.io.Serializable;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -10,7 +11,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-public class ProcedureController {
+public class ProcedureController implements Serializable {
 
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("WebApp_PLSQLPU");
 
@@ -58,7 +59,6 @@ public class ProcedureController {
     }
 
     public void callProcedureEncrypted(String nameNewTable, String tableSelected, String fieldSelected, Integer nFields) throws SQLException {
-        System.out.println(nameNewTable + " " + tableSelected + " " + fieldSelected + " " + nFields);
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         Connection connection = em.unwrap(Connection.class);

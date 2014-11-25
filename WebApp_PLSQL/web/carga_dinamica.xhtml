@@ -24,7 +24,7 @@
                     <f:validateDoubleRange minimum="0" maximum="20" />
                 </p:inputText>
                 <h:outputLabel value="NewTable" for="newTable" />
-                <p:inputText id="newTable" value="#{beanLoadTableDinamic.nameNewTable}"  required="true"  style="width: 200px;" placeholder="Enter name of new table"/>
+                <p:inputText id="newTable" value="#{beanLoadTableDinamic.nameNewTable}"  required="true"  style="width: 260px;" placeholder="Enter name of new table"/>
             </h:panelGrid>
 
             <p:commandButton id="buttonSearchPatent" value="Create Table Dinamic"  actionListener="#{beanLoadTableDinamic.createTableDinamic}" update="messages"/>  
