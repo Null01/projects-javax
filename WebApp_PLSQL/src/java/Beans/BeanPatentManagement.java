@@ -46,6 +46,8 @@ public class BeanPatentManagement implements Serializable {
     private String description;
     private Part file;
 
+    private Part fileUpdateFile;
+
     // lista de inventores - tabla INVENTOR_PATENT
     private String inventors;
     private List<SelectItem> listInventors = new ArrayList<SelectItem>();
@@ -177,6 +179,40 @@ public class BeanPatentManagement implements Serializable {
         controller.updatePatent(patentUpdate);
     }
 
+    public void preOnClickUpdateFilePatent(Patent patent) {
+        this.patentUpdate.setDocument(patent.getDocument());
+        this.patentUpdate.setDocumentExt(patent.getDocumentExt());
+    }
+
+    public void onClickUpdateFilePatent(ActionEvent actionEvent) {
+        File outputFile = null;
+        byte[] bufferOutputFile = null;
+        String contentType = null;
+        if (fileUpdateFile.getSize() != 0) {
+            FileUtils utils = new FileUtils();
+            String path = ServletUtils.getServletContext().getRealPath("");
+            String fileName = utils.getFileName(fileUpdateFile);
+            contentType = ServletUtils.getServletContext().getMimeType(fileName);
+            Object[] targets = utils.createFile(fileUpdateFile, path + File.separator + "WEB-INF" + File.separator + fileName);
+            outputFile = (File) targets[0];
+            bufferOutputFile = (byte[]) targets[1];
+            int index = patentUpdate.getDocumentExt().indexOf("/");
+            contentType = patentUpdate.getDocumentExt().substring(index + 1, patentUpdate.getDocumentExt().length());
+            boolean updated = controller.updateFilePatent(patentUpdate.getPatentId(), outputFile, contentType);
+            if (updated) {
+                FacesMessage message = new FacesMessage("Succesful - Patent [" + patentUpdate.getPatentId() + "-" + patentUpdate.getPatentTitle() + "] updated.", "");
+                FacesContext.getCurrentInstance().addMessage(null, message);
+                listPatentsResultSet.clear();
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Please, fill the fields with information valid.", "'" + this.getKeywordSearch() + "'"));
+            }
+        }
+    }
+
+    public boolean isValid(Patent patent) {
+        return patent.getDocument() != null;
+    }
+
     public String getFieldKeywordSearch() {
         return fieldKeywordSearch;
     }
@@ -303,6 +339,14 @@ public class BeanPatentManagement implements Serializable {
 
     public void setListPatentsResultSet(List<Patent> listPatentsResultSet) {
         this.listPatentsResultSet = listPatentsResultSet;
+    }
+
+    public Part getFileUpdateFile() {
+        return fileUpdateFile;
+    }
+
+    public void setFileUpdateFile(Part fileUpdateFile) {
+        this.fileUpdateFile = fileUpdateFile;
     }
 
     private void findValuesTableAssignee() {

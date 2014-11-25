@@ -19,6 +19,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -231,5 +233,27 @@ public class PatentController implements Serializable {
         query.executeUpdate();
         em.getTransaction().commit();
 
+    }
+
+    public boolean updateFilePatent(String idPatent, File file, String contentType) {
+
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Connection connection = em.unwrap(Connection.class);
+        PreparedStatement prepareStatement;
+        try {
+            prepareStatement = connection.prepareStatement("UPDATE " + Patent.class.getSimpleName() + " SET DOCUMENT = ? , DOCUMENT_EXT = ?  WHERE PATENT_ID = ?");
+            InputStream inputStream = new FileInputStream(file);
+            prepareStatement.setBinaryStream(1, inputStream, (int) file.length());
+            prepareStatement.setString(2, contentType);
+            prepareStatement.setString(3, idPatent);
+            prepareStatement.executeUpdate();
+            em.getTransaction().commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(PatentController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(PatentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
     }
 }

@@ -55,7 +55,10 @@
                 </p:column>
                 <p:column  headerText="DOCUMENT" width="100">
                     <div align="center">
-                        <p:commandButton value="Download" ajax="false"  icon="ui-icon-arrowthick-1-s" action="#{beanPatentManagement.onClickDownload(patent)}"/>
+                        <c:if test="#{beanPatentManagement.isValid(patent)}">
+                            <p:commandButton value="Download" ajax="false"  icon="ui-icon-arrowthick-1-s" action="#{beanPatentManagement.onClickDownload(patent)}"/>
+                            <p:commandButton ajax="false" icon="ui-icon-refresh" action="#{beanPatentManagement.preOnClickUpdateFilePatent(patent)}" />
+                        </c:if>
                     </div>
                 </p:column>
                 <p:column width="20">
@@ -81,6 +84,23 @@
             <p:commandButton value="Create Patent"  type="button" onclick="PF('dlgCreatePatent').show();" update=":idDialogCreatePatent"/>
         </div>
     </h:form>
+
+
+    <p:dialog id="idDlgUpdateFilePatent" header="Create Patent - Please fill the fields" widgetVar="dlgUpdateFilePatent" modal="true" draggable="false" appendTo="@(body)" resizable="false">
+        <h:form id="formUpdateFilePatent" enctype="multipart/form-data" >
+            <p:panel id="panelCreate">
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Attached File: " for="attachedFilePatent"/>
+                    <h:inputFile id="attachedFilePatent" value="#{beanPatentManagement.fileUpdateFile}" required="true" />
+                </h:panelGrid>
+            </p:panel>
+            <br/>
+            <div align="center">
+                <p:commandButton value="Update" ajax="false" actionListener="#{beanPatentManagement.onClickUpdateFilePatent}" 
+                                 oncomplete="dlgUpdateFilePatent.hide()" update="messages"/>
+            </div>
+        </h:form>
+    </p:dialog>
 
 
     <p:dialog id="idDialogCreatePatent" header="Create Patent - Please fill the fields" widgetVar="dlgCreatePatent" modal="true" draggable="false" appendTo="@(body)" resizable="false" width="680">
