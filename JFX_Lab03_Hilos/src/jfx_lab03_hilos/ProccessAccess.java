@@ -3,6 +3,7 @@ package jfx_lab03_hilos;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -19,26 +20,31 @@ public class ProccessAccess extends Thread {
 
     @Override
     public synchronized void run() {
-        int index = 0, timer = 0;
-        switch_step(index);
+        int index = 0, count = 0, time = intRandom(5);
+        switch_step(index, time);
         while (true) {
-            ++timer;
-            if (timer - 1 == ITags.TimeProcess) {
-                index = (index + 1) % processExecute.size();
-                switch_step(index);
-                timer = 0;
-            }
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 System.out.println(ex);
             }
-
+            ++count;
+            if (count == time) {
+                count = 0;
+                time = intRandom(5);
+                index = (index + 1) % processExecute.size();
+                switch_step(index, time);
+            }
         }
+
     }
 
-    private void switch_step(int i) {
-        Main.output.appendText(processExecute.get(i).getName() + "\n");
+    private static int intRandom(int top) {
+        return new Random().nextInt(top) + 1;
+    }
+
+    private void switch_step(int i, int second) {
+        Main.output.appendText(processExecute.get(i).getName() + "\tTime: " + second + " Sec.\n");
         switch (i) {
             case 0:
                 Main.fadeTransitionRedLight.play();

@@ -41,12 +41,11 @@ public class Main extends Application {
         redLightBorder.setStrokeWidth(1.5);
         redLightBorder.setFill(null);
         fadeTransitionRedLight = FadeTransitionBuilder.create()
-                .duration(Duration.seconds(ITags.TimeProcess + 0.7))
                 .node(redLight)
                 .fromValue(0.2)
                 .toValue(1)
                 .cycleCount(Timeline.INDEFINITE)
-                .autoReverse(false)
+                .autoReverse(true)
                 .build();
         root.getChildren().add(redLight);
         root.getChildren().add(redLightBorder);
@@ -57,12 +56,11 @@ public class Main extends Application {
         greenLightBorder.setStrokeWidth(1.5);
         greenLightBorder.setFill(null);
         fadeTransitionGreenLight = FadeTransitionBuilder.create()
-                .duration(Duration.seconds(ITags.TimeProcess + 0.7))
                 .node(greenLight)
                 .fromValue(0.2)
                 .toValue(1)
                 .cycleCount(Timeline.INDEFINITE)
-                .autoReverse(false)
+                .autoReverse(true)
                 .build();
         root.getChildren().add(greenLight);
         root.getChildren().add(greenLightBorder);
@@ -94,15 +92,15 @@ public class Main extends Application {
         });
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
     private void executeProccess() {
         ProccessAccess proccess = new ProccessAccess(new Thread[]{
             new Thread("Hilo_Rojo 0"), new Thread("Hilo_Verde 0")
         });
         proccess.start();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
 }
