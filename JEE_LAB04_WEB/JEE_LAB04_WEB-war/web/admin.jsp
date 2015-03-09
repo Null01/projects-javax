@@ -13,11 +13,6 @@
     Integer usuarioConectados = null;
     synchronized (contexto) {
         usuarioConectados = (Integer) contexto.getAttribute("usuariosConectados");
-        if (usuarioConectados == null) {
-            usuarioConectados = new Integer("0");
-        }
-        ++usuarioConectados;
-        contexto.setAttribute("usuariosConectados", usuarioConectados);
     }
 %>
 

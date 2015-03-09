@@ -29,4 +29,7 @@
             30
         </session-timeout>
     </session-config>
+    <listener>
+        <listener-class> util.ListenerSession </listener-class>
+    </listener>
 </web-app>
