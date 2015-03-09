@@ -66,7 +66,7 @@
 
                     <div class="brand wow fadeIn">
                         <h1 class="brand_name">
-                            <a href="admin.jsp">RecetarioSocial</a>
+                            <a href="user.jsp">RecetarioSocial</a>
                         </h1>
                     </div>
                 </div>
