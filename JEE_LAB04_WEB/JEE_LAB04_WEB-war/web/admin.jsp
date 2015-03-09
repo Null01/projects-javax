@@ -4,6 +4,7 @@
     Author     : andresfelipegarciaduran
 --%>
 
+<%@page import="Modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 ﻿<!DOCTYPE html>
 
@@ -26,7 +27,7 @@
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/font-awesome.min.css">
         <link rel="stylesheet" href="css/font-awesome.css">
-        
+
         <link rel="stylesheet" href="css/demo.css"/>
 
         <script src="js/jquery.js"></script>
@@ -47,6 +48,9 @@
         <script src='js/device.min.js'></script>
     </head>
 
+    <%
+        Usuario usuario = (Usuario) session.getAttribute("user_data");
+    %>
     <body>
         <div class="page">
             <!--========================================================
@@ -70,7 +74,7 @@
                                     <a href="index.jsp">Home</a>
                                 </li>
                                 <li>
-                                    <a href="index.jsp">Cerrar sesión</a>
+                                    <a href="Logout">Cerrar sesión</a>
                                 </li>
                             </ul>
                         </nav>
@@ -84,7 +88,7 @@
             <main>
                 <section class="well well__offset-3">
                     <div class="container">
-                        <h2><em>Administración</em></h2>
+                        <h2><em>Administración <% out.print(usuario.getNombre());%></em></h2>
                         <br/>
                         <div class="row box-3">
                             <div class="grid_5">
@@ -113,7 +117,7 @@
                                         <span class="close">Cerrar</span>
                                     </div>
                                 </div>   
-                             
+
                             </div>
                         </div>
                     </div>
@@ -135,15 +139,15 @@
                     </div>
                 </div>
             </footer>
-            
-          
+
+
         </div>
         <!--  <script src="js/foundation/vendor/jquery.js"></script> -->
         <script>
-                    $(document).foundation();
+            $(document).foundation();
         </script>
         <script src="js/script.js"></script>
         <script>!window.jQuery && document.write(unescape('%3Cscript src="js/jquery-1.7.1.min.js"%3E%3C/script%3E'))</script>
-	<script type="text/javascript" src="js/demo.js"></script>
+        <script type="text/javascript" src="js/demo.js"></script>
     </body>
 </html>

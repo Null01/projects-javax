@@ -4,6 +4,7 @@
     Author     : andresfelipegarciaduran
 --%>
 
+<%@page import="Modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 ﻿<!DOCTYPE html>
 <html lang="en">
@@ -36,7 +37,9 @@
 
         <script src='js/device.min.js'></script>
     </head>
-
+    <%
+        Usuario usuario = (Usuario) session.getAttribute("user_data");
+    %>
     <body>
         <div class="page">
             <!--========================================================
@@ -59,9 +62,11 @@
                                 <li class="active">
                                     <a href="index.jsp">Home</a>
                                 </li>
+                                <% if (usuario == null) { %>
                                 <li>
                                     <a id="modal_trigger_login" href="#modal_login" >Ingresar</a>
                                 </li>
+                                <%}%>
                                 <li>
                                     <a href="contact.jsp">Contactenos</a>
                                 </li>

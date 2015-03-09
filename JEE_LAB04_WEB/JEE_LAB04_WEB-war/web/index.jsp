@@ -4,6 +4,7 @@
     Author     : andresfelipegarciaduran
 --%>
 
+<%@page import="Modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 ﻿<!DOCTYPE html>
 <html lang="en">
@@ -40,7 +41,9 @@
 
         <script src='js/device.min.js'></script>
     </head>
-
+    <%
+        Usuario usuario = (Usuario) session.getAttribute("user_data");
+    %>
     <body>
         <div class="page">
             <!--========================================================
@@ -66,7 +69,7 @@
 
                     <div class="brand wow fadeIn">
                         <h1 class="brand_name">
-                            <a href="user.jsp">RecetarioSocial</a>
+                            <a href="index.jsp">RecetarioSocial</a>
                         </h1>
                     </div>
                 </div>
@@ -79,9 +82,11 @@
                             <li class="active">
                                 <a href="index.jsp">Home</a>
                             </li>
+                            <% if(usuario == null){ %>
                             <li>
                                 <a id="modal_trigger_login" href="#modal_login" >Ingresar</a>
                             </li>
+                            <%}%>
                             <li>
                                 <a href="contact.jsp">Contactenos</a>
                             </li>
@@ -245,7 +250,7 @@
         <script src="js/foundation/foundation/foundation.orbit.js"></script>
         <script src="js/foundation/foundation/foundation.topbar.js"></script>
         <script>
-                                $(document).foundation();
+                    $(document).foundation();
         </script>
 
         <script src="js/script.js"></script>

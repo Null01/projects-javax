@@ -31,33 +31,28 @@ public class FilterSession implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-        /*
-         String requestURI = httpRequest.getRequestURI();
-         HttpSession session = httpRequest.getSession(false);
 
-         String scheme = httpRequest.getScheme();             // http
-         String serverName = httpRequest.getServerName();     // hostname
-         int serverPort = httpRequest.getServerPort();        // 8080
-         String contextPath = httpRequest.getContextPath();   // /mywebapp
+        String requestURI = httpRequest.getRequestURI();
+        HttpSession session = httpRequest.getSession(false);
 
-         String path = scheme + "://" + serverName + ":" + serverPort + contextPath;
-         String indexURI = "/index.jsp";
+        String scheme = httpRequest.getScheme();             // http
+        String serverName = httpRequest.getServerName();     // hostname
+        int serverPort = httpRequest.getServerPort();        // 8080
+        String contextPath = httpRequest.getContextPath();   // /mywebapp
 
-         boolean createSession = false;
-         if (session != null) {
-         Object object = session.getAttribute("session");
-         if (object != null) {
-         createSession = true;
-         }
-         }
+        String path = scheme + "://" + serverName + ":" + serverPort + contextPath;
+        String indexURI = "/index.jsp";
 
-         if (!createSession) {
-         httpRequest.getRequestDispatcher(indexURI).forward(request, response);
-         } else {
-         
-         }
-         */
-chain.doFilter(request, response);
+        boolean createSession = false;
+        if (session != null) {
+            Object object = session.getAttribute("user_data");
+            if (object != null) {
+                createSession = true;
+            }
+        }
+        System.out.println(createSession);
+        chain.doFilter(request, response);
+
     }
 
     @Override

@@ -39,8 +39,7 @@
     </head>
 
     <%
-        Usuario usuario = (Usuario) request.getAttribute("user_data");
-        
+        Usuario usuario = (Usuario) session.getAttribute("user_data");
     %>
 
     <body>
@@ -69,7 +68,7 @@
                                     <a href="contact.jsp">Contactenos</a>
                                 </li>
                                 <li>
-                                    <a href="index.jsp">Cerrar sesión</a>
+                                    <a href="Logout">Cerrar sesión</a>
                                 </li>
                             </ul>
                         </nav>

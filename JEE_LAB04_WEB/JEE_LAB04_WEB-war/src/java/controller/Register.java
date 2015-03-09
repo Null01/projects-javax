@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import security.SecurityEncrypt;
 import session.InterpreterDB;
 
@@ -45,14 +46,15 @@ public class Register extends HttpServlet {
             InterpreterDB.onlyThread.writeFileUser(first_name, last_name, email, passwordEncrypt);
             boolean userIsAdmin = InterpreterDB.onlyThread.userIsAdmin(email);
             Usuario usuario = new Usuario(first_name, last_name, email);
-            request.setAttribute("user_data", usuario);
+            HttpSession session = request.getSession(true);
+            session.setAttribute("user_data", usuario);
             if (userIsAdmin) {
                 request.getRequestDispatcher("admin.jsp").forward(request, response);
             } else {
                 request.getRequestDispatcher("user.jsp").forward(request, response);
             }
         } catch (Exception ex) {
-            System.out.println(ex);
+            System.err.println(ex);
             response.sendRedirect("index.jsp");
 
         }

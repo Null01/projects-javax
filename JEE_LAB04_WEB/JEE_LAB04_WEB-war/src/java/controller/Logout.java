@@ -1,6 +1,10 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package controller;
 
-import Modelo.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -8,14 +12,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import security.SecurityEncrypt;
-import session.InterpreterDB;
 
 /**
  *
  * @author andresfelipegarciaduran
  */
-public class Login extends HttpServlet {
+public class Logout extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,29 +32,10 @@ public class Login extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        PrintWriter out = response.getWriter();
-
-        try {
-            SecurityEncrypt security = new SecurityEncrypt();
-            String passwordEncrypt = security.encryptWithMD5(password);
-            InterpreterDB.onlyThread.readInFileUsersId(email, passwordEncrypt, password);
-            boolean userIsAdmin = InterpreterDB.onlyThread.userIsAdmin(email);
-            Object obj = InterpreterDB.onlyThread.readFileDataUserId(email);
-            Usuario usuario = (Usuario) obj;
-            HttpSession session = request.getSession(true);
-            session.setAttribute("user_data", usuario);
-            if (userIsAdmin) {
-                request.getRequestDispatcher("admin.jsp").forward(request, response);
-            } else {
-                request.getRequestDispatcher("user.jsp").forward(request, response);
-            }
-        } catch (Exception ex) {
-            System.out.println(ex);
-            response.sendRedirect("index.jsp");
-
-        }
+        HttpSession session = request.getSession();
+        session.setAttribute("user_data", null);
+        session.invalidate();
+        response.sendRedirect("index.jsp");
 
     }
 
