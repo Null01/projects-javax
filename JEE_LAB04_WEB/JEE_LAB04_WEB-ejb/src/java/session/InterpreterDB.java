@@ -113,7 +113,7 @@ public class InterpreterDB {
             loadFile.setProperty("lastName", last_name);
             File f1 = new File(nameFile);
             OutputStream out1 = new FileOutputStream(f1);
-            loadFile.store(out, null);
+            loadFile.store(out1, null);
         } catch (FileNotFoundException ex) {
             throw new Exception(ex);
         }
