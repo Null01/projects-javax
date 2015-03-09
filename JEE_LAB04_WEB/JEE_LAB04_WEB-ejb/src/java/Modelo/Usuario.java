@@ -13,11 +13,21 @@ public class Usuario {
     private String Nombre;
     private String Apellido;
     private String Correo;
+    private String Tipo;
 
-    public Usuario(String Nombre, String Apellido, String Correo) {
+    public Usuario(String Nombre, String Apellido, String Correo, String Tipo) {
         this.Nombre = Nombre;
         this.Apellido = Apellido;
         this.Correo = Correo;
+        this.Tipo = Tipo;
+    }
+
+    public String getTipo() {
+        return Tipo;
+    }
+
+    public void setTipo(String Tipo) {
+        this.Tipo = Tipo;
     }
 
     public String getNombre() {

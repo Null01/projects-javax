@@ -16,7 +16,6 @@ import java.util.Properties;
 public class InterpreterDB {
 
     private static final String name_file_users_id = "users_id.properties";
-    private static final String PARAM_ADMIN = "ADMIN";
 
     public static InterpreterDB onlyThread = new InterpreterDB();
 
@@ -38,6 +37,7 @@ public class InterpreterDB {
         return properties;
     }
 
+    
     public void writeInFileUsersId(String id, String pass) throws Exception {
         try {
             Properties loadFile = loadFile(name_file_users_id);
@@ -86,7 +86,7 @@ public class InterpreterDB {
             if (!loadFile.containsKey(id)) {
                 return false;
             }
-            String param = (String) loadFile.get(PARAM_ADMIN);
+            String param = (String) loadFile.get(ITipoUsuario.ADMIN);
             if (param.compareTo(id) == 0) {
                 return true;
             }
@@ -96,7 +96,7 @@ public class InterpreterDB {
         return false;
     }
 
-    public void writeFileUser(String first_name, String last_name, String email, String passwordEncrypt) throws Exception {
+    public void writeFileDataUserId(String first_name, String last_name, String email, String passwordEncrypt) throws Exception {
 
         try {
             Properties loadFileId = loadFile(name_file_users_id);
@@ -121,6 +121,8 @@ public class InterpreterDB {
 
     public Object readFileDataUserId(String email) throws Exception {
         Properties loadFile = loadFile(email + ".properties");
-        return new Usuario(loadFile.getProperty("firstName"), loadFile.getProperty("lastName"), loadFile.getProperty("id"));
+        boolean userIsAdmin = userIsAdmin(email);
+        String type = (userIsAdmin) ? ITipoUsuario.ADMIN : ITipoUsuario.SIMPLE;
+        return new Usuario(loadFile.getProperty("firstName"), loadFile.getProperty("lastName"), loadFile.getProperty("id"), type);
     }
 }
