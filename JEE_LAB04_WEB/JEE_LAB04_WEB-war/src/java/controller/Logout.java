@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -42,6 +43,16 @@ public class Logout extends HttpServlet {
             InterpreterLogs.onlyThread.writeLogUser(getServletContext(), new String[]{Logout.class.getSimpleName(), usuario.getCorreo()});
             session.setAttribute("user_data", null);
             session.invalidate();
+            ServletContext contexto = getServletContext();
+            Integer usuarioConectados = null;
+            synchronized (contexto) {
+                usuarioConectados = (Integer) contexto.getAttribute("usuariosConectados");
+                if (usuarioConectados == null) {
+                    usuarioConectados = new Integer("0");
+                }
+                --usuarioConectados;
+                contexto.setAttribute("usuariosConectados", usuarioConectados);
+            }
             response.sendRedirect("index.jsp");
         } catch (Exception ex) {
             ex.printStackTrace();

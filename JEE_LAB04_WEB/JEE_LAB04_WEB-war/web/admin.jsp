@@ -8,12 +8,16 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 ﻿<!DOCTYPE html>
 
-<% ServletContext contexto = getServletContext();
+<%
+    ServletContext contexto = getServletContext();
     Integer usuarioConectados = null;
-    Integer usuarioLogados = null;
     synchronized (contexto) {
         usuarioConectados = (Integer) contexto.getAttribute("usuariosConectados");
-        usuarioLogados = (Integer) contexto.getAttribute("usuariosLogados");
+        if (usuarioConectados == null) {
+            usuarioConectados = new Integer("0");
+        }
+        ++usuarioConectados;
+        contexto.setAttribute("usuariosConectados", usuarioConectados);
     }
 %>
 
@@ -95,9 +99,6 @@
                                 <h2>Usuarios registrados</h2>
                                 <div>
                                     <ul>
-                                        <h3>
-                                            Usuario Registrados: <%=(usuarioLogados == null) ? "0" : usuarioLogados.toString()%>
-                                        </h3>
                                         <h3>
                                             Usuario Conectados: <%=(usuarioConectados == null) ? "0" : usuarioConectados.toString()%>
                                         </h3>
