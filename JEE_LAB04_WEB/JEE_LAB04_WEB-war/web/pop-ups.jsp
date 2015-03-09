@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
     <body>
 
         <div id="modal_login" class="popupContainer" style="display:none;">
@@ -41,7 +42,7 @@
                             </label>
                             <div class="action_btns">
                                 <div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Back</a></div>
-                                <div class="one_half last"><a href="#" class="btn btn_red" onclick="$(this).closest('form').submit()">Login</a></div>
+                                <div class="one_half last"><a href="#" class="btn btn_red" onclick=$(this).closest('form').submit()">Login</a></div>
                             </div>
                         </fieldset>
                     </form>
@@ -54,19 +55,19 @@
                         <fieldset>
                             <label class="text">
                                 <input id="fname_register" type="text" name="fname" placeholder="Nombres" value=""
-                                       data-constraints="@Required" />
+                                       data-constraints="@Required" required="required"/>
                             </label>
                             <label class="text">
                                 <input id="flast_register" type="text" name="lname" placeholder="Apellidos" value=""
-                                       data-constraints="@Required" />
+                                       data-constraints="@Required" required="required"/>
                             </label>
                             <label class="email">
-                                <input id="email_register" type="email" name="email" placeholder="e-mail@dominio.com" value=""
-                                       data-constraints="@Required" />
+                                <input id="email_register" type="email" name="email" placeholder="e-mail@dominio.com" value="" 
+                                       data-constraints="@Required" required="required"/>
                             </label>
                             <label class="password">
                                 <input id="password_register" type="password" name="password" placeholder="password" value=""
-                                       data-constraints="@Required" />
+                                       data-constraints="@Required" required="required"/>
                             </label>
                             <br/>
                             <div class="action_btns">
