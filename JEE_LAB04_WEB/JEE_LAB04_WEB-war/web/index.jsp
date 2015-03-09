@@ -245,8 +245,9 @@
         <script src="js/foundation/foundation/foundation.orbit.js"></script>
         <script src="js/foundation/foundation/foundation.topbar.js"></script>
         <script>
-                    $(document).foundation();
+                                $(document).foundation();
         </script>
+
         <script src="js/script.js"></script>
     </body>
 </html>

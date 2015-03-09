@@ -4,6 +4,7 @@
     Author     : andresfelipegarciaduran
 --%>
 
+<%@page import="Modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 ﻿<!DOCTYPE html>
 <html lang="en">
@@ -37,6 +38,11 @@
         <script src='js/device.min.js'></script>
     </head>
 
+    <%
+        Usuario usuario = (Usuario) request.getAttribute("user_data");
+        
+    %>
+
     <body>
         <div class="page">
             <!--========================================================
@@ -62,6 +68,9 @@
                                 <li>
                                     <a href="contact.jsp">Contactenos</a>
                                 </li>
+                                <li>
+                                    <a href="index.jsp">Cerrar sesión</a>
+                                </li>
                             </ul>
                         </nav>
                     </div>
@@ -74,7 +83,7 @@
             <main>
                 <section class="well well__offset-3">
                     <div class="container">
-                        <h2><em>¡Bienvenido usuario!</em></h2>
+                        <h2><em>¡Bienvenido <%out.print(usuario.getNombre());%>!</em></h2>
                         <br/>
                         <div class="row box-3">
                             <div class="grid_5">

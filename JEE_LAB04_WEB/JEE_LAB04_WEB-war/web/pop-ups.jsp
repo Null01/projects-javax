@@ -33,11 +33,11 @@
                         <fieldset>
                             <label class="email">
                                 <input id="email_login" type="email" name="email" placeholder="e-mail@dominio.com" value=""
-                                       data-constraints="@Required" />
+                                       data-constraints="@Required" required=""/>
                             </label>
                             <label class="password">
                                 <input id="password_login" type="password" name="password" placeholder="password" value=""
-                                       data-constraints="@Required" />
+                                       data-constraints="@Required" required=""/>
                             </label>
                             <div class="action_btns">
                                 <div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Back</a></div>
@@ -57,7 +57,7 @@
                                        data-constraints="@Required" />
                             </label>
                             <label class="text">
-                                <input id="flast_register" type="text" name="flast" placeholder="Apellidos" value=""
+                                <input id="flast_register" type="text" name="lname" placeholder="Apellidos" value=""
                                        data-constraints="@Required" />
                             </label>
                             <label class="email">

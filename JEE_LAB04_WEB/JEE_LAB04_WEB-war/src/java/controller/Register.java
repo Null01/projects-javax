@@ -5,12 +5,15 @@
  */
 package controller;
 
+import Modelo.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import security.SecurityEncrypt;
+import session.InterpreterDB;
 
 /**
  *
@@ -30,17 +33,28 @@ public class Register extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Register</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Register at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String first_name = request.getParameter("fname");
+        String last_name = request.getParameter("lname");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        PrintWriter out = response.getWriter();
+
+        try {
+            SecurityEncrypt security = new SecurityEncrypt();
+            String passwordEncrypt = security.encryptWithMD5(password);
+            InterpreterDB.onlyThread.writeFileUser(first_name, last_name, email, passwordEncrypt);
+            boolean userIsAdmin = InterpreterDB.onlyThread.userIsAdmin(email);
+            Usuario usuario = new Usuario(first_name, last_name, email);
+            request.setAttribute("user_data", usuario);
+            if (userIsAdmin) {
+                request.getRequestDispatcher("admin.jsp").forward(request, response);
+            } else {
+                request.getRequestDispatcher("user.jsp").forward(request, response);
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+            response.sendRedirect("index.jsp");
+
         }
     }
 
