@@ -91,29 +91,14 @@
                                     <div class="contact-form-loader"></div>
                                     <fieldset>
                                         <label class="name">
-                                            Nombre:
-                                            <input type="text" name="name" placeholder="" value=""
-                                                   data-constraints="@Required @JustLetters"/>
-                                            <span class="empty-message">*This field is required.</span>
-                                            <span class="error-message">*This is not a valid name.</span>
+                                            Nombre: <%=usuario.getNombre()%>
                                         </label>
-
                                         <label class="name">
-                                            Apellido:
-                                            <input type="text" name="name" placeholder="" value=""
-                                                   data-constraints="@Required"/>
-                                            <span class="empty-message">*This field is required.</span>
-                                            <span class="error-message">*This is not a valid phone.</span>
+                                            Apellido: <%=usuario.getApellido()%>
                                         </label>
-
                                         <label class="email">
-                                            Correo electronico:
-                                            <input type="text" name="email" placeholder="" value=""
-                                                   data-constraints="@Required @Email"/>
-                                            <span class="empty-message">*This field is required.</span>
-                                            <span class="error-message">*This is not a valid email.</span>
+                                            <strong>Correo electronico:</strong> <%=usuario.getCorreo()%>
                                         </label>
-
                                     </fieldset>
                                     <div class="modal fade response-message">
                                         <div class="modal-dialog">

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import security.SecurityEncrypt;
 import session.InterpreterDB;
+import session.InterpreterLogs;
 
 /**
  *
@@ -43,10 +44,13 @@ public class Login extends HttpServlet {
             Usuario usuario = (Usuario) obj;
             HttpSession session = request.getSession(true);
             session.setAttribute("user_data", usuario);
+            InterpreterLogs.onlyThread.writeLogUser(getServletContext(), new String[]{Login.class.getSimpleName(), email});
             if (userIsAdmin) {
-                request.getRequestDispatcher("admin.jsp").forward(request, response);
+                //request.getRequestDispatcher("admin.jsp").forward(request, response);
+                response.sendRedirect("admin.jsp");
             } else {
-                request.getRequestDispatcher("user.jsp").forward(request, response);
+                //  request.getRequestDispatcher("user.jsp").forward(request, response);
+                response.sendRedirect("user.jsp");
             }
         } catch (Exception ex) {
             System.out.println(ex);

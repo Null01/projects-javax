@@ -4,6 +4,7 @@
     Author     : andresfelipegarciaduran
 --%>
 
+<%@page import="session.ITipoUsuario"%>
 <%@page import="Modelo.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 ﻿<!DOCTYPE html>
@@ -82,10 +83,27 @@
                             <li class="active">
                                 <a href="index.jsp">Home</a>
                             </li>
-                            <% if(usuario == null){ %>
+                            <% if (usuario == null) { %>
                             <li>
                                 <a id="modal_trigger_login" href="#modal_login" >Ingresar</a>
                             </li>
+                            <%} else {
+                                if (usuario.getTipo().compareTo(ITipoUsuario.ADMIN) == 0) {
+                            %>
+                            <li>
+                                <a href="admin.jsp" >Servicios</a>
+                            </li>
+                            <%
+                            } else {
+                            %>
+                            <li>
+                                <a href="user.jsp" >Servicios</a>
+                            </li>
+                            <%
+                                }
+                            %>
+
+
                             <%}%>
                             <li>
                                 <a href="contact.jsp">Contactenos</a>

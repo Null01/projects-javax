@@ -5,13 +5,17 @@
  */
 package controller;
 
+import Modelo.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import session.InterpreterLogs;
 
 /**
  *
@@ -32,10 +36,17 @@ public class Logout extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
-        HttpSession session = request.getSession();
-        session.setAttribute("user_data", null);
-        session.invalidate();
-        response.sendRedirect("index.jsp");
+        try {
+            HttpSession session = request.getSession();
+            Usuario usuario = (Usuario) session.getAttribute("user_data");
+            InterpreterLogs.onlyThread.writeLogUser(getServletContext(), new String[]{Logout.class.getSimpleName(), usuario.getCorreo()});
+            session.setAttribute("user_data", null);
+            session.invalidate();
+            response.sendRedirect("index.jsp");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            response.sendRedirect("index.jsp");
+        }
 
     }
 

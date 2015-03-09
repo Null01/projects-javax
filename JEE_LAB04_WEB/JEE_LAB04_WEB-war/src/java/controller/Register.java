@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import security.SecurityEncrypt;
 import session.InterpreterDB;
+import session.InterpreterLogs;
 
 /**
  *
@@ -43,11 +44,12 @@ public class Register extends HttpServlet {
         try {
             SecurityEncrypt security = new SecurityEncrypt();
             String passwordEncrypt = security.encryptWithMD5(password);
-            InterpreterDB.onlyThread.writeFileUser(first_name, last_name, email, passwordEncrypt);
+            InterpreterDB.onlyThread.writeFileDataUserId(first_name, last_name, email, passwordEncrypt);
             boolean userIsAdmin = InterpreterDB.onlyThread.userIsAdmin(email);
-            Usuario usuario = new Usuario(first_name, last_name, email);
+            Usuario usuario = (Usuario) InterpreterDB.onlyThread.readFileDataUserId(email);
             HttpSession session = request.getSession(true);
             session.setAttribute("user_data", usuario);
+            InterpreterLogs.onlyThread.writeLogUser(getServletContext(), new String[]{Register.class.getSimpleName(), email});
             if (userIsAdmin) {
                 request.getRequestDispatcher("admin.jsp").forward(request, response);
             } else {

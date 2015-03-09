@@ -112,7 +112,7 @@
                                 <div class="overlay-container">
                                     <div class="window-container zoomin">
                                         <h3>Visor de LOG</h3> 
-                                        <object type="text/plain" data="actual.txt" width="1100" height="300"></object>
+                                        <object type="text/plain" data="log_app.txt" width="1100" height="300"></object>
                                         <br/>
                                         <span class="close">Cerrar</span>
                                     </div>
