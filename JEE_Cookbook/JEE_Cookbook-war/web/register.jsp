@@ -4,7 +4,7 @@
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 
-    <!-- Mirrored from demohtml.templatesquare.com/terramia/blog-sidebar-right.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Mar 2015 03:35:33 GMT -->
+    <!-- Mirrored from demohtml.templatesquare.com/terramia/single.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Mar 2015 03:35:55 GMT -->
     <head>
 
         <!-- Basic Page Needs
@@ -33,9 +33,9 @@
         <link rel="stylesheet" href="styles/color.css" />
         <link rel="stylesheet" href="styles/prettyPhoto.css"  media="screen" />
 
-
         <!-- INCLUDE ============================== -->
         <script src="js/libs/jquery/jquery.js"></script>
+
 
 
         <!--[if lt IE 9]>
@@ -46,33 +46,18 @@
         ================================================== -->
         <link rel="shortcut icon" href="images/favicon.ico" />
     </head>
-    <body>
+    <body class="single">
         <div id="bodychild">
             <div id="outercontainer">
                 <!-- HEADER -->
                 <div id="navegation-include">
-                    <!-- <script>
+                    <!--<script>
                         $("#navegation-include").load("navegation.jsp");
                     </script> -->
-                    <jsp:include page="navegation.jsp"/>
+                    <jsp:include page="navegation.jsp" />
                 </div>
                 <!-- END HEADER -->
 
-                <!-- BEFORE CONTENT -->
-                <div id="outerbeforecontent">
-                    <div class="container">
-                        <div class="row">
-                            <div class="twelve columns" >
-                                <div id="beforecontent">
-                                    <h1 class="pagetitle">Our Blog</h1>
-                                    <p>Suspendisse arcu nulla, mollis sed eros id, pellentesque vulputate nulla. Nullam lectus dolor, pulvinar eu tristique nec, tempus ut ligula. Quisque pulvinar ut justo id dapibus. Duis convallis tellus faucibus nisl fermentum, nec semper massa adipiscing.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="separator full"></div>
-                </div>
-                <!-- END BEFORE CONTENT -->
 
 
                 <!-- MAIN CONTENT -->
@@ -80,91 +65,33 @@
                     <div class="container">
                         <div class="row">
                             <section id="maincontent" class="nine columns positionleft">
-
                                 <section class="content">
-
-                                    <article class="post">
-                                        <div class="postimg"><img src="images/content/post1.jpg" alt=""  /></div>
-                                        <div class="entry-content">
-                                            <h2 class="posttitle"><a href="single.html">Family style &amp; catering menu</a></h2>
-                                            <div class="entry-utility">
-                                                june 20,2013  /  by <a href="#">Admin</a>
-                                            </div>
-                                            <p>Morbi nec nunc condimentum, egestas dui nec, fermentum diam. Vivamus vel tincidunt libero, vitae elementum ligula. Nunc placerat purus quam, ac adipiscing arcu rutrum eu. Vestibulum adipiscing ut augue ut auctor. Vestibulum nec lorem...</p>
-                                            <a href="single.html" class="button">Read More</a>
-                                            <div class="clear"></div>
+                                    <div class="six columns">
+                                        <div id="contactform">
+                                            <form action="Register" method="post">
+                                                <fieldset>
+                                                    <label for="fname" >Your first name <span class="required">(required)</span></label>
+                                                    <input type="text" name="fname" size="60" required/>
+                                                    <label for="lname" >Your second name <span class="required">(required)</span></label>
+                                                    <input type="text" name="lname"  size="60" required/>
+                                                    <label for="email" >Your email <span class="required">(required)</span></label>
+                                                    <input type="email" name="email"  size="60" required/>
+                                                    <label for="password" >Your password <span class="required">(required)</span></label>
+                                                    <input type="password" name="password"  size="60" required/>
+                                                    <label for="confirmPassword" >Confirm password <span class="required">(required)</span></label>
+                                                    <input type="password" name="confirmPassword"  size="60" required/>
+                                                    <br class="clear" />
+                                                    <input type="submit" class="button" id="submit_btn" value="      Register     "/>
+                                                </fieldset>
+                                            </form>
                                         </div>
-                                        <div class="clear"></div>
-                                    </article>
-
-                                    <article class="post">
-                                        <div class="postimg"><img src="images/content/post2.jpg" alt=""  /></div>
-                                        <div class="entry-content">
-                                            <h2 class="posttitle"><a href="single.html">Celebrations banquet &amp; events menu</a></h2>
-                                            <div class="entry-utility">
-                                                june 20,2013  /  by <a href="#">Admin</a>
-                                            </div>
-                                            <p>Morbi nec nunc condimentum, egestas dui nec, fermentum diam. Vivamus vel tincidunt libero, vitae elementum ligula. Nunc placerat purus quam, ac adipiscing arcu rutrum eu. Vestibulum adipiscing ut augue ut auctor. Vestibulum nec lorem...</p>
-                                            <a href="single.html" class="button">Read More</a>
-                                            <div class="clear"></div>
-                                        </div>
-                                        <div class="clear"></div>
-                                    </article>
-
-                                    <article class="post">
-                                        <div class="postimg"><img src="images/content/post3.jpg" alt=""  /></div>
-                                        <div class="entry-content">
-                                            <h2 class="posttitle"><a href="single.html">Gluten free menu</a></h2>
-                                            <div class="entry-utility">
-                                                june 20,2013  /  by <a href="#">Admin</a>
-                                            </div>
-                                            <p>Morbi nec nunc condimentum, egestas dui nec, fermentum diam. Vivamus vel tincidunt libero, vitae elementum ligula. Nunc placerat purus quam, ac adipiscing arcu rutrum eu. Vestibulum adipiscing ut augue ut auctor. Vestibulum nec lorem...</p>
-                                            <a href="single.html" class="button">Read More</a>
-                                            <div class="clear"></div>
-                                        </div>
-                                        <div class="clear"></div>
-                                    </article>
-
-                                    <article class="post last">
-                                        <div class="postimg"><img src="images/content/post4.jpg" alt=""  /></div>
-                                        <div class="entry-content">
-                                            <h2 class="posttitle"><a href="single.html">Perfect sharing and snacking</a></h2>
-                                            <div class="entry-utility">
-                                                june 20,2013  /  by <a href="#">Admin</a>
-                                            </div>
-                                            <p>Morbi nec nunc condimentum, egestas dui nec, fermentum diam. Vivamus vel tincidunt libero, vitae elementum ligula. Nunc placerat purus quam, ac adipiscing arcu rutrum eu. Vestibulum adipiscing ut augue ut auctor. Vestibulum nec lorem...</p>
-                                            <a href="single.html" class="button">Read More</a>
-                                            <div class="clear"></div>
-                                        </div>
-                                        <div class="clear"></div>
-                                    </article>
-
-
-                                    <div class="wp-pagenavi">
-                                        <span class="pages">Page 1 of 2</span><a class="page" href="#">1</a><span class="current">2</span><a class="page" href="#">3</a> 
                                     </div>
-
                                 </section>
-
                             </section>
 
-                            <aside class="three columns">
+                            <div class="three columns">
                                 <div class="sidebar">
                                     <ul>
-                                        <li class="widget-container">
-                                            <div class="box-notice">
-                                                <div class="title">
-                                                    <div class="line"></div>
-                                                    <span class="icon-l"></span>
-                                                    <h2>Our Hours</h2>
-                                                    <span class="icon-r"></span>
-                                                    <div class="line"></div>
-                                                </div>
-                                                <h3>Open 5 days a week<br>08am - 09pm</h3>
-                                                <p>Farmville Gathaway 58th street, City Name<br><span>+1 800 123 456</span></p>
-
-                                            </div>
-                                        </li>
                                         <li class="widget-container">
                                             <h2 class="widget-title"><span>Archives</span></h2>
                                             <ul>
@@ -211,7 +138,7 @@
                                     </ul>
                                 </div>
 
-                            </aside>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -272,5 +199,5 @@
 
     </body>
 
-    <!-- Mirrored from demohtml.templatesquare.com/terramia/blog-sidebar-right.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Mar 2015 03:35:39 GMT -->
+    <!-- Mirrored from demohtml.templatesquare.com/terramia/single.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 18 Mar 2015 03:35:56 GMT -->
 </html>

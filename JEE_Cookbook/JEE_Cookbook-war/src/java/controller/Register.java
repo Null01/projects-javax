@@ -52,7 +52,7 @@ public class Register extends HttpServlet {
             Usuario userRegistered = sessionControllerBean.isUserRegistered(email, encryptWithMD5);
             if (userRegistered != null) {
                 HttpSession session = request.getSession(true);
-                session.setAttribute("user_data", userRegistered);
+                session.setAttribute("user-data", userRegistered);
                 MonitorLogs.onlyChannel.writeLogUser(getServletContext(), new String[]{Login.class.getSimpleName(), userRegistered.getCorreo(), userRegistered.getApellido() + " " + userRegistered.getApellido()});
                 if (userRegistered.getTipo().compareTo(ITipoUsuario.ADMIN) == 0) {
                     request.getRequestDispatcher("admin.jsp").forward(request, response);

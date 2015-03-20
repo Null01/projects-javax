@@ -29,7 +29,7 @@ public class SessionControllerBean {
         if (user_find == null) {
             throw new Exception("ERROR - LA LLAVE " + email + " NO EXISTE EN LA TABLA " + edu.lab.entities.Usuario.class.getSimpleName());
         }
-        Usuario outcome = new Usuario(user_find.getFname(), user_find.getFname(), user_find.getEmail(), find.getTypeuser());
+        Usuario outcome = new Usuario(user_find.getFname(), user_find.getLname(), user_find.getEmail(), find.getTypeuser());
         return outcome;
     }
 

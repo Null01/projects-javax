@@ -4,7 +4,7 @@
 <html>
     <body>
         <%
-            Usuario usuario = (Usuario) session.getAttribute("user_data");
+            Usuario usuario = (Usuario) session.getAttribute("user-data");
         %>
         <div id="outerheader">
             <div class="container">
@@ -38,9 +38,9 @@
                                 <nav id="nav-wrap">
                                     <ul id="topnav" class="sf-menu">
                                         <li><a href="index.jsp">Home</a></li>
+                                        <li><a href="register.jsp">Register</a></li>
                                         <li><a href="about.jsp">About Us</a></li>
                                         <li><a href="menu.jsp">Our Menus</a></li>
-                                        <!-- <li><a href="blog-sidebar-right.html">Our Blog</a></li> -->
                                         <li><a href="gallery.jsp">Gallery</a></li>
                                             <%
                                                 if (usuario != null) {

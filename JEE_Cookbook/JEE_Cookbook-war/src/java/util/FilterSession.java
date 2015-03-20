@@ -51,31 +51,34 @@ public class FilterSession implements Filter {
 
         boolean createSession = false;
         if (session != null) {
-            Object object = session.getAttribute("user_data");
+            Object object = session.getAttribute("user-data");
             if (object != null) {
                 createSession = true;
             }
         }
         System.out.println("createSession: " + createSession);
 
-        String jsps[] = {"index", "contact", "gallery", "menu", "about", "admin-home", "user-home"};
+        String jsps[] = {"index", "contact", "gallery","register", "menu", "about", "admin-home", "user-home"};
         String servlets[] = {"Login", "Logout", "Register"};
         Set<String> setJsps = new TreeSet<String>(Arrays.asList(jsps));
         if (tokens[tokens.length - 1].endsWith(".jsp")) {
             // Validacion .JPS
+            session.setAttribute("current-page", tokens[tokens.length - 1]);
             tokens[tokens.length - 1] = tokens[tokens.length - 1].replace(".jsp", "");
             if (createSession) {
-                Usuario attribute = (Usuario) session.getAttribute("user_data");
+                Usuario attribute = (Usuario) session.getAttribute("user-data");
                 try {
                     boolean userIsAdmin = attribute.getTipo().compareTo(ITipoUsuario.ADMIN) == 0;
                     if (userIsAdmin) {
                         if (tokens[tokens.length - 1].compareTo(jsps[jsps.length - 1]) == 0) {
+                             session.setAttribute("current-page", jsps[jsps.length - 2] + ".jsp");
                             httpRequest.getRequestDispatcher("/" + jsps[jsps.length - 2] + ".jsp").forward(request, response);
                         } else {
                             chain.doFilter(request, response);
                         }
                     } else {
                         if (tokens[tokens.length - 1].compareTo(jsps[jsps.length - 2]) == 0) {
+                             session.setAttribute("current-page", jsps[jsps.length - 1] + ".jsp");
                             httpRequest.getRequestDispatcher("/" + jsps[jsps.length - 1] + ".jsp").forward(request, response);
                         } else {
                             chain.doFilter(request, response);

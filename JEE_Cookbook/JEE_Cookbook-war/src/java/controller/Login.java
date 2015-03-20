@@ -45,7 +45,7 @@ public class Login extends HttpServlet {
             Usuario userRegistered = (Usuario) sessionControllerBean.isUserRegistered(email, encryptWithMD5);
             if (userRegistered != null) {
                 HttpSession session = request.getSession(true);
-                session.setAttribute("user_data", userRegistered);
+                session.setAttribute("user-data", userRegistered);
                 MonitorLogs.onlyChannel.writeLogUser(getServletContext(), new String[]{Login.class.getSimpleName(), userRegistered.getCorreo(), userRegistered.getApellido() + " " + userRegistered.getNombre()});
                 if (userRegistered.getTipo().compareTo(ITipoUsuario.ADMIN) == 0) {
                     //request.getRequestDispatcher("admin.jsp").forward(request, response);

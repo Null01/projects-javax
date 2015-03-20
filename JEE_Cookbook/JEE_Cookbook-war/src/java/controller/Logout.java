@@ -35,9 +35,9 @@ public class Logout extends HttpServlet {
 
         try {
             HttpSession session = request.getSession();
-            Usuario usuario = (Usuario) session.getAttribute("user_data");
+            Usuario usuario = (Usuario) session.getAttribute("user-data");
             MonitorLogs.onlyChannel.writeLogUser(getServletContext(), new String[]{Logout.class.getSimpleName(), usuario.getCorreo()});
-            session.setAttribute("user_data", null);
+            session.setAttribute("user-data", null);
             session.invalidate();
             //request.getRequestDispatcher("index.jsp").forward(request, response);
             response.sendRedirect("index.jsp");

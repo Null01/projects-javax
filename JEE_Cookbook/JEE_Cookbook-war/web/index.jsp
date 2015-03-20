@@ -1,3 +1,4 @@
+<%@page import="edu.lab.modelo.Usuario"%>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -45,7 +46,9 @@
 
     </head>
     <body>
-
+        <%
+            Usuario usuario = (Usuario) session.getAttribute("user-data");
+        %>
         <div id="bodychild">
             <div id="outercontainer">
                 <!-- HEADER -->
@@ -61,7 +64,12 @@
                 <div id="outerslider">
                     <div class="container">
                         <div class="row">
-                            <div id="slidercontainer" class="nine columns">
+                            <%
+                                String classSliderContainer = "nine columns";
+                                if (usuario != null) {
+                                    classSliderContainer = "twelve columns";
+                                }%>
+                            <div id="slidercontainer" class="<%=classSliderContainer%>">
                                 <!-- <div id="headline">We serve authentic Italian Dishes</div> -->
                                 <div id="slider">
                                     <div id="slideritems" class="flexslider">
@@ -97,6 +105,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <% if (usuario == null) { %>
                             <div class="three columns">
                                 <br/> <br/> 
                                 <div class="box-notice-login">
@@ -114,6 +123,7 @@
                                     </form>
                                 </div>
                             </div>
+                            <%}%>
                         </div>
                     </div>
                 </div>
@@ -143,7 +153,6 @@
                                                 <h2>An ideal place to spend a<br> romantic dinner</h2>
                                                 <div class="line-one-third"></div>
                                             </div>
-
                                             <p>Mauris laoreet ultricies leo volutpat laoreet. Pellentesque at velit eu nibh varius ullamcorper ac aliquam diam. Vestibulum pellentesque at justo eu pharetra.</p>
                                             <a class="button" href="#">Read More</a>
                                         </div>

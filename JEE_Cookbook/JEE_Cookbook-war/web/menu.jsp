@@ -116,7 +116,6 @@
                                                     <a class="button" href="#">Read More</a>
                                                 </div>
                                             </div>
-
                                             <div class="one_fourth columns item">
                                                 <div class="ts-img">
                                                     <a class="image" href="images/content/img-menu3.jpg" data-rel="prettyPhoto[mixed]" >
@@ -133,7 +132,6 @@
                                                     <a class="button" href="#">Read More</a>
                                                 </div>
                                             </div>
-
                                             <div class="one_fourth columns item">
                                                 <div class="ts-img">
                                                     <a class="image" href="images/content/img-menu4.jpg" data-rel="prettyPhoto[mixed]" >
@@ -198,7 +196,6 @@
                                                     <a class="button" href="#">Read More</a>
                                                 </div>
                                             </div>
-
                                         </div>
                                         <nav class="carousel-nav">
                                             <a class="port-nav left"></a><a class="port-nav right"></a>
