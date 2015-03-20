@@ -47,7 +47,7 @@
                                         <li><a href="register.jsp">Register</a></li>
                                         <li><a href="about.jsp">About Us</a></li>
                                         <li><a href="menu.jsp">Our Menus</a></li>
-                                        <li><a href="gallery.jsp">Gallery</a></li>
+										<li><a href="gallery.jsp">Gallery</a></li>
                                             <%
                                                 if (usuario != null) {
                                                     boolean isAdmin = usuario.getTipo().compareTo(ITipoUsuario.ADMIN) == 0;
@@ -55,22 +55,16 @@
                                             %>
                                         <li><a href="<%=pageUserHome%>">User</a>
                                             <%
-                                                    if (isAdmin) {
-                                                        myFunc(out);
+                                                if (isAdmin) {
+                                            %>
+                                            <ul>    
+                                                <li><a href='user-control.jsp'>User-Control</a></li>
+                                            </ul>
+                                            <%
                                                     }
                                                 }
                                             %>
-                                            <%!
-                                                private void myFunc(javax.servlet.jsp.JspWriter myOut) {
-                                                    try {
-                                                        myOut.println("<ul>");
-                                                        myOut.println("<li><a href='user-control.jsp'>User-Control</a></li>");
-                                                        myOut.println("</ul>");
-                                                    } catch (Exception e) {
-                                                        System.out.println("Se presento un error en la crear-administrador-de-equipo.jsp..." + e.getMessage());
-                                                    }
-                                                }
-                                            %>
+                                        </li>
                                         </li>
                                         <li><a href="Logout">Logout</a></li>
                                     </ul>
