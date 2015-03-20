@@ -47,12 +47,26 @@
                                                     boolean isAdmin = usuario.getTipo().compareTo(ITipoUsuario.ADMIN) == 0;
                                                     String pageUserHome = ((isAdmin) ? "admin" : "user") + "-home.jsp";
                                             %>
-                                        <li><a href="<%=pageUserHome%>">User</a></li>
+                                        <li><a href="<%=pageUserHome%>">User</a>
+                                            <%
+                                                    if (isAdmin) {
+                                                        myFunc(out);
+                                                    }
+                                                }
+                                            %>
+                                            <%!
+                                                private void myFunc(javax.servlet.jsp.JspWriter myOut) {
+                                                    try {
+                                                        myOut.println("<ul>");
+                                                        myOut.println("<li><a href='user-control.jsp'>User-Control</a></li>");
+                                                        myOut.println("</ul>");
+                                                    } catch (Exception e) {
+                                                        System.out.println("Se presento un error en la crear-administrador-de-equipo.jsp..." + e.getMessage());
+                                                    }
+                                                }
+                                            %>
+                                        </li>
                                         <li><a href="Logout">Logout</a></li>
-
-                                        <%
-                                            }
-                                        %>
                                     </ul>
                                     <div class="clear"></div>
                                 </nav>
