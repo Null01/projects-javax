@@ -84,6 +84,12 @@
                                                 <label for="confirmPassword" >Confirm password <span class="required">(required)</span></label>
                                                 <input type="password" name="confirmPassword"  size="60" required/>
                                                 <br class="clear" />
+                                                <%
+                                                    Object message = request.getAttribute("message-error-register");
+                                                    if (message != null) {
+                                                        out.println("<br/><span class=\"required\">" + message.toString() + "</span><br/>");
+                                                    }
+                                                %>
                                                 <input type="submit" class="button" id="submit_btn" value="      Register     "/>
                                             </fieldset>
                                         </form>

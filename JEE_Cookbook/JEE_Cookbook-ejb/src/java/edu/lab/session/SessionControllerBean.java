@@ -25,7 +25,7 @@ public class SessionControllerBean {
         EntityManager em = emf.createEntityManager();
         Login find = em.find(Login.class, new LoginPK(email, password));
         if (find == null) {
-            return null;
+            throw new Exception("ERROR - DATOS INCORRECTO");
         }
         edu.lab.entities.Usuario user_find = em.find(edu.lab.entities.Usuario.class, email);
         if (user_find == null) {
@@ -47,7 +47,7 @@ public class SessionControllerBean {
         if (resultList != null && !resultList.isEmpty()) {
             throw new Exception("ERROR - EL CORREO ELECTRONICO YA SE ENCUENTRA INSCRITO ");
         }
-        
+
         edu.lab.entities.Login login = new edu.lab.entities.Login(email, password);
         login.setTypeuser(ITipoUsuario.SIMPLE);
         em.getTransaction().begin();

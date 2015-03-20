@@ -57,17 +57,16 @@ public class Register extends HttpServlet {
                 session.setAttribute("user-data", userRegistered);
                 MonitorLogs.onlyChannel.writeLogUser(getServletContext(), new String[]{Login.class.getSimpleName(), userRegistered.getCorreo(), userRegistered.getApellido() + " " + userRegistered.getApellido()});
                 if (userRegistered.getTipo().compareTo(ITipoUsuario.ADMIN) == 0) {
-                    request.getRequestDispatcher("admin-home.jsp").forward(request, response);
+                    response.sendRedirect("admin-home.jsp");
                 } else {
-                    request.getRequestDispatcher("user-home.jsp").forward(request, response);
+                    response.sendRedirect("user-home.jsp");
                 }
             } else {
                 response.sendRedirect("register.jsp");
             }
         } catch (Exception ex) {
-            System.err.println(ex);
-            response.sendRedirect("register.jsp");
-
+            request.setAttribute("message-error-register", ex.getMessage());
+            request.getRequestDispatcher("register.jsp").forward(request, response);
         }
     }
 

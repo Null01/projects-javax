@@ -1,5 +1,11 @@
 <%@page import="edu.lab.session.ITipoUsuario"%>
 <%@page import="edu.lab.modelo.Usuario"%>
+<%
+    response.setHeader("Cache-Control", "no-cache");
+    response.setHeader("Cache-Control", "no-store");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+%>
 <!DOCTYPE html>
 <html>
     <body>

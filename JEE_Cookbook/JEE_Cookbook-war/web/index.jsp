@@ -1,4 +1,11 @@
+
 <%@page import="edu.lab.modelo.Usuario"%>
+<%
+    response.setHeader("Cache-Control", "no-cache");
+    response.setHeader("Cache-Control", "no-store");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+%>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -119,6 +126,12 @@
                                         <div class="bg-right">
                                             <input type="password" name="password" id="password" placeholder="Contraseña"  required/>
                                         </div>
+                                        <%
+                                            Object message = request.getAttribute("message-error-login");
+                                            if (message != null) {
+                                                out.println("<br/><span class=\"required\">" + message.toString() + "</span><br/>");
+                                            }
+                                        %>
                                         <input type="submit" class="button" id="submit_btn" value="  Ingresar  "/>
                                     </form>
                                 </div>
