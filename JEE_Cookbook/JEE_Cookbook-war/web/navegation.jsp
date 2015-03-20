@@ -47,7 +47,7 @@
                                         <li><a href="register.jsp">Register</a></li>
                                         <li><a href="about.jsp">About Us</a></li>
                                         <li><a href="menu.jsp">Our Menus</a></li>
-										<li><a href="gallery.jsp">Gallery</a></li>
+                                        <li><a href="gallery.jsp">Gallery</a></li>
                                             <%
                                                 if (usuario != null) {
                                                     boolean isAdmin = usuario.getTipo().compareTo(ITipoUsuario.ADMIN) == 0;
@@ -61,12 +61,14 @@
                                                 <li><a href='user-control.jsp'>User-Control</a></li>
                                             </ul>
                                             <%
-                                                    }
+                                                }
+                                            %>
+                                        <li><a href="Logout">Logout</a></li>
+                                            <%
                                                 }
                                             %>
                                         </li>
-                                        </li>
-                                        <li><a href="Logout">Logout</a></li>
+
                                     </ul>
                                     <div class="clear"></div>
                                 </nav>
