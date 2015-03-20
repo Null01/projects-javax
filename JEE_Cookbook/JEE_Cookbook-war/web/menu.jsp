@@ -15,7 +15,7 @@
         <!-- Basic Page Needs
   ================================================== -->
         <meta charset="utf-8" />
-        <title>Terramia</title>
+        <title>Cookbook</title>
         <meta name="robots" content="index, follow" />
         <meta name="keywords" content="" />
         <meta name="description" content="" />

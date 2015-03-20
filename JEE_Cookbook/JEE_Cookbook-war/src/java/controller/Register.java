@@ -55,7 +55,7 @@ public class Register extends HttpServlet {
             if (userRegistered != null) {
                 HttpSession session = request.getSession(true);
                 session.setAttribute("user-data", userRegistered);
-                MonitorLogs.onlyChannel.writeLogUser(getServletContext(), new String[]{Login.class.getSimpleName(), userRegistered.getCorreo(), userRegistered.getApellido() + " " + userRegistered.getApellido()});
+                MonitorLogs.onlyChannel.writeLogUser(getServletContext(), new String[]{Register.class.getSimpleName(), userRegistered.getCorreo(), userRegistered.getApellido() + " " + userRegistered.getNombre()});
                 if (userRegistered.getTipo().compareTo(ITipoUsuario.ADMIN) == 0) {
                     response.sendRedirect("admin-home.jsp");
                 } else {

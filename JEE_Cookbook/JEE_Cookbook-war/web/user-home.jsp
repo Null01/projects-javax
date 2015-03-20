@@ -114,13 +114,60 @@
                     <div class="separator full"></div>
                 </div>
 
+
                 <!-- MAIN CONTENT -->
                 <div id="outermain">
                     <div class="container">
                         <div class="row">
                             <section id="maincontent" class="nine columns positionleft">
-
                                 <section class="content">
+
+                                    <!-- PUBLISH GOOGLE-->
+                                    <div id="google_pluss">
+                                        <div class="Sb">
+                                            <div tabindex="0" style="-moz-user-select: none;" class="kqa es" guidedhelpid="sharebox_textarea" role="button">Share what's new...</div>
+                                            <div class="iH">
+                                                <div class="j7 Be" guidedhelpid="sharebox_text">
+                                                    <div class="m7">
+                                                        <div class="mB k7"></div>
+                                                        <div class="mB l7"></div>                            
+                                                    </div>
+                                                    <span style="-moz-user-select: none;" role="button" class="d-s aj oqa" tabindex="0">
+                                                        <div class="yl lH"></div>
+                                                        <div class="dv">Text</div>
+                                                    </span></div><div class="j7 " guidedhelpid="sharebox_photos">
+                                                    <div class="m7">
+                                                        <div class="mB k7"></div>
+                                                        <div class="mB l7"></div>                                
+                                                    </div>
+                                                    <span style="-moz-user-select: none;" role="button" class="d-s aj nqa" tabindex="0">
+                                                        <div class="yl FD"></div>
+                                                        <div class="dv">Photos</div>
+                                                    </span></div><div class="j7 " guidedhelpid="sharebox_link">
+                                                    <div class="m7">
+                                                        <div class="mB k7"></div>
+                                                        <div class="mB l7"></div>                                    
+                                                    </div>
+                                                    <span style="-moz-user-select: none;" role="button" class="d-s aj mqa" tabindex="0">
+                                                        <div class="yl kH"></div>
+                                                        <div class="dv">Link</div>
+                                                    </span>                                
+                                                </div>
+                                                <div class="j7 " guidedhelpid="sharebox_video">
+                                                    <div class="m7">
+                                                        <div class="mB k7"></div>
+                                                        <div class="mB l7"></div>                                        
+                                                    </div>
+                                                    <span style="-moz-user-select: none;" role="button" class="d-s aj pqa" tabindex="0">
+                                                        <div class="yl mH"></div>
+                                                        <div class="dv">Video</div>
+                                                    </span>                        
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
                                     <div id="entry-author-info">
                                         <div id="author-description">
                                             <img class="avatar alignleft" src="images/content/avatar.gif" alt="">   
@@ -183,8 +230,6 @@
                                     </section>
 
                                 </section>
-
-
                             </section>
 
                             <aside class="three columns">
