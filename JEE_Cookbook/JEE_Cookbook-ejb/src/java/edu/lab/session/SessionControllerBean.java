@@ -3,11 +3,13 @@ package edu.lab.session;
 import edu.lab.entities.Login;
 import edu.lab.entities.LoginPK;
 import edu.lab.modelo.Usuario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 /**
  *
@@ -33,8 +35,25 @@ public class SessionControllerBean {
         return outcome;
     }
 
-    public void registerUser(String fname, String lname, String email, String passoword) throws Exception {
+    public void registerUser(String fname, String lname, String email, String password, String confirmPassword) throws Exception {
+
+        if (password.compareTo(confirmPassword) != 0) {
+            throw new Exception("ERROR - LAS CONTRASEÑAS NO COINCIDEN");
+        }
+
         EntityManager em = emf.createEntityManager();
+        Query createNamedQuery = em.createNamedQuery("Login.findByEmail").setParameter("email", email);
+        List resultList = createNamedQuery.getResultList();
+        if (resultList != null && !resultList.isEmpty()) {
+            throw new Exception("ERROR - EL CORREO ELECTRONICO YA SE ENCUENTRA INSCRITO ");
+        }
+        
+        edu.lab.entities.Login login = new edu.lab.entities.Login(email, password);
+        login.setTypeuser(ITipoUsuario.SIMPLE);
+        em.getTransaction().begin();
+        em.persist(login);
+        em.getTransaction().commit();
+
         edu.lab.entities.Usuario usuario = new edu.lab.entities.Usuario(email);
         usuario.setFname(fname);
         usuario.setLname(lname);
@@ -42,10 +61,6 @@ public class SessionControllerBean {
         em.persist(usuario);
         em.getTransaction().commit();
 
-        edu.lab.entities.Login login = new edu.lab.entities.Login(email, passoword);
-        em.getTransaction().begin();
-        em.persist(login);
-        em.getTransaction().commit();
     }
 
 }

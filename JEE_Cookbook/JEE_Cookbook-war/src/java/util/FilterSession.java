@@ -40,13 +40,6 @@ public class FilterSession implements Filter {
         String requestURI = httpRequest.getRequestURI();
         String tokens[] = requestURI.split("/");
         HttpSession session = httpRequest.getSession();
-
-        String scheme = httpRequest.getScheme();             // http
-        String serverName = httpRequest.getServerName();     // hostname
-        int serverPort = httpRequest.getServerPort();        // 8080
-        String contextPath = httpRequest.getContextPath();   // /mywebapp
-
-        String path = scheme + "://" + serverName + ":" + serverPort + contextPath;
         String indexURI = "/index.jsp";
 
         boolean createSession = false;
@@ -56,9 +49,8 @@ public class FilterSession implements Filter {
                 createSession = true;
             }
         }
-        System.out.println("createSession: " + createSession);
 
-        String jsps[] = {"index", "contact", "gallery","register", "menu", "about", "admin-home", "user-home"};
+        String jsps[] = {"index", "contact", "gallery", "register", "menu", "about", "admin-home", "user-home"};
         String servlets[] = {"Login", "Logout", "Register"};
         Set<String> setJsps = new TreeSet<String>(Arrays.asList(jsps));
         if (tokens[tokens.length - 1].endsWith(".jsp")) {
@@ -71,14 +63,14 @@ public class FilterSession implements Filter {
                     boolean userIsAdmin = attribute.getTipo().compareTo(ITipoUsuario.ADMIN) == 0;
                     if (userIsAdmin) {
                         if (tokens[tokens.length - 1].compareTo(jsps[jsps.length - 1]) == 0) {
-                             session.setAttribute("current-page", jsps[jsps.length - 2] + ".jsp");
+                            session.setAttribute("current-page", jsps[jsps.length - 2] + ".jsp");
                             httpRequest.getRequestDispatcher("/" + jsps[jsps.length - 2] + ".jsp").forward(request, response);
                         } else {
                             chain.doFilter(request, response);
                         }
                     } else {
                         if (tokens[tokens.length - 1].compareTo(jsps[jsps.length - 2]) == 0) {
-                             session.setAttribute("current-page", jsps[jsps.length - 1] + ".jsp");
+                            session.setAttribute("current-page", jsps[jsps.length - 1] + ".jsp");
                             httpRequest.getRequestDispatcher("/" + jsps[jsps.length - 1] + ".jsp").forward(request, response);
                         } else {
                             chain.doFilter(request, response);

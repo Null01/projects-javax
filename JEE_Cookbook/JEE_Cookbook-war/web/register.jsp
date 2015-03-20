@@ -64,30 +64,33 @@
                 <div id="outermain">
                     <div class="container">
                         <div class="row">
-                            <section id="maincontent" class="nine columns positionleft">
-                                <section class="content">
-                                    <div class="six columns">
-                                        <div id="contactform">
-                                            <form action="Register" method="post">
-                                                <fieldset>
-                                                    <label for="fname" >Your first name <span class="required">(required)</span></label>
-                                                    <input type="text" name="fname" size="60" required/>
-                                                    <label for="lname" >Your second name <span class="required">(required)</span></label>
-                                                    <input type="text" name="lname"  size="60" required/>
-                                                    <label for="email" >Your email <span class="required">(required)</span></label>
-                                                    <input type="email" name="email"  size="60" required/>
-                                                    <label for="password" >Your password <span class="required">(required)</span></label>
-                                                    <input type="password" name="password"  size="60" required/>
-                                                    <label for="confirmPassword" >Confirm password <span class="required">(required)</span></label>
-                                                    <input type="password" name="confirmPassword"  size="60" required/>
-                                                    <br class="clear" />
-                                                    <input type="submit" class="button" id="submit_btn" value="      Register     "/>
-                                                </fieldset>
-                                            </form>
-                                        </div>
+                            <div class="two columns">
+                            </div>
+                            <section class="content">
+                                <div class="six columns">
+                                    <h1>Form Register</h1>
+                                    <p> afpergerpweferoigdf sdpoigw sdfpowefwkefw wpeo wepfokwepfwe f wepojwefqofrm </p>
+                                    <div id="contactform">
+                                        <form action="Register" method="post">
+                                            <fieldset>
+                                                <label for="fname" >Your first name <span class="required">(required)</span></label>
+                                                <input type="text" name="fname" size="60" required/>
+                                                <label for="lname" >Your second name <span class="required">(required)</span></label>
+                                                <input type="text" name="lname"  size="60" required/>
+                                                <label for="email" >Your email <span class="required">(required)</span></label>
+                                                <input type="email" name="email"  size="60" required/>
+                                                <label for="password" >Your password <span class="required">(required)</span></label>
+                                                <input type="password" name="password"  size="60" required/>
+                                                <label for="confirmPassword" >Confirm password <span class="required">(required)</span></label>
+                                                <input type="password" name="confirmPassword"  size="60" required/>
+                                                <br class="clear" />
+                                                <input type="submit" class="button" id="submit_btn" value="      Register     "/>
+                                            </fieldset>
+                                        </form>
                                     </div>
-                                </section>
+                                </div>
                             </section>
+
 
                             <div class="three columns">
                                 <div class="sidebar">

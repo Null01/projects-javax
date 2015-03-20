@@ -1,4 +1,17 @@
 <%@page import="edu.lab.modelo.Usuario"%>
+<%
+    response.setHeader("Cache-Control", "no-cache");
+    response.setHeader("Cache-Control", "no-store");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+    if (session.getAttribute("user-data") == null) {
+        if (session.getAttribute("current-page") != null) {
+            response.sendRedirect(request.getContextPath() + "/" + session.getAttribute("current-page"));
+        } else {
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
+        }
+    }
+%>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -101,22 +114,6 @@
                     <div class="separator full"></div>
                 </div>
 
-                <!-- BEFORE CONTENT -->
-                <div id="outerbeforecontent">
-                    <div class="container">
-                        <div class="row">
-                            <div class="twelve columns" >
-                                <div id="beforecontent">
-                                    <h1 class="pagetitle">Family style &amp; catering menu</h1>
-                                    <p>June 20, 2013  /  by <a href="#">John Doe</a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="separator full"></div>
-                </div>
-                <!-- END BEFORE CONTENT -->
-
                 <!-- MAIN CONTENT -->
                 <div id="outermain">
                     <div class="container">
@@ -124,32 +121,10 @@
                             <section id="maincontent" class="nine columns positionleft">
 
                                 <section class="content">
-
-                                    <article class="post">
-                                        <div class="entry-content">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac feugiat. Vestibulum ullamcorper sodales nisi nec condimentum. Mauris convallis mauris at pellentesque volutpat. Phasellus at ultricies neque, quis malesuada augue. Donec eleifend condimentum nisl eu consectetur. Integer eleifend, nisl venenatis consequat iaculis, lectus arcu malesuada sem, dapibus porta quam lacus eu neque.</p>
-
-                                            <p><img src="images/content/pic.jpg" alt="" class="frame alignleft"  />Morbi nec nunc condimentum, egestas dui nec, fermentum diam. Vivamus vel tincidunt libero, vitae elementum ligula. Nunc placerat purus quam, ac adipiscing arcu rutrum eu. Vestibulum adipiscing ut augue ut auctor. Vestibulum nec lorem imperdiet nibh mollis gravida ut a justo.</p>
-
-                                            <p>Suspendisse arcu nulla, mollis sed eros id, pellentesque vulputate nulla. Nullam lectus dolor, pulvinar eu tristique nec, tempus ut ligula. Quisque pulvinar ut justo id dapibus. Duis convallis tellus faucibus nisl fermentum, nec semper massa adipiscing. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In vestibulum est vel elementum pellentesque. </p>
-
-                                            <p>Morbi nec nunc condimentum, egestas dui nec, fermentum diam. Vivamus vel tincidunt libero, vitae elementum ligula. Nunc placerat purus quam, ac adipiscing arcu rutrum eu. Vestibulum adipiscing ut augue ut auctor. Vestibulum nec lorem imperdiet nibh mollis gravida ut a justo.</p>
-
-                                            <p>Donec vel risus ultrices, pellentesque velit in, viverra eros. Aenean malesuada commodo nunc in viverra. Nunc ornare lectus id sem pellentesque, a varius massa iaculis. Cras tristique, risus eu ornare fermentum, turpis nisl dapibus enim, in consectetur tellus erat quis risus. Vestibulum rutrum magna eget pretium bibendum.</p>
-
-                                            <p>In sagittis enim vitae magna ultricies accumsan. Vestibulum tempus ipsum ac auctor accumsan. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam at tempus nunc, vel dictum leo. Fusce ultrices sodales tempus. Phasellus sagittis, diam sed pulvinar eleifend, mauris urna ornare elit, convallis pretium leo libero vitae lectus. In vestibulum est vel elementum pellentesque. Sed pellentesque quis lectus vel hendrerit. Praesent ut libero consectetur, sodales velit in, imperdiet purus. Nulla eu diam velit.</p>
-
-                                            <div class="clear"></div>
-                                        </div>
-                                        <div class="clear"></div>
-                                    </article>
-
                                     <div id="entry-author-info">
-                                        <h3>About Author</h3>                         
-
                                         <div id="author-description">
                                             <img class="avatar alignleft" src="images/content/avatar.gif" alt="">   
-                                            <h4 class="author">John Doe</h4>
+                                            <h4 class="author"><%= usuario.getNombre()%></h4>
                                             <p>Curabitur tincidunt iaculis ipsum, eu malesuada tellus congue a. Quisque aliquet, enim eget consequat scelerisque, lectus nibh pulvinar lectus, ac vestibulum nisl urna quis magna. Quisque laoreet pulvinar orci, eget tempor ante consectetur in. Nullam et lorem ut magna aliquet eleifend scelerisque eu justo.  </p>                        
                                         </div><!-- author-description	-->
                                         <div class="clear"></div>
@@ -228,15 +203,6 @@
                                                 <p>Farmville Gathaway 58th street, City Name<br><span>+1 800 123 456</span></p>
 
                                             </div>
-                                        </li>
-                                        <li class="widget-container">
-                                            <h2 class="widget-title"><span>Archives</span></h2>
-                                            <ul>
-                                                <li><a href="#">December 2012</a></li>
-                                                <li><a href="#">January 2013</a></li>
-                                                <li><a href="#">March 2013</a></li>
-                                                <li><a href="#">June 2013</a></li>
-                                            </ul>
                                         </li>
                                         <li class="widget-container">
                                             <h2 class="widget-title"><span>Latest News</span></h2>

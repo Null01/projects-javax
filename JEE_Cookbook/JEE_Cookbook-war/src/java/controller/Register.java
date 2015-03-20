@@ -44,27 +44,29 @@ public class Register extends HttpServlet {
         String last_name = request.getParameter("lname");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String confirmPassword = request.getParameter("confirmPassword");
 
         try {
             SecurityEncrypt security = new SecurityEncrypt();
             String encryptWithMD5 = security.encryptWithMD5(password);
-            sessionControllerBean.registerUser(first_name, last_name, email, encryptWithMD5);
+            String encryptWithMD5Confirm = security.encryptWithMD5(confirmPassword);
+            sessionControllerBean.registerUser(first_name, last_name, email, encryptWithMD5, encryptWithMD5Confirm);
             Usuario userRegistered = sessionControllerBean.isUserRegistered(email, encryptWithMD5);
             if (userRegistered != null) {
                 HttpSession session = request.getSession(true);
                 session.setAttribute("user-data", userRegistered);
                 MonitorLogs.onlyChannel.writeLogUser(getServletContext(), new String[]{Login.class.getSimpleName(), userRegistered.getCorreo(), userRegistered.getApellido() + " " + userRegistered.getApellido()});
                 if (userRegistered.getTipo().compareTo(ITipoUsuario.ADMIN) == 0) {
-                    request.getRequestDispatcher("admin.jsp").forward(request, response);
+                    request.getRequestDispatcher("admin-home.jsp").forward(request, response);
                 } else {
-                    request.getRequestDispatcher("user.jsp").forward(request, response);
+                    request.getRequestDispatcher("user-home.jsp").forward(request, response);
                 }
             } else {
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("register.jsp");
             }
         } catch (Exception ex) {
             System.err.println(ex);
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("register.jsp");
 
         }
     }
