@@ -91,29 +91,74 @@
                                 <br/>
                                 <h1 class="pagetitle">About Me</h1>
                                 <p>Suspendisse arcu nulla, mollis sed eros id, pellentesque vulputate nulla. Nullam lectus dolor, pulvinar eu tristique nec, tempus ut ligula. Quisque pulvinar ut justo id dapibus. Duis convallis tellus faucibus nisl fermentum, nec semper massa adipiscing.</p>
-                                <table border="0" style="width:80%">
-                                    <tbody>
-                                        <tr>
-                                            <td>My fisrt name:</td>
-                                            <td> <% out.print(usuario.getNombre());%> </td>
-                                        </tr>
-                                        <tr>
-                                            <td>My second name:</td>
-                                            <td> <% out.print(usuario.getApellido());%> </td>
-                                        </tr>
-                                        <tr>
-                                            <td>My email:</td>
-                                            <td> <% out.print(usuario.getCorreo());%> </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
 
+                                <div id="target">
+                                    <table border="0" style="width:80%">
+                                        <tbody>
+                                            <tr>
+                                                <td>My fisrt name:</td>
+                                                <td> <% out.print(usuario.getNombre());%> </td>
+                                            </tr>
+                                            <tr>
+                                                <td>My second name:</td>
+                                                <td> <% out.print(usuario.getApellido());%> </td>
+                                            </tr>
+                                            <tr>
+                                                <td>My email:</td>
+                                                <td> <% out.print(usuario.getCorreo());%> </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <input type="button"class="button" id="ocultar" value=" Actualizar     "/>
+                                </div>   
+
+                                <div id="target1" style="display:none;">
+                                    <form action="Register" method="post">
+                                        <fieldset>
+                                            <table border="0" style="width:80%">
+                                                <tbody>
+                                                    <tr>
+                                                        <td><label for="fname" >Your first name <span class="required">(required)</span></label></td>
+                                                        <td><input type="text" name="fname" value='<% out.print(usuario.getNombre());%>' size="30" required/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><label for="lname" >Your second name <span class="required">(required)</span></label></td>
+                                                        <td><input type="text" name="lname" value='<% out.print(usuario.getApellido());%>' size="30" required/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><label for="email" >Your email <span class="required">(required)</span></label></td>
+                                                        <td><input type="email" name="email" value='<% out.print(usuario.getCorreo());%>' size="30" required/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><label for="password" >Your password <span class="required">(required)</span></label></td>
+                                                        <td><input type="password" name="password" size="30" required/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><label for="confirmPassword" >New password <span class="required">(no-required)</span></label></td>
+                                                        <td><input type="password" name="newPassword" size="30" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><label for="confirmPassword" >Confirm password <span class="required">(no-required)</span></label></td>
+                                                        <td><input type="password" name="confirmPassword" size="30" /></td>
+                                                    </tr>
+                                                <br class="clear" />
+                                                <%
+                                                    Object message = request.getAttribute("message-error-register");
+                                                    if (message != null) {
+                                                        out.println("<br/><span class=\"required\">" + message.toString() + "</span><br/>");
+                                                    }
+                                                %>
+                                                </tbody>
+                                            </table>
+                                            <input type="submit" class="button" id="submit_btn" value="  Guardar     "/>    
+                                        </fieldset>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="separator full"></div>
                 </div>
-
 
                 <!-- MAIN CONTENT -->
                 <div id="outermain">
@@ -339,6 +384,15 @@
                     controlNav: true  //Boolean: Create navigation for paging control of each clide? Note: Leave true for manualControls usage
                 });
 
+            });
+            
+            $(document).ready(function () {
+                $("#ocultar").click(function () {
+                    $('#target').hide();
+                    $('.target').hide();
+                    $('#target1').show();
+                    $('.target1').show();
+                });
             });
         </script>
     </body>
