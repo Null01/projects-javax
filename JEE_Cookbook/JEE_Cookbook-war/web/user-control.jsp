@@ -4,6 +4,18 @@
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
     <%
+        response.setHeader("Cache-Control", "no-cache");
+        response.setHeader("Cache-Control", "no-store");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+        if (session.getAttribute("user-data") == null) {
+            if (session.getAttribute("current-page") != null) {
+                response.sendRedirect(request.getContextPath() + "/" + session.getAttribute("current-page"));
+            } else {
+                response.sendRedirect(request.getContextPath() + "/index.jsp");
+            }
+        }
+
         ServletContext contexto = getServletContext();
         Integer usuarioConectados = null;
         synchronized (contexto) {

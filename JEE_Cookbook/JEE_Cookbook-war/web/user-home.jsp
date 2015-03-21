@@ -178,7 +178,7 @@
                                                         <div class="mB l7"></div>                            
                                                     </div>
                                                     <span style="-moz-user-select: none;" role="button" class="d-s aj oqa" tabindex="0">
-                                                        <div class="yl lH"></div>
+                                                        <div id="create-coment-dialog" class="yl lH"></div>
                                                         <div class="dv">Text</div>
                                                     </span></div><div class="j7 " guidedhelpid="sharebox_photos">
                                                     <div class="m7">
@@ -212,6 +212,122 @@
 
                                         </div>
                                     </div>
+
+                                    <!-- POPUP GOOGLE PUBLISH -->
+                                    <div id="dialog-ok"  class="iqa Sb hd">
+                                        <div style="display: none;" class="jqa cv">
+                                            <div class="qqa zk">
+                                                <a href="#" target="_blank" title="Andres Felipe Garcia Duran">
+                                                    <img class="Ml Uk" src="#"></a>
+                                            </div>
+                                            <div tabindex="0" style="-moz-user-select: none;" class="kqa es es-u es-eb" guidedhelpid="sharebox_textarea" role="button">
+                                                Share what's new...
+                                            </div>
+                                            <div class="iH">
+                                                <div class="j7 Be" guidedhelpid="sharebox_text">
+                                                    <div class="m7">
+                                                        <div class="mB k7"></div>
+                                                        <div class="mB l7"></div>                                                            
+                                                    </div>
+                                                    <span style="-moz-user-select: none;" role="button" class="d-s aj oqa" tabindex="0">
+                                                        <div class="yl lH"></div>
+                                                        <div class="dv">Text</div>
+                                                    </span>                                                        
+                                                </div>
+                                                <div class="j7 " guidedhelpid="sharebox_photos">
+                                                    <div class="m7">
+                                                        <div class="mB k7"></div>
+                                                        <div class="mB l7"></div>                                                            
+                                                    </div>
+                                                    <span style="-moz-user-select: none;" role="button" class="d-s aj nqa" tabindex="0">
+                                                        <div class="yl FD"></div>
+                                                        <div class="dv">Photos</div>
+                                                    </span>
+
+                                                </div>
+                                                <div class="j7 " guidedhelpid="sharebox_link">
+                                                    <div class="m7">
+                                                        <div class="mB k7"></div>
+                                                        <div class="mB l7"></div>
+
+                                                    </div>
+                                                    <span style="-moz-user-select: none;" role="button" class="d-s aj mqa" tabindex="0">
+                                                        <div class="yl kH"></div>
+                                                        <div class="dv">Link</div>
+                                                    </span>                                                        
+                                                </div>
+                                                <div class="j7 " guidedhelpid="sharebox_video">
+                                                    <div class="m7">
+                                                        <div class="mB k7"></div>
+                                                        <div class="mB l7"></div>        
+                                                    </div>
+                                                    <span style="-moz-user-select: none;" role="button" class="d-s aj pqa" tabindex="0">
+                                                        <div class="yl mH"></div>
+                                                        <div class="dv">Video</div>
+                                                    </span>                                                        
+                                                </div>
+                                                <div class="j7 " guidedhelpid="sharebox_event">
+                                                    <div class="m7">
+                                                        <div class="mB k7"></div>
+                                                        <div class="mB l7"></div>                                                            
+                                                    </div>
+                                                    <span style="-moz-user-select: none;" role="button" class="d-s aj lqa" tabindex="0">
+                                                        <div class="yl jH"></div>
+                                                        <div class="dv">Event</div>
+                                                    </span>                                                        
+                                                </div>
+                                                <div class="j7 " guidedhelpid="sharebox_poll">
+                                                    <div class="m7">
+                                                        <div class="mB k7"></div>
+                                                        <div class="mB l7"></div>                                                            
+                                                    </div>
+                                                    <span style="-moz-user-select: none;" role="button" class="d-s aj jXxjbb" tabindex="0">
+                                                        <div class="yl TCROWb"></div>
+                                                        <div class="dv">Poll</div>
+                                                    </span>                                                        
+                                                </div>                                                    
+                                            </div>
+                                            <div class="cc"></div>
+
+                                        </div>
+                                        <div decorated="true" guidedhelpid="sharebox" class="o-oa-ub-Z R6a hH ub fL">
+                                            <div class="Bc zR">
+                                                <div class="bw">
+                                                    <div class="RQ">Drop photos, videos, or links here to share</div>
+
+                                                </div>
+                                                <div class="Py"></div>
+                                                <div class="Om"></div>
+                                                <div class="Mm"></div>
+                                                <div class="Nm"></div>
+                                                <div class="Lm"></div>
+                                                <div class="ev W0">
+                                                    <div class="sG fv">Share this post</div>
+                                                    <div class="rG re ul">
+                                                        <div class="pc">
+                                                            <div class="zk">
+                                                                <a href="#" target="_blank" title="Andres Felipe Garcia Duran">
+                                                                    <img class="Ml Uk" src=#>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="Gb WK">
+                                                            <div class="Rd" guidedhelpid="sharebox_editor">
+                                                                <div class="eg">
+                                                                    <div class="yw oo"></div>
+                                                                    <div class="yw VK"></div>
+
+                                                                </div>
+                                                                <div class="URaP8 Kf Pf b-K b-K-Xb">
+                                                                    <div id="91" class="pq">Share what's new...</div>
+                                                                    <div aria-labelledby="91" role="textbox" g_editable="true" class="df b-K b-K-Xb URaP8 editable" id=":2c.f" contenteditable="true"></div>
+
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div></div><div class="Bia UK ul" guidedhelpid="sharebox_icons"><div class="pc oi Cg">Attach:</div><div class="Cg"><div class="Gb"><div class="Hc xja"><div class="Rj yk" style="display:none"><div class="Gia YQ"><div class="T0 bR" style="display: none"><div class="U0 cR"></div><a class="S0 ZQ">Edit album name</a></div><input class="R0 Qy" type="hidden"></div><div class="uw URaP8 Oi b-K b-K-Xb"><div class="Q0 ei"><div><div class="Xx xJ"><div class="Ig At dn"><div class=""><div class="tG QF">&nbsp;</div><div class="Ct"></div></div></div></div></div></div><div class="Hia aR"></div></div></div><div guidedhelpid="toolbar" class="vh"><div class="gv"><span style="-moz-user-select: none;" role="button" class="d-s ph qZ" title="Add photos" tabindex="0"><div class="po JI"></div><div class="jL">Photos</div></span><span style="-moz-user-select: none;" role="button" class="d-s ph pZ" title="Add link" tabindex="0"><div class="po hL"></div><div class="jL">Link</div></span><span style="-moz-user-select: none;" role="button" class="d-s ph rZ" title="Add video" tabindex="0"><div class="po iL"></div><div class="jL">Video</div></span><span style="-moz-user-select: none;" role="button" class="d-s ph oZ" title="Add event" tabindex="0"><div class="po gL"></div><div class="jL">Event</div></span><span style="-moz-user-select: none;" role="button" class="d-s ph WWwgod" title="Add Poll" tabindex="0"><div class="po M9W4jb"></div><div class="jL">Poll</div></span></div></div><div></div></div></div></div></div><div class="vi P0 ul"><div class="pc Ao X0">To:</div><div class="kc"><div class="Gb" guidedhelpid="sharebox_chips_div"><div><div class="g-h-f-ci g-h-f-Au"><div></div><div tabindex="0" guidedhelpid="shareboxpeoplepickericon" title="Browse people" style="-moz-user-select: none;" class="g-h-f-Qm"></div><div style="" class="g-h-f-vc g-h-f-k"><div class="g-h-f-vc-B b-K b-K-Xb URaP8"><div class="Dp"><div aria-haspopup="true" aria-expanded="false" style="-moz-user-select: none;" role="button" aria-label="Posting options" tabindex="0" class="CC tm d-k-l d-r-c"><div class="d-k-l d-r-c-sa-z"><div class="d-k-l d-r-c-aa-z"><div class="d-k-l d-r-c-ha"></div><div class="d-k-l d-r-c-Qa">&nbsp;</div></div></div></div><div style="display: none;" class="zo"></div><div style="display: none;" class="yo"></div><div style="display: none;" class="lt"></div><div class="EC"></div><div aria-haspopup="true" role="menu" style="display: none; -moz-user-select: none;" class="d-r d-r-ih"><div id=":2x" style="-moz-user-select: none;" role="menuitem" class="d-A osa Nq"><div class="d-A-B"><div>Disable comments</div></div></div><div id=":2y" style="-moz-user-select: none;" role="menuitem" class="d-A osa Qq"><div class="d-A-B"><div>Enable Comments</div></div></div><div id=":2z" style="-moz-user-select: none;" role="menuitem" class="d-A osa Rq"><div class="d-A-B"><div>Disable reshares</div></div></div><div id=":30" style="-moz-user-select: none;" role="menuitem" class="d-A osa Sq"><div class="d-A-B"><div>Enable reshares</div></div></div></div></div><span aria-relevant="all" aria-live="assertive" aria-atomic="true" role="list"><span tabindex="-1" role="listitem" class="g-h-f-za g-h-f-za-Wl" id=":2i" guidedhelpid="public_chip"><span class="g-h-f-za-yb"><span class="g-h-f-m-Ef g-h-f-m"><div style="position: absolute; top: -1000px;">Public icon</div></span> <span class="g-h-f-za-B">Public</span>&nbsp;<div role="button" aria-label="Remove Public" tabindex="0" class="g-h-f-m-bd-nb"><span class="g-h-f-m g-h-f-m-bd"></span></div></span></span></span><span class="g-h-f-N"><span class="g-h-f-N-Rm" id="sbda">+ Add more people</span><input aria-haspopup="true" tabindex="0" aria-label="Add more people" class="g-h-f-N-N" id="sbdp" value="" placeholder="+ Add more people" type="text"></span></div><div style="display: none;" class="g-h-f-V-nb"><div class="g-h-f-V-bd"></div></div></div><div style="display: none;" class="g-h-f-CJ"><input class="g-h-f-iK" type="text"></div></div></div></div></div></div></div></div><div class="cc" guidedhelpid="shareboxcontrols"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td class="bI" valign="top"><div aria-disabled="true" style="-moz-user-select: none;" role="button" class="d-k-l b-c b-c-Ba qy jt b-c-I" guidedhelpid="sharebutton">Share</div><div style="-moz-user-select: none;" role="button" class="d-k-l b-c b-c-R xD" tabindex="0">Cancel</div></td><td id="sbxeoh" class="ub-Fc-p0-di" width="100%"><div class="pF Pra" style="display:none"><div class="h2 FF"><span aria-labelledby="sbxsecb.lbl" style="-moz-user-select: none;" class="b-P d-k-l b-P-Xh Ora mZ" role="checkbox" aria-checked="false" id="sbxsecb" tabindex="0" dir="ltr"><div class="b-P-Tb" role="presentation"></div></span></div><label id="sbxsecb.lbl" for="sbxsecb" class="nZ E2"></label></div><div class="C2" style="display:none"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td><label class="D2"><b>Be careful:</b> this post could be seen outside of .  <a href="https://support.google.com/plus/?p=post_restrictions" target="_blank">Learn more</a></label></td></tr></tbody></table></div><div style="display: none;"></div></td></tr></tbody></table></div></div></div>
+
 
                                     <div id="entry-author-info">
                                         <div id="author-description">
@@ -350,7 +466,6 @@
             </div><!-- end outercontainer -->
         </div><!-- end bodychild -->
 
-
         <!-- ////////////////////////////////// -->
         <!-- //      Javascript Files        // -->
         <!-- ////////////////////////////////// -->
@@ -376,6 +491,16 @@
 
         <!-- jQuery Flexslider -->
         <script type="text/javascript" src="js/jquery.flexslider-min.js"></script>
+
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+        <link rel="stylesheet" href="styles/google/google-pluss-style.css">
+        <link rel="stylesheet" href="styles/google/google-pluss-style2.css">
+
+
+
         <script type="text/javascript">
             jQuery(window).load(function () {
                 jQuery('.flexslider').flexslider({
@@ -385,7 +510,7 @@
                 });
 
             });
-            
+
             $(document).ready(function () {
                 $("#ocultar").click(function () {
                     $('#target').hide();
@@ -394,6 +519,29 @@
                     $('.target1').show();
                 });
             });
+
+
+            $(function () {
+                $("#dialog-ok").dialog({
+                    autoOpen: false,
+                    resizable: false,
+                    modal: true,
+                    width: 540,
+                    show: {
+                        effect: "blind",
+                        duration: 100
+                    },
+                    hide: {
+                        effect: "explode",
+                        duration: 100
+                    }
+                });
+
+                $("#create-coment-dialog").click(function () {
+                    $("#dialog-ok").dialog("open");
+                });
+            });
         </script>
+
     </body>
 </html>

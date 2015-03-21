@@ -23,8 +23,5 @@
             </div>
             <!-- END COPYRIGHT -->
         </footer>
-        <script>
-            $(document).foundation();
-        </script>
     </body>
 </html>
