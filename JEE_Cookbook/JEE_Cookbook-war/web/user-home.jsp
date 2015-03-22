@@ -169,19 +169,8 @@
                         <div class="row">
                             <div id="maincontent" class="nine columns positionleft">
                                 <div class="content">
-
-                                    <!-- Publicacion -->
-                                    <div id="entry-author-info">
-                                        <div id="author-description">
-                                            <img class="avatar alignleft" src="images/content/avatar.gif" alt="">   
-                                            <h4 class="author"><%= usuario.getNombre()%></h4>
-                                            <p>Curabitur tincidunt iaculis ipsum, eu malesuada tellus congue a. Quisque aliquet, enim eget consequat scelerisque, lectus nibh pulvinar lectus, ac vestibulum nisl urna quis magna. Quisque laoreet pulvinar orci, eget tempor ante consectetur in. Nullam et lorem ut magna aliquet eleifend scelerisque eu justo.  </p>                        
-                                        </div><!-- author-description	-->
-                                        <div class="clear"></div>
-                                    </div>
-
-                                    <!-- Comments -->
-                                    <div id="comments-include">
+                                    <!-- Publicacion y Comments -->
+                                    <div id="publish-include">
                                         <jsp:include page="publishs-comments.jsp" />
                                     </div>
                                 </div>

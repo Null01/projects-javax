@@ -52,6 +52,7 @@ insert into usuario values ('estebancastiblanco02@gmail.com', 'Esteban','Castibl
 insert into login values ('agarciad1@ucentral.edu.co','411cd305d84659e7479e5700063be2bb','SIMPLE');
 insert into usuario values ('agarciad1@ucentral.edu.co', 'Andres','Duran' );
 insert into publish values(default, 'agarciad1@ucentral.edu.co', 'Primera publicacion','Aqui va la descripcion','2015-03-21');
+
 insert into commentsPublish values (default, 'agarciad1@ucentral.edu.co', 1, 0,'Aqui va el comentario1','2015-03-21');
 insert into commentsPublish values (default, 'agarciad1@ucentral.edu.co', 1, 0,'Aqui va el comentario2','2015-03-21');
 insert into commentsPublish values (default, 'agarciad1@ucentral.edu.co', 1, 2, 'Aqui va el comentario3','2015-03-21');

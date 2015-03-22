@@ -4,6 +4,7 @@ import edu.lab.entities.Commentspublish;
 import edu.lab.entities.Publish;
 import edu.lab.modelo.Comentario;
 import edu.lab.modelo.Publicacion;
+import edu.lab.modelo.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateful;
@@ -31,13 +32,15 @@ public class PublishControllerBean {
         if (list != null) {
             for (Object objPublish : list) {
                 Publish p = (Publish) objPublish;
-                Publicacion publicacion = new Publicacion(p.getIdpublish(), p.getTittle(), p.getDescription(), p.getDatecreated(), p.getEmail().getEmail(), null);
+                Usuario usuario = new Usuario(p.getEmail().getFname(), p.getEmail().getLname(), p.getEmail().getEmail(), "");
+                Publicacion publicacion = new Publicacion(p.getIdpublish(), p.getTittle(), p.getDescription(), p.getDatecreated(), usuario, null);
                 List<Commentspublish> commentspublishList = p.getCommentspublishList();
                 List<Comentario> outcomeComments = new ArrayList<>();
                 if (commentspublishList != null) {
                     for (Object objComment : commentspublishList) {
                         Commentspublish c = (Commentspublish) objComment;
-                        Comentario comentario = new Comentario(c.getIdcomment(), c.getIdcommenttoothercomment(), c.getCommentspublish(), c.getDatecreated(), c.getEmail().getEmail(), null);
+                        Usuario u = new Usuario(c.getEmail().getFname(), c.getEmail().getLname(), c.getEmail().getEmail(), "");
+                        Comentario comentario = new Comentario(c.getIdcomment(), c.getIdcommenttoothercomment(), c.getCommentspublish(), c.getDatecreated(), u, null);
                         outcomeComments.add(comentario);
                     }
                 }

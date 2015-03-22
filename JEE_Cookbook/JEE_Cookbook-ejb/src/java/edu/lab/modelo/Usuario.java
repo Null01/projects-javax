@@ -53,4 +53,10 @@ public class Usuario {
     public void setCorreo(String Correo) {
         this.Correo = Correo;
     }
+
+    @Override
+    public String toString() {
+        return Nombre + " " + Apellido + " " + Correo + " " + Tipo;
+    }
+
 }

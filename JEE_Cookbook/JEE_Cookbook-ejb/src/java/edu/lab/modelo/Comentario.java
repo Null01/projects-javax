@@ -17,10 +17,10 @@ public class Comentario {
     private int idcommenttoothercomment;
     private String commentspublish;
     private Date datecreated;
-    private String email;
+    private Usuario email;
     private Comentario comment;
 
-    public Comentario(Integer idcomment, int idcommenttoothercomment, String commentspublish, Date datecreated, String email, Comentario comment) {
+    public Comentario(Integer idcomment, int idcommenttoothercomment, String commentspublish, Date datecreated, Usuario email, Comentario comment) {
         this.idcomment = idcomment;
         this.idcommenttoothercomment = idcommenttoothercomment;
         this.commentspublish = commentspublish;
@@ -61,11 +61,11 @@ public class Comentario {
         this.datecreated = datecreated;
     }
 
-    public String getEmail() {
+    public Usuario getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(Usuario email) {
         this.email = email;
     }
 
@@ -75,6 +75,11 @@ public class Comentario {
 
     public void setComment(Comentario comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        return idcomment + " " + idcommenttoothercomment + " " + commentspublish + " " + datecreated + " " + email + " " + comment;
     }
 
 }

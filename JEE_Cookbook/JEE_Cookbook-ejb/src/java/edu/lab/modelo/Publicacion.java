@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.lab.modelo;
 
 import java.util.Date;
@@ -18,14 +13,14 @@ public class Publicacion {
     private String tittle;
     private String description;
     private Date datecreated;
-    private String email;
+    private Usuario email;
     private List<Comentario> comment;
 
     private Publicacion() {
 
     }
 
-    public Publicacion(Integer idpublish, String tittle, String description, Date datecreated, String email, List<Comentario> comment) {
+    public Publicacion(Integer idpublish, String tittle, String description, Date datecreated, Usuario email, List<Comentario> comment) {
         this.idpublish = idpublish;
         this.tittle = tittle;
         this.description = description;
@@ -66,11 +61,11 @@ public class Publicacion {
         this.datecreated = datecreated;
     }
 
-    public String getEmail() {
+    public Usuario getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(Usuario email) {
         this.email = email;
     }
 
@@ -80,6 +75,11 @@ public class Publicacion {
 
     public void setComment(List<Comentario> comment) {
         this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        return idpublish + " " + tittle + " " + description + " " + datecreated + " " + email + " " + comment;
     }
 
 }

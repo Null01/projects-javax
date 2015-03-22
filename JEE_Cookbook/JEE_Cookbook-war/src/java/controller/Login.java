@@ -60,18 +60,18 @@ public class Login extends HttpServlet {
                     //request.getRequestDispatcher("admin.jsp").forward(request, response);
                     response.sendRedirect("admin-home.jsp");
                 } else {
-                    //request.getRequestDispatcher("user.jsp").forward(request, response);
+
                     List<Publicacion> obtenerPublicacionPorUsuario = publishControllerBean.obtenerPublicacionPorUsuario(userRegistered.getCorreo());
+                    System.out.println(obtenerPublicacionPorUsuario);
                     request.setAttribute("publish-data", obtenerPublicacionPorUsuario);
-                    response.sendRedirect("user-home.jsp");
+                    request.getRequestDispatcher("user-home.jsp").forward(request, response);
                 }
             } else {
                 response.sendRedirect("index.jsp");
             }
         } catch (Exception ex) {
-            //request.getRequestDispatcher("index.jsp").forward(request, response);
             request.setAttribute("message-error-login", ex.getMessage());
-            response.sendRedirect("index.jsp");
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
 
     }
