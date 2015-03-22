@@ -6,16 +6,21 @@
 package edu.lab.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -48,6 +53,10 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 400)
     @Column(name = "lname")
     private String lname;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "email", fetch = FetchType.EAGER)
+    private List<Commentspublish> commentspublishList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "email", fetch = FetchType.EAGER)
+    private List<Publish> publishList;
 
     public Usuario() {
     }
@@ -84,6 +93,24 @@ public class Usuario implements Serializable {
 
     public void setLname(String lname) {
         this.lname = lname;
+    }
+
+    @XmlTransient
+    public List<Commentspublish> getCommentspublishList() {
+        return commentspublishList;
+    }
+
+    public void setCommentspublishList(List<Commentspublish> commentspublishList) {
+        this.commentspublishList = commentspublishList;
+    }
+
+    @XmlTransient
+    public List<Publish> getPublishList() {
+        return publishList;
+    }
+
+    public void setPublishList(List<Publish> publishList) {
+        this.publishList = publishList;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package controller;
 
+import edu.lab.modelo.Publicacion;
 import edu.lab.modelo.Usuario;
 import edu.lab.security.MonitorLogs;
 import java.io.IOException;
@@ -9,16 +10,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import edu.lab.security.SecurityEncrypt;
+import edu.lab.services.publish.PublishControllerBean;
 import edu.lab.session.ITipoUsuario;
 import edu.lab.session.SessionControllerBean;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
  * @author andresfelipegarciaduran
  */
 public class Login extends HttpServlet {
-    
+
+    private PublishControllerBean publishControllerBean = lookupPublishControllerBeanBean();
+
     @EJB
     private SessionControllerBean sessionControllerBean;
 
@@ -34,10 +44,10 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        
+
         try {
             SecurityEncrypt security = new SecurityEncrypt();
             String encryptWithMD5 = security.encryptWithMD5(password);
@@ -51,6 +61,8 @@ public class Login extends HttpServlet {
                     response.sendRedirect("admin-home.jsp");
                 } else {
                     //request.getRequestDispatcher("user.jsp").forward(request, response);
+                    List<Publicacion> obtenerPublicacionPorUsuario = publishControllerBean.obtenerPublicacionPorUsuario(userRegistered.getCorreo());
+                    request.setAttribute("publish-data", obtenerPublicacionPorUsuario);
                     response.sendRedirect("user-home.jsp");
                 }
             } else {
@@ -59,10 +71,9 @@ public class Login extends HttpServlet {
         } catch (Exception ex) {
             //request.getRequestDispatcher("index.jsp").forward(request, response);
             request.setAttribute("message-error-login", ex.getMessage());
-            //request.getRequestDispatcher("index.jsp").forward(request, response);
             response.sendRedirect("index.jsp");
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -103,5 +114,15 @@ public class Login extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private PublishControllerBean lookupPublishControllerBeanBean() {
+        try {
+            Context c = new InitialContext();
+            return (PublishControllerBean) c.lookup("java:global/JEE_Cookbook/JEE_Cookbook-ejb/PublishControllerBean!edu.lab.services.publish.PublishControllerBean");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
 
 }

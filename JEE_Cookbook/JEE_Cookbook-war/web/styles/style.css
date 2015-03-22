@@ -467,7 +467,13 @@ textarea, input[type="email"], select{
     font-size:13px;
 }
 
-textarea{width:90%;}
+textarea{
+    width:90%;
+    resize: none;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    resize: none;
+}
 
 textarea:focus{outline:0;}
 
@@ -780,4 +786,34 @@ tr.odd td {}
 #footernav{ position:static; }
 #footernav li{ line-height:10px; padding: 0px 9px 0px; margin-top:6px; display:inline-block;}
 #footernav ul{ display:none!important;}
+
+/*====== BOX COMMENTS =======*/
+.box-comment{
+    -moz-box-shadow: 7px 10px 40px #000000;
+    -webkit-box-shadow: 7px 10px 40px #000000;
+    box-shadow: 7px 10px 40px #000000;
+}
+
+.btn-box-comment {
+    background: #000000;
+    background-image: -webkit-linear-gradient(top, #000000, #141414);
+    background-image: -moz-linear-gradient(top, #000000, #141414);
+    background-image: -ms-linear-gradient(top, #000000, #141414);
+    background-image: -o-linear-gradient(top, #000000, #141414);
+    background-image: linear-gradient(to bottom, #000000, #141414);
+    -webkit-border-radius: 8;
+    -moz-border-radius: 8;
+    border-radius: 8px;
+    text-shadow: 1px 1px 3px #000000;
+    padding: 4px 20px 4px 20px;
+    text-decoration: none;
+    position:relative;
+    left:580px;
+    bottom: 5px;
+}
+
+.btn-box-comment:hover {
+    background: #090a0a;
+    text-decoration: none;
+}
 
