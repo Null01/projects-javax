@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -28,8 +29,10 @@ import javax.servlet.http.HttpSession;
  */
 public class Comments extends HttpServlet {
 
-    PublishControllerBean publishControllerBean = lookupPublishControllerBeanBean();
+    @EJB
+    private PublishControllerBean publishControllerBean;
 
+    //PublishControllerBean publishControllerBean = lookupPublishControllerBeanBean();
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -92,14 +95,15 @@ public class Comments extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private PublishControllerBean lookupPublishControllerBeanBean() {
-        try {
-            Context c = new InitialContext();
-            return (PublishControllerBean) c.lookup("java:global/JEE_Cookbook/JEE_Cookbook-ejb/PublishControllerBean!edu.lab.services.publish.PublishControllerBean");
-        } catch (NamingException ne) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-            throw new RuntimeException(ne);
-        }
-    }
-
+    /*
+     private PublishControllerBean lookupPublishControllerBeanBean() {
+     try {
+     Context c = new InitialContext();
+     return (PublishControllerBean) c.lookup("java:global/JEE_Cookbook/JEE_Cookbook-ejb/PublishControllerBean!edu.lab.services.publish.PublishControllerBean");
+     } catch (NamingException ne) {
+     Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+     throw new RuntimeException(ne);
+     }
+     }
+     */
 }
