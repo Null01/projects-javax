@@ -64,10 +64,10 @@ public class Publish implements Serializable {
     @Column(name = "datecreated")
     @Temporal(TemporalType.DATE)
     private Date datecreated;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idpublish", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idpublish", fetch = FetchType.LAZY)
     private List<Commentspublish> commentspublishList;
     @JoinColumn(name = "email", referencedColumnName = "email")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuario email;
 
     public Publish() {

@@ -60,10 +60,10 @@ public class Commentspublish implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date datecreated;
     @JoinColumn(name = "email", referencedColumnName = "email")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuario email;
     @JoinColumn(name = "idpublish", referencedColumnName = "idpublish")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Publish idpublish;
 
     public Commentspublish() {
