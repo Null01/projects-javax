@@ -132,7 +132,7 @@
                                                 out.println("<br/><span class=\"required\">" + message.toString() + "</span><br/>");
                                             }
                                         %>
-                                        <input type="submit" class="button" id="submit_btn" value="  Ingresar  "/>
+                                        <input type="submit" class="button" id="submit_btn" value="  Ingresar   "/>
                                     </form>
                                 </div>
                             </div>

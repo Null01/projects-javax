@@ -78,7 +78,7 @@
                                                 <label for="lname" >Your second name <span class="required">(required)</span></label>
                                                 <input type="text" name="lname"  size="60" required/>
                                                 <label for="email" >Your email <span class="required">(required)</span></label>
-                                                <input type="email" name="email"  size="60" required/>
+                                                <input type="email" name="email" size="60" required/>
                                                 <label for="password" >Your password <span class="required">(required)</span></label>
                                                 <input type="password" name="password"  size="60" required/>
                                                 <label for="confirmPassword" >Confirm password <span class="required">(required)</span></label>
@@ -90,8 +90,8 @@
                                                         out.println("<br/><span class=\"required\">" + message.toString() + "</span><br/>");
                                                     }
                                                 %>
-                                                <input type="submit" class="button" id="submit_btn" value="      Register     "/>
                                             </fieldset>
+                                            <input type="submit" class="button" id="submit_btn" value="       Register        "/>
                                         </form>
                                     </div>
                                 </div>

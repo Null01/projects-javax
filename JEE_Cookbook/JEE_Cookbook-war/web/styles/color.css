@@ -93,6 +93,20 @@ textarea, input[type="password"], select{
 	background:#efefef;
 }
 
+input[type="email"],
+textarea, input[type="email"], select{
+	border:solid 3px #fff;
+	color:#666;
+	background:#efefef;
+}
+
+input[type="email"],
+textarea, input[type="email"]{
+    -moz-box-shadow:inset 1px 2px 2px #cecece;
+    -webkit-box-shadow:inset 1px 2px 2px #cecece;
+    box-shadow:inset 1px 2px 2px #cecece;
+}
+
 input[type="text"],
 textarea, input[type="password"]{
     -moz-box-shadow:inset 1px 2px 2px #cecece;

@@ -26,8 +26,7 @@ import javax.naming.NamingException;
  * @author andresfelipegarciaduran
  */
 public class Login extends HttpServlet {
-
-    private PublishControllerBean publishControllerBean = lookupPublishControllerBeanBean();
+    PublishControllerBean publishControllerBean = lookupPublishControllerBeanBean();
 
     @EJB
     private SessionControllerBean sessionControllerBean;

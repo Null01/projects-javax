@@ -118,31 +118,31 @@
                                 <div id="target1" style="display:none;">
                                     <form action="Register" method="post">
                                         <fieldset>
-                                            <table border="0" style="width:80%">
+                                            <table border="0" style="width:100%">
                                                 <tbody>
                                                     <tr>
-                                                        <td><label for="fname" >Your first name <span class="required">(required)</span></label></td>
-                                                        <td><input type="text" name="fname" value='<% out.print(usuario.getNombre());%>' size="30" required/></td>
+                                                        <td><label for="fname" >Your first name <span class="required">*</span></label></td>
+                                                        <td><input type="text" name="fname" value='<% out.print(usuario.getNombre());%>' size="25" required/></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><label for="lname" >Your second name <span class="required">(required)</span></label></td>
-                                                        <td><input type="text" name="lname" value='<% out.print(usuario.getApellido());%>' size="30" required/></td>
+                                                        <td><label for="lname" >Your second name <span class="required">*</span></label></td>
+                                                        <td><input type="text" name="lname" value='<% out.print(usuario.getApellido());%>' size="25" required/></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><label for="email" >Your email <span class="required">(required)</span></label></td>
-                                                        <td><input type="email" name="email" value='<% out.print(usuario.getCorreo());%>' size="30" required/></td>
+                                                        <td><label for="email" >Your email <span class="required">*</span></label></td>
+                                                        <td><input type="email" name="email" value='<% out.print(usuario.getCorreo());%>' size="25" required/></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><label for="password" >Your password <span class="required">(required)</span></label></td>
-                                                        <td><input type="password" name="password" size="30" required/></td>
+                                                        <td><label for="password" >Your password <span class="required">*</span></label></td>
+                                                        <td><input type="password" name="password" size="25" required/></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><label for="confirmPassword" >New password <span class="required">(no-required)</span></label></td>
-                                                        <td><input type="password" name="newPassword" size="30" /></td>
+                                                        <td><label for="confirmPassword" >New password <span class="required"></span></label></td>
+                                                        <td><input type="password" name="newPassword" size="25" /></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><label for="confirmPassword" >Confirm password <span class="required">(no-required)</span></label></td>
-                                                        <td><input type="password" name="confirmPassword" size="30" /></td>
+                                                        <td><label for="confirmPassword" >Confirm password <span class="required"></span></label></td>
+                                                        <td><input type="password" name="confirmPassword" size="25" /></td>
                                                     </tr>
                                                 <br class="clear" />
                                                 <%
