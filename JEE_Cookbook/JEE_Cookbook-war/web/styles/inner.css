@@ -115,8 +115,8 @@ border-radius: 53px;
 .reply a:hover{text-decoration:underline;}
 .fn a, .fn a:visited{}
 
-.comment-body{margin:0 0 0 0px; padding:0px; margin-left:90px;}
-.comment-body p{ margin-bottom:5px; margin-top:10px;}
+.comment-body{margin:0 0 0 0px; padding:0px; margin-left:90px; word-wrap: break-word;}
+.comment-body p{ margin-bottom:5px; margin-top:10px; word-wrap: break-word;}
 .comment-body .more{ padding:0px 0px;}
 .comment-arrow{ width:8px; height:18px; position:absolute; left:72px; top:10px;}
 #commentform {margin-bottom:20px}

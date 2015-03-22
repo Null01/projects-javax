@@ -37,7 +37,6 @@ public class PublishControllerBean implements Serializable {
                 Publish p = (Publish) objPublish;
                 Usuario usuario = new Usuario(p.getEmail().getFname(), p.getEmail().getLname(), p.getEmail().getEmail(), "");
                 Publicacion publicacion = new Publicacion(p.getIdpublish(), p.getTittle(), p.getDescription(), p.getDatecreated(), usuario, null);
-
                 query = em.createQuery("SELECT p FROM " + Commentspublish.class.getSimpleName() + " p WHERE p.idpublish.idpublish = :id").setParameter("id", p.getIdpublish());
                 List<Commentspublish> commentspublishList = query.getResultList();
                 // List<Commentspublish> commentspublishList = p.getCommentspublishList();

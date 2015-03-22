@@ -43,8 +43,8 @@
                 <div id="current-date">
                     <span class="tdate"><%= new SimpleDateFormat("MMMM d, yyyy hh:mm:ss a", Locale.ENGLISH).format(Calendar.getInstance().getTime())%></span>
                     <form action="Comments" method="post">
-                        <textarea data-autoresize placeholder="Comment here" rows="2" name="comment-root"></textarea>
-                        <input type="hidden"  name="id-publish" value="<%= String.valueOf(p.getIdpublish())%>">
+                        <textarea data-autoresize placeholder="Comment here" rows="2" name="comment-root" maxlength="2000"></textarea>
+                        <input type="hidden" name="id-publish" value="<%= String.valueOf(p.getIdpublish())%>">
                         <input class="btn-box-comment" style="background: none;" type="submit" value=" Comment  ">
                     </form>
                 </div>
