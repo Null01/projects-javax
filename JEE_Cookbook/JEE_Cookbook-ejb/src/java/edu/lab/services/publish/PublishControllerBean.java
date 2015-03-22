@@ -6,6 +6,7 @@ import edu.lab.modelo.Comentario;
 import edu.lab.modelo.Publicacion;
 import edu.lab.modelo.Usuario;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateful;
 import javax.ejb.LocalBean;
@@ -40,6 +41,7 @@ public class PublishControllerBean {
                     for (Object objComment : commentspublishList) {
                         Commentspublish c = (Commentspublish) objComment;
                         Usuario u = new Usuario(c.getEmail().getFname(), c.getEmail().getLname(), c.getEmail().getEmail(), "");
+                        System.out.println(u.getNombre() + " " + u.getApellido());
                         Comentario comentario = new Comentario(c.getIdcomment(), c.getIdcommenttoothercomment(), c.getCommentspublish(), c.getDatecreated(), u, null);
                         outcomeComments.add(comentario);
                     }
@@ -50,4 +52,22 @@ public class PublishControllerBean {
         }
         return outcomePublish;
     }
+
+    public void createPublication(String idpublish, Usuario usuario, String comment) {
+        EntityManager em = emf.createEntityManager();
+        
+        Commentspublish commentPublish = new Commentspublish();
+        commentPublish.setCommentspublish(comment);
+        commentPublish.setDatecreated(new Date());
+        commentPublish.setIdcommenttoothercomment(0); // arreglar
+        Publish publish = em.find(Publish.class, Integer.parseInt(idpublish));
+        commentPublish.setIdpublish(publish);
+        edu.lab.entities.Usuario usuario1 = em.find(edu.lab.entities.Usuario.class, usuario.getCorreo());
+        commentPublish.setEmail(usuario1);
+
+        em.getTransaction().begin();
+        em.persist(commentPublish);
+        em.getTransaction().commit();
+    }
+
 }
