@@ -16,9 +16,8 @@
 <!-- Commments --->
 <%
     Usuario usuario = (Usuario) session.getAttribute("user-data");
-    List<Publicacion> publish = (List<Publicacion>) request.getAttribute("publish-data");
+    List<Publicacion> publish = (List<Publicacion>) session.getAttribute("publish-data");
 %>
-
 
 <%
     for (Publicacion p : publish) {
@@ -43,14 +42,14 @@
                 <cite class="fn"><%= usuario.getNombre()%></cite>
                 <div id="current-date">
                     <span class="tdate"><%= new SimpleDateFormat("MMMM d, yyyy hh:mm:ss a", Locale.ENGLISH).format(Calendar.getInstance().getTime())%></span>
-                </div><br/>
-                <form action="#" method="post">
-                    <textarea data-autoresize placeholder="Comment here" rows="2" name="comment"></textarea>
-                    <input class="btn-box-comment" style="background: none;" type="submit" value=" Comment">
-                </form>
+                    <form action="Comments" method="post">
+                        <textarea data-autoresize placeholder="Comment here" rows="2" name="comment-root"></textarea>
+                        <input type="hidden"  name="id-publish" value="<%= String.valueOf(p.getIdpublish())%>">
+                        <input class="btn-box-comment" style="background: none;" type="submit" value=" Comment  ">
+                    </form>
+                </div>
             </div>
         </div>
-
         <%
             for (Comentario c : p.getComment()) {
         %>

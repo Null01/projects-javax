@@ -2,15 +2,19 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>Login</servlet-name>
-        <servlet-class>controller.Login</servlet-class>
+        <servlet-class>edu.lab.controller.session.Login</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Register</servlet-name>
-        <servlet-class>controller.Register</servlet-class>
+        <servlet-class>edu.lab.controller.session.Register</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Logout</servlet-name>
-        <servlet-class>controller.Logout</servlet-class>
+        <servlet-class>edu.lab.controller.session.Logout</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Comments</servlet-name>
+        <servlet-class>edu.lab.controller.publish.Comments</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -24,13 +28,17 @@
         <servlet-name>Logout</servlet-name>
         <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Comments</servlet-name>
+        <url-pattern>/Comments</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <listener>
-        <listener-class> util.ListenerSession </listener-class>
+        <listener-class> edu.lab.util.ListenerSession </listener-class>
     </listener>
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
