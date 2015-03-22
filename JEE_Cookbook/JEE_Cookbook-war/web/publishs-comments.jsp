@@ -45,7 +45,8 @@
                     <form action="Comments" method="post">
                         <textarea data-autoresize placeholder="Comment here" rows="2" name="comment-root" maxlength="2000"></textarea>
                         <input type="hidden" name="id-publish" value="<%= String.valueOf(p.getIdpublish())%>">
-                        <input class="btn-box-comment" style="background: none;" type="submit" value=" Comment  ">
+                        <input class="buttoncomment" type="submit" value=" Comment  ">
+                        <!class="btn-box-comment"->
                     </form>
                 </div>
             </div>

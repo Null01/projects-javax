@@ -817,3 +817,10 @@ tr.odd td {}
     text-decoration: none;
 }
 
+.buttoncomment, .buttoncomment:visited, input[type="submit"], buttoncomment{
+    padding:15px 26px 20px 26px;
+    cursor:pointer;
+    font-size:13px;
+    line-height:14px;
+    display:inline-block;
+}

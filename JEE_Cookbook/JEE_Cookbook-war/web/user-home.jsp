@@ -112,7 +112,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <input type="button"class="button" id="ocultar" value=" Actualizar     "/>
+                                    <input type="button"class="button" id="ocultar" value=" Actualizar         "/>
                                 </div>   
 
                                 <div id="target1" style="display:none;">
@@ -153,7 +153,7 @@
                                                 %>
                                                 </tbody>
                                             </table>
-                                            <input type="submit" class="button" id="submit_btn" value="  Guardar     "/>    
+                                            <input type="submit" class="button" id="mostrar" value="  Guardar     "/>    
                                         </fieldset>
                                     </form>
                                 </div>
