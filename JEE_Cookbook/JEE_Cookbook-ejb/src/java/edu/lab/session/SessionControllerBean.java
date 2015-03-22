@@ -3,6 +3,7 @@ package edu.lab.session;
 import edu.lab.entities.Login;
 import edu.lab.entities.LoginPK;
 import edu.lab.modelo.Usuario;
+import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -17,7 +18,7 @@ import javax.persistence.Query;
  */
 @Stateless
 @LocalBean
-public class SessionControllerBean {
+public class SessionControllerBean implements Serializable{
 
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("JEE_Cookbook-ejbPU");
 

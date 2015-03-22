@@ -5,13 +5,14 @@
  */
 package edu.lab.modelo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author andresfelipegarciaduran
  */
-public class Comentario {
+public class Comentario implements Serializable{
 
     private Integer idcomment;
     private int idcommenttoothercomment;

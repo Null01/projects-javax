@@ -4,11 +4,13 @@
  */
 package edu.lab.modelo;
 
+import java.io.Serializable;
+
 /**
  *
  * @author EstebanC02
  */
-public class Usuario {
+public class Usuario implements Serializable{
 
     private String Nombre;
     private String Apellido;

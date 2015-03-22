@@ -1,5 +1,6 @@
 package edu.lab.modelo;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  *
  * @author andresfelipegarciaduran
  */
-public class Publicacion {
+public class Publicacion implements Serializable{
 
     private Integer idpublish;
     private String tittle;
