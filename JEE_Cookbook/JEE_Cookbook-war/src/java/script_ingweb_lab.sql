@@ -49,12 +49,14 @@ insert into usuario values ('andresduran0502@gmail.com', 'Andres Felipe','Garcia
 insert into login values ('estebancastiblanco02@gmail.com','5a22e6c339c96c9c0513a46e44c39683', 'ADMIN');
 insert into usuario values ('estebancastiblanco02@gmail.com', 'Esteban','Castiblanco Moncaleano' );
 
+insert into login values ('dpinedar@ucentral.edu.co','411cd305d84659e7479e5700063be2bb','SIMPLE');
+insert into usuario values ('dpinedar@ucentral.edu.co', 'Diego Nicolas','Pineda' );
+
 insert into login values ('agarciad1@ucentral.edu.co','411cd305d84659e7479e5700063be2bb','SIMPLE');
 insert into usuario values ('agarciad1@ucentral.edu.co', 'Andres','Duran' );
 insert into publish values(default, 'agarciad1@ucentral.edu.co', 'Primera publicacion','Aqui va la descripcion','2015-03-21');
 
-insert into commentsPublish values (default, 'agarciad1@ucentral.edu.co', 1, 0,'Aqui va el comentario1','2015-03-21');
-insert into commentsPublish values (default, 'agarciad1@ucentral.edu.co', 1, 0,'Aqui va el comentario2','2015-03-21');
-insert into commentsPublish values (default, 'agarciad1@ucentral.edu.co', 1, 2, 'Aqui va el comentario3','2015-03-21');
+insert into commentsPublish values (default, 'dpinedar@ucentral.edu.co', 1, 0,'Aqui va el comentario1','2015-03-21');
+insert into commentsPublish values (default, 'dpinedar@ucentral.edu.co', 1, 0,'Aqui va el comentario2','2015-03-21');
 
 

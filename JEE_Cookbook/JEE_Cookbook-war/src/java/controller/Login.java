@@ -60,7 +60,6 @@ public class Login extends HttpServlet {
                     //request.getRequestDispatcher("admin.jsp").forward(request, response);
                     response.sendRedirect("admin-home.jsp");
                 } else {
-
                     List<Publicacion> obtenerPublicacionPorUsuario = publishControllerBean.obtenerPublicacionPorUsuario(userRegistered.getCorreo());
                     System.out.println(obtenerPublicacionPorUsuario);
                     request.setAttribute("publish-data", obtenerPublicacionPorUsuario);

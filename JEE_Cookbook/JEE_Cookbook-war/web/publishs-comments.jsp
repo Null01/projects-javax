@@ -22,7 +22,6 @@
 
 <%
     for (Publicacion p : publish) {
-
 %>
 <div id="entry-author-info">
     <div id="author-description">
@@ -35,7 +34,7 @@
 </div>
 
 <div id="comment">
-    <h3> <% out.print(publish.size());%> Comments</h3>
+    <h3> <% out.print(p.getComment().size());%> Comments</h3>
     <ol class="commentlist">
         <div class="box-comment">
             <div class="comment-body">
