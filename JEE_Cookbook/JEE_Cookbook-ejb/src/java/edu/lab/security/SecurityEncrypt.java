@@ -10,7 +10,6 @@ import java.security.NoSuchAlgorithmException;
  * @author andresfelipegarciaduran
  */
 public class SecurityEncrypt {
-    
 
     public String encryptWithMD5(String clave) throws NoSuchAlgorithmException {
         String md5Clave = MD5(MD5(MD5(clave)));
@@ -25,6 +24,9 @@ public class SecurityEncrypt {
      * @throws NoSuchAlgorithmException
      */
     private String MD5(String string) throws NoSuchAlgorithmException {
+        if (string == null || string.isEmpty()) {
+            throw new NoSuchAlgorithmException("ERROR - CADENA ES NULL Y/O VACIA");
+        }
         String encryptMD5 = "";
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");

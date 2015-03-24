@@ -6,7 +6,7 @@
     </servlet>
     <servlet>
         <servlet-name>Register</servlet-name>
-        <servlet-class>edu.lab.controller.session.Register</servlet-class>
+        <servlet-class>edu.lab.controller.user.RegisterUser</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Logout</servlet-name>
@@ -15,6 +15,10 @@
     <servlet>
         <servlet-name>Comments</servlet-name>
         <servlet-class>edu.lab.controller.publish.Comments</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateUser</servlet-name>
+        <servlet-class>edu.lab.controller.user.UpdateUser</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>Comments</servlet-name>
         <url-pattern>/Comments</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateUser</servlet-name>
+        <url-pattern>/UpdateUser</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

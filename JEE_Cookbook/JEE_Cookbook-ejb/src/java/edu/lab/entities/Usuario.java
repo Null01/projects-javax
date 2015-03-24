@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -53,9 +54,11 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 400)
     @Column(name = "lname")
     private String lname;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "email", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "email", fetch = FetchType.LAZY)
     private List<Commentspublish> commentspublishList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "email", fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario", fetch = FetchType.LAZY)
+    private Login login;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "email", fetch = FetchType.LAZY)
     private List<Publish> publishList;
 
     public Usuario() {
@@ -102,6 +105,14 @@ public class Usuario implements Serializable {
 
     public void setCommentspublishList(List<Commentspublish> commentspublishList) {
         this.commentspublishList = commentspublishList;
+    }
+
+    public Login getLogin() {
+        return login;
+    }
+
+    public void setLogin(Login login) {
+        this.login = login;
     }
 
     @XmlTransient

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.lab.controller.session;
+package edu.lab.controller.user;
 
 import edu.lab.modelo.Usuario;
 import edu.lab.security.MonitorLogs;
@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import edu.lab.security.SecurityEncrypt;
+import edu.lab.services.user.UserControllerBean;
 import edu.lab.session.ITipoUsuario;
 import edu.lab.session.SessionControllerBean;
 import javax.ejb.EJB;
@@ -23,7 +24,10 @@ import javax.ejb.EJB;
  *
  * @author andresfelipegarciaduran
  */
-public class Register extends HttpServlet {
+public class RegisterUser extends HttpServlet {
+
+    @EJB
+    private UserControllerBean userControllerBean;
 
     @EJB
     private SessionControllerBean sessionControllerBean;
@@ -50,12 +54,12 @@ public class Register extends HttpServlet {
             SecurityEncrypt security = new SecurityEncrypt();
             String encryptWithMD5 = security.encryptWithMD5(password);
             String encryptWithMD5Confirm = security.encryptWithMD5(confirmPassword);
-            sessionControllerBean.registerUser(first_name, last_name, email, encryptWithMD5, encryptWithMD5Confirm);
+            userControllerBean.registarDatosUsuario(first_name, last_name, email, encryptWithMD5, encryptWithMD5Confirm);
             Usuario userRegistered = sessionControllerBean.isUserRegistered(email, encryptWithMD5);
             if (userRegistered != null) {
                 HttpSession session = request.getSession(true);
                 session.setAttribute("user-data", userRegistered);
-                MonitorLogs.onlyChannel.writeLogUser(getServletContext(), new String[]{Register.class.getSimpleName(), userRegistered.getCorreo(), userRegistered.getApellido() + " " + userRegistered.getNombre()});
+                MonitorLogs.onlyChannel.writeLogUser(getServletContext(), new String[]{RegisterUser.class.getSimpleName(), userRegistered.getCorreo(), userRegistered.getApellido() + " " + userRegistered.getNombre()});
                 if (userRegistered.getTipo().compareTo(ITipoUsuario.ADMIN) == 0) {
                     response.sendRedirect("admin-home.jsp");
                 } else {

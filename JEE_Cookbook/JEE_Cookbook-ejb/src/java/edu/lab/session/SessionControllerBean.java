@@ -1,16 +1,13 @@
 package edu.lab.session;
 
 import edu.lab.entities.Login;
-import edu.lab.entities.LoginPK;
 import edu.lab.modelo.Usuario;
 import java.io.Serializable;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 
 /**
  *
@@ -18,50 +15,21 @@ import javax.persistence.Query;
  */
 @Stateless
 @LocalBean
-public class SessionControllerBean implements Serializable{
+public class SessionControllerBean implements Serializable {
 
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("JEE_Cookbook-ejbPU");
 
     public Usuario isUserRegistered(String email, String password) throws Exception {
         EntityManager em = emf.createEntityManager();
-        Login find = em.find(Login.class, new LoginPK(email, password));
+        Login find = em.find(Login.class, email);
         if (find == null) {
-            throw new Exception("ERROR - DATOS INCORRECTO");
+            throw new Exception("ERROR - EL CORREO ELECTRONICO NO ESTA REGISTRADO");
         }
-        edu.lab.entities.Usuario user_find = em.find(edu.lab.entities.Usuario.class, email);
-        if (user_find == null) {
-            throw new Exception("ERROR - LA LLAVE " + email + " NO EXISTE EN LA TABLA " + edu.lab.entities.Usuario.class.getSimpleName());
+        if (find.getPass().compareTo(password) != 0) {
+            throw new Exception("ERROR - LA CONTRASEÑA NO COINCIDE CON EL REGISTRO");
         }
-        Usuario outcome = new Usuario(user_find.getFname(), user_find.getLname(), user_find.getEmail(), find.getTypeuser());
+        Usuario outcome = new Usuario(find.getUsuario().getFname(), find.getUsuario().getLname(), find.getEmail(), find.getTypeuser());
         return outcome;
-    }
-
-    public void registerUser(String fname, String lname, String email, String password, String confirmPassword) throws Exception {
-
-        if (password.compareTo(confirmPassword) != 0) {
-            throw new Exception("ERROR - LAS CONTRASEÑAS NO COINCIDEN");
-        }
-
-        EntityManager em = emf.createEntityManager();
-        Query createNamedQuery = em.createNamedQuery("Login.findByEmail").setParameter("email", email);
-        List resultList = createNamedQuery.getResultList();
-        if (resultList != null && !resultList.isEmpty()) {
-            throw new Exception("ERROR - EL CORREO ELECTRONICO YA SE ENCUENTRA INSCRITO ");
-        }
-
-        edu.lab.entities.Login login = new edu.lab.entities.Login(email, password);
-        login.setTypeuser(ITipoUsuario.SIMPLE);
-        em.getTransaction().begin();
-        em.persist(login);
-        em.getTransaction().commit();
-
-        edu.lab.entities.Usuario usuario = new edu.lab.entities.Usuario(email);
-        usuario.setFname(fname);
-        usuario.setLname(lname);
-        em.getTransaction().begin();
-        em.persist(usuario);
-        em.getTransaction().commit();
-
     }
 
 }

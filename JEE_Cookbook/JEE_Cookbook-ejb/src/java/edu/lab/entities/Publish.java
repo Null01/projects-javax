@@ -62,7 +62,7 @@ public class Publish implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "datecreated")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date datecreated;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idpublish", fetch = FetchType.LAZY)
     private List<Commentspublish> commentspublishList;

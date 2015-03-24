@@ -39,7 +39,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Commentspublish.findByCommentspublish", query = "SELECT c FROM Commentspublish c WHERE c.commentspublish = :commentspublish"),
     @NamedQuery(name = "Commentspublish.findByDatecreated", query = "SELECT c FROM Commentspublish c WHERE c.datecreated = :datecreated")})
 public class Commentspublish implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,7 +56,7 @@ public class Commentspublish implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "datecreated")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date datecreated;
     @JoinColumn(name = "email", referencedColumnName = "email")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -152,5 +151,5 @@ public class Commentspublish implements Serializable {
     public String toString() {
         return "edu.lab.entities.Commentspublish[ idcomment=" + idcomment + " ]";
     }
-
+    
 }

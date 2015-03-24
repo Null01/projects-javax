@@ -26,6 +26,7 @@ import javax.naming.NamingException;
  * @author andresfelipegarciaduran
  */
 public class Login extends HttpServlet {
+
     PublishControllerBean publishControllerBean = lookupPublishControllerBeanBean();
     @EJB
     private SessionControllerBean sessionControllerBean;
@@ -54,6 +55,7 @@ public class Login extends HttpServlet {
                 HttpSession session = request.getSession(true);
                 session.setAttribute("user-data", userRegistered);
                 MonitorLogs.onlyChannel.writeLogUser(getServletContext(), new String[]{Login.class.getSimpleName(), userRegistered.getCorreo(), userRegistered.getApellido() + " " + userRegistered.getNombre()});
+                request.removeAttribute("message-error-update-login");
                 if (userRegistered.getTipo().compareTo(ITipoUsuario.ADMIN) == 0) {
                     //request.getRequestDispatcher("admin.jsp").forward(request, response);
                     response.sendRedirect("admin-home.jsp");

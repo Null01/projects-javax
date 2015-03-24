@@ -1,10 +1,10 @@
-package edu.lab.controller.publish;
+package edu.lab.controller.user;
 
-import edu.lab.modelo.Publicacion;
 import edu.lab.modelo.Usuario;
-import edu.lab.services.publish.PublishControllerBean;
+import edu.lab.security.SecurityEncrypt;
+import edu.lab.services.user.UserControllerBean;
+import edu.lab.session.SessionControllerBean;
 import java.io.IOException;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,12 +16,14 @@ import javax.servlet.http.HttpSession;
  *
  * @author andresfelipegarciaduran
  */
-public class Comments extends HttpServlet {
+public class UpdateUser extends HttpServlet {
 
     @EJB
-    private PublishControllerBean publishControllerBean;
+    private SessionControllerBean sessionControllerBean;
 
-    //PublishControllerBean publishControllerBean = lookupPublishControllerBeanBean();
+    @EJB
+    private UserControllerBean userControllerBean;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,15 +36,29 @@ public class Comments extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String comment = request.getParameter("comment-root");
-        String idpublish = request.getParameter("id-publish");
+        String fname = request.getParameter("fname");
+        String lname = request.getParameter("lname");
+        String password = request.getParameter("password");
+        String newPassword = request.getParameter("newPassword");
+        String confirmPassword = request.getParameter("confirmPassword");
 
-        HttpSession session = request.getSession();
-        Usuario usuario = (Usuario) session.getAttribute("user-data");
-        publishControllerBean.createPublication(idpublish, usuario, comment);
-        List<Publicacion> obtenerPublicacionPorUsuario = publishControllerBean.obtenerPublicacionPorUsuario(usuario.getCorreo());
-        session.setAttribute("publish-data", obtenerPublicacionPorUsuario);
-        response.sendRedirect("user-home.jsp#maincontent");
+        SecurityEncrypt encrypt = new SecurityEncrypt();
+        try {
+            Usuario usuario = (Usuario) request.getSession().getAttribute("data-user");
+            String email = usuario.getCorreo();
+            password = encrypt.encryptWithMD5(password);
+            newPassword = (newPassword == null || newPassword.isEmpty()) ? password : encrypt.encryptWithMD5(newPassword);
+            confirmPassword = (confirmPassword == null || confirmPassword.isEmpty()) ? null : encrypt.encryptWithMD5(confirmPassword);
+            userControllerBean.actualizarDatosUsuario(fname, lname, email, password, newPassword, confirmPassword);
+            HttpSession session = request.getSession();
+            Usuario userRegistered = sessionControllerBean.isUserRegistered(email, newPassword);
+            session.setAttribute("user-data", userRegistered);
+            request.removeAttribute("message-error-update-user");
+            response.sendRedirect("user-home.jsp");
+        } catch (Exception ex) {
+            request.setAttribute("message-error-update-user", ex.getMessage());
+            request.getRequestDispatcher("user-home.jsp").forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -84,15 +100,4 @@ public class Comments extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    /*
-     private PublishControllerBean lookupPublishControllerBeanBean() {
-     try {
-     Context c = new InitialContext();
-     return (PublishControllerBean) c.lookup("java:global/JEE_Cookbook/JEE_Cookbook-ejb/PublishControllerBean!edu.lab.services.publish.PublishControllerBean");
-     } catch (NamingException ne) {
-     Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
-     throw new RuntimeException(ne);
-     }
-     }
-     */
 }
