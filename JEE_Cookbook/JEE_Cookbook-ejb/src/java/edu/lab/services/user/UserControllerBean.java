@@ -28,9 +28,8 @@ public class UserControllerBean {
         }
 
         EntityManager em = emf.createEntityManager();
-        Query createNamedQuery = em.createNamedQuery("Login.findByEmail").setParameter("email", email);
-        List resultList = createNamedQuery.getResultList();
-        if (resultList != null && !resultList.isEmpty()) {
+        Login find = em.find(Login.class, email);
+        if (find != null) {
             throw new Exception("ERROR - EL CORREO ELECTRONICO YA SE ENCUENTRA INSCRITO ");
         }
 
@@ -40,10 +39,10 @@ public class UserControllerBean {
         usuario.setLname(lname);
         usuario.setLogin(login);
         login.setUsuario(usuario);
-
         em.getTransaction().begin();
-        em.persist(login);
+        em.persist(usuario);
         em.getTransaction().commit();
+
     }
 
     public void actualizarDatosUsuario(String fname, String lname, String email, String oldPassword, String password, String confirmPassword) throws Exception {

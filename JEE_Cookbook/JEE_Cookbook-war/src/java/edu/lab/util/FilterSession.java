@@ -23,25 +23,25 @@ import javax.servlet.http.HttpSession;
  */
 @WebFilter(filterName = "FilterSession", urlPatterns = {"/*"})
 public class FilterSession implements Filter {
-
+    
     private FilterConfig filterConfig;
-
+    
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         this.filterConfig = filterConfig;
         // Set up a simple configuration that logs on the console.
     }
-
+    
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-
+        
         String requestURI = httpRequest.getRequestURI();
         String tokens[] = requestURI.split("/");
         HttpSession session = httpRequest.getSession();
         String indexURI = "/index.jsp";
-
+        
         boolean createSession = false;
         if (session != null) {
             Object object = session.getAttribute("user-data");
@@ -49,12 +49,15 @@ public class FilterSession implements Filter {
                 createSession = true;
             }
         }
-
-        String jsps[] = {"index", "contact", "gallery", "register", "menu", "about", "admin-home", "user-home"};
-        String servlets[] = {"Login", "Logout", "Register"};
-        Set<String> setJsps = new TreeSet<String>(Arrays.asList(jsps));
-        if (tokens[tokens.length - 1].endsWith(".jsp")) {
-            // Validacion .JPS
+        
+        String generics[] = {"index", "contact", "gallery", "register", "menu", "about"};
+        String onlyJpsAdmin[] = {"user-control", "admin-home"};
+        String onlyJpsUser[] = {"user-home"};
+        
+        Set<String> setGenerics = new TreeSet<String>(Arrays.asList(generics));
+        Set<String> setOnlyJsps = new TreeSet<String>(Arrays.asList(onlyJpsAdmin));
+        
+        if (tokens[tokens.length - 1].endsWith(".jsp")) { // Validacion .JPS
             session.setAttribute("current-page", tokens[tokens.length - 1]);
             tokens[tokens.length - 1] = tokens[tokens.length - 1].replace(".jsp", "");
             if (createSession) {
@@ -62,28 +65,34 @@ public class FilterSession implements Filter {
                 try {
                     boolean userIsAdmin = attribute.getTipo().compareTo(ITipoUsuario.ADMIN) == 0;
                     if (userIsAdmin) {
-                        if (tokens[tokens.length - 1].compareTo(jsps[jsps.length - 1]) == 0) {
-                            session.setAttribute("current-page", jsps[jsps.length - 2] + ".jsp");
-                            httpRequest.getRequestDispatcher("/" + jsps[jsps.length - 2] + ".jsp").forward(request, response);
-                        } else {
-                            chain.doFilter(request, response);
+                        /*if (tokens[tokens.length - 1].compareTo(generics[generics.length - 1]) == 0) {
+                         session.setAttribute("current-page", generics[generics.length - 2] + ".jsp");
+                         httpRequest.getRequestDispatcher("/" + generics[generics.length - 2] + ".jsp").forward(request, response);
+                         } else {
+
+                         chain.doFilter(request, response);
+                         }
+                         */
+                        if (setOnlyJsps.contains("")) {
+                            
                         }
                     } else {
-                        if (tokens[tokens.length - 1].compareTo(jsps[jsps.length - 2]) == 0) {
-                            session.setAttribute("current-page", jsps[jsps.length - 1] + ".jsp");
-                            httpRequest.getRequestDispatcher("/" + jsps[jsps.length - 1] + ".jsp").forward(request, response);
-                        } else {
-                            chain.doFilter(request, response);
-                        }
+                        /*if (tokens[tokens.length - 1].compareTo(generics[generics.length - 2]) == 0) {
+                         session.setAttribute("current-page", generics[generics.length - 1] + ".jsp");
+                         httpRequest.getRequestDispatcher("/" + generics[generics.length - 1] + ".jsp").forward(request, response);
+                         } else {
+                         chain.doFilter(request, response);
+                         }*/
+                        
                     }
                 } catch (Exception ex) {
                     httpRequest.getRequestDispatcher(indexURI).forward(request, response);
                 }
             } else {
-                if (!setJsps.contains(tokens[tokens.length - 1])) {
+                if (!setGenerics.contains(tokens[tokens.length - 1])) {
                     httpRequest.getRequestDispatcher(indexURI).forward(request, response);
                 } else {
-                    if (tokens[tokens.length - 1].compareTo(jsps[jsps.length - 2]) == 0 || tokens[tokens.length - 1].compareTo(jsps[jsps.length - 1]) == 0) {
+                    if (tokens[tokens.length - 1].compareTo(onlyJpsUser[onlyJpsUser.length - 1]) == 0 || tokens[tokens.length - 1].compareTo(onlyJpsAdmin[onlyJpsAdmin.length - 1]) == 0) {
                         httpRequest.getRequestDispatcher(indexURI).forward(request, response);
                     } else {
                         chain.doFilter(request, response);
@@ -94,10 +103,10 @@ public class FilterSession implements Filter {
             chain.doFilter(request, response);
         }
     }
-
+    
     @Override
     public void destroy() {
         System.out.println("destroy");
     }
-
+    
 }

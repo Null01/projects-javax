@@ -112,11 +112,11 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <input type="button"class="button" id="ocultar" value=" Actualizar         "/>
+                                    <input type="button"class="button" id="ocultar" value=" Actualizar     "/>
                                 </div>   
 
                                 <div id="target1" style="display:none;">
-                                    <form action="Register" method="post">
+                                    <form action="UpdateUser" method="post">
                                         <fieldset>
                                             <table border="0" style="width:100%">
                                                 <tbody>
@@ -130,7 +130,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td><label for="email" >Your email <span class="required">*</span></label></td>
-                                                        <td><input type="email" name="email" value='<% out.print(usuario.getCorreo());%>' size="25" required/></td>
+                                                        <td><input type="email" name="email" readonly  value='<% out.print(usuario.getCorreo());%>' size="25" required/></td>
                                                     </tr>
                                                     <tr>
                                                         <td><label for="password" >Your password <span class="required">*</span></label></td>
@@ -145,15 +145,16 @@
                                                         <td><input type="password" name="confirmPassword" size="25" /></td>
                                                     </tr>
                                                 <br class="clear" />
-                                                <%
-                                                    Object message = request.getAttribute("message-error-register");
-                                                    if (message != null) {
-                                                        out.println("<br/><span class=\"required\">" + message.toString() + "</span><br/>");
-                                                    }
-                                                %>
                                                 </tbody>
                                             </table>
-                                            <input type="submit" class="button" id="mostrar" value="  Guardar     "/>    
+                                            <%
+                                                Object message = request.getAttribute("message-error-update-user");
+                                                if (message != null) {
+                                                    out.println("<span class=\"required\">" + message.toString() + "</span><br/><br/>");
+                                                }
+                                            %>
+
+                                            <input type="submit" class="button" id="submit_btn" value="  Guardar     "/>    
                                         </fieldset>
                                     </form>
                                 </div>
@@ -167,6 +168,8 @@
                 <div id="outermain">
                     <div class="container">
                         <div class="row">
+
+                            <!-- PUBLICACION Y COMENTARIOS -->
                             <div id="maincontent" class="nine columns positionleft">
                                 <div class="content">
                                     <!-- Publicacion y Comments -->
@@ -175,6 +178,8 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- WIDGET -->
                             <aside class="three columns">
                                 <div class="sidebar">
                                     <ul>

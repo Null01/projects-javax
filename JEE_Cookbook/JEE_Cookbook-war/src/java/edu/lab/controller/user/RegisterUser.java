@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.lab.controller.user;
 
+import edu.lab.modelo.Publicacion;
 import edu.lab.modelo.Usuario;
 import edu.lab.security.MonitorLogs;
 import java.io.IOException;
@@ -15,16 +11,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import edu.lab.security.SecurityEncrypt;
+import edu.lab.services.publish.PublishControllerBean;
 import edu.lab.services.user.UserControllerBean;
 import edu.lab.session.ITipoUsuario;
 import edu.lab.session.SessionControllerBean;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 /**
  *
  * @author andresfelipegarciaduran
  */
 public class RegisterUser extends HttpServlet {
+
+    PublishControllerBean publishControllerBean = lookupPublishControllerBeanBean();
 
     @EJB
     private UserControllerBean userControllerBean;
@@ -49,7 +54,6 @@ public class RegisterUser extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
-
         try {
             SecurityEncrypt security = new SecurityEncrypt();
             String encryptWithMD5 = security.encryptWithMD5(password);
@@ -63,7 +67,9 @@ public class RegisterUser extends HttpServlet {
                 if (userRegistered.getTipo().compareTo(ITipoUsuario.ADMIN) == 0) {
                     response.sendRedirect("admin-home.jsp");
                 } else {
-                    response.sendRedirect("user-home.jsp");
+                    List<Publicacion> obtenerPublicacionPorUsuario = publishControllerBean.obtenerPublicacionPorUsuario(userRegistered.getCorreo());
+                    session.setAttribute("publish-data", obtenerPublicacionPorUsuario);
+                    request.getRequestDispatcher("user-home.jsp").forward(request, response);
                 }
             } else {
                 response.sendRedirect("register.jsp");
@@ -112,5 +118,15 @@ public class RegisterUser extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private PublishControllerBean lookupPublishControllerBeanBean() {
+        try {
+            Context c = new InitialContext();
+            return (PublishControllerBean) c.lookup("java:global/JEE_Cookbook/JEE_Cookbook-ejb/PublishControllerBean!edu.lab.services.publish.PublishControllerBean");
+        } catch (NamingException ne) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", ne);
+            throw new RuntimeException(ne);
+        }
+    }
 
 }

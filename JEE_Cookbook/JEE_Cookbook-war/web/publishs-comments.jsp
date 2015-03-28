@@ -17,9 +17,6 @@
 <%
     Usuario usuario = (Usuario) session.getAttribute("user-data");
     List<Publicacion> publish = (List<Publicacion>) session.getAttribute("publish-data");
-%>
-
-<%
     for (Publicacion p : publish) {
 %>
 <div id="entry-author-info">
@@ -41,12 +38,11 @@
                 <div class="avatar-img"><img src="images/content/avatar.gif" alt="" class="avatar"/></div><br/>
                 <cite class="fn"><%= usuario.getNombre()%></cite>
                 <div id="current-date">
-                    <span class="tdate"><%= new SimpleDateFormat("MMMM d, yyyy hh:mm:ss a", Locale.ENGLISH).format(Calendar.getInstance().getTime())%></span>
+                    <span class="tdate"><%= new SimpleDateFormat("MMMM d, yyyy hh:mm a", Locale.ENGLISH).format(Calendar.getInstance().getTime())%></span>
                     <form action="Comments" method="post">
                         <textarea data-autoresize placeholder="Comment here" rows="2" name="comment-root" maxlength="2000"></textarea>
                         <input type="hidden" name="id-publish" value="<%= String.valueOf(p.getIdpublish())%>">
-                        <input class="buttoncomment" type="submit" value=" Comment  ">
-                        <!class="btn-box-comment"->
+                        <input class="btn-box-comment" style="background: none;" type="submit" value=" Comment  ">
                     </form>
                 </div>
             </div>
@@ -59,11 +55,12 @@
                 <div class="comment-arrow"></div>
                 <div class="avatar-img"><img src="images/content/avatar.gif" alt="" class="avatar"/></div>
                 <cite class="fn"><%= c.getEmail().getNombre()%></cite>
-                <span class="tdate"><%= new SimpleDateFormat("MMMM d, yyyy hh:mm:ss a", Locale.ENGLISH).format(c.getDatecreated())%> &nbsp;/&nbsp; </span> <span class="reply"><a href="#">Reply</a></span>
+                <span class="tdate"><%= new SimpleDateFormat("MMMM d, yyyy hh:mm a", Locale.ENGLISH).format(c.getDatecreated())%> &nbsp;/&nbsp; </span> <span class="reply"><a href="#">Responder</a></span>
                 <div class="commenttext">
                     <p><%= c.getCommentspublish()%> </p>
                 </div>
             </div>
+
             <%
                 if (c.getComment() != null) {
             %>
@@ -73,7 +70,7 @@
                         <div class="comment-arrow"></div>
                         <div class="avatar-img"><img src="images/content/avatar.gif" alt="" class="avatar"/></div>
                         <cite class="fn"><a href="#">Wayne Rooney</a></cite>
-                        <span class="tdate">August 17, 2010 7:15 am &nbsp;/&nbsp;</span> <span class="reply"><a href="#">Reply</a></span>
+                        <span class="tdate">August 17, 2010 7:15 am &nbsp;/&nbsp;</span> <span class="reply"><a href="#">Responder</a></span>
                         <div class="commenttext">
                             <p>Nulla lobortis facilisis eros vitae mollis. Morbi consectetur, tortor ut feugiat rhoncus, nunc augue placerat massa, sit amet laoreet est libero quis nisl. Integer cursus sodales sem eu dapibus. Morbi lobortis eleifend lectus sit amet porttitor. Nam tincidunt congue laoreet.</p>
                         </div>
@@ -89,6 +86,5 @@
         %>
     </ol>
 </div>
-
 <%    }
 %>

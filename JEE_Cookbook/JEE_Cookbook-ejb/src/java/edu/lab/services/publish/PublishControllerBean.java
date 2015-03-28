@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
+import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -20,8 +20,7 @@ import javax.persistence.Query;
  *
  * @author andresfelipegarciaduran
  */
-//@Stateful
-@Stateless
+@Stateful
 @LocalBean
 public class PublishControllerBean implements Serializable {
 
@@ -37,7 +36,7 @@ public class PublishControllerBean implements Serializable {
                 Publish p = (Publish) objPublish;
                 Usuario usuario = new Usuario(p.getEmail().getFname(), p.getEmail().getLname(), p.getEmail().getEmail(), "");
                 Publicacion publicacion = new Publicacion(p.getIdpublish(), p.getTittle(), p.getDescription(), p.getDatecreated(), usuario, null);
-                query = em.createQuery("SELECT p FROM " + Commentspublish.class.getSimpleName() + " p WHERE p.idpublish.idpublish = :id").setParameter("id", p.getIdpublish());
+                query = em.createQuery("SELECT p FROM " + Commentspublish.class.getSimpleName() + " p WHERE p.idpublish.idpublish = :id order by p.datecreated desc").setParameter("id", p.getIdpublish());
                 List<Commentspublish> commentspublishList = query.getResultList();
                 // List<Commentspublish> commentspublishList = p.getCommentspublishList();
                 List< Comentario> outcomeComments = new ArrayList<>();
@@ -45,7 +44,6 @@ public class PublishControllerBean implements Serializable {
                     for (Object objComment : commentspublishList) {
                         Commentspublish c = (Commentspublish) objComment;
                         Usuario u = new Usuario(c.getEmail().getFname(), c.getEmail().getLname(), c.getEmail().getEmail(), "");
-                        System.out.println(u.getNombre() + " " + u.getApellido());
                         Comentario comentario = new Comentario(c.getIdcomment(), c.getIdcommenttoothercomment(), c.getCommentspublish(), c.getDatecreated(), u, null);
                         outcomeComments.add(comentario);
                     }

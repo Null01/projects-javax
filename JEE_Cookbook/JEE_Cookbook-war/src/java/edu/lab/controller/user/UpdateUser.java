@@ -44,11 +44,11 @@ public class UpdateUser extends HttpServlet {
 
         SecurityEncrypt encrypt = new SecurityEncrypt();
         try {
-            Usuario usuario = (Usuario) request.getSession().getAttribute("data-user");
+            Usuario usuario = (Usuario) request.getSession().getAttribute("user-data");
             String email = usuario.getCorreo();
             password = encrypt.encryptWithMD5(password);
             newPassword = (newPassword == null || newPassword.isEmpty()) ? password : encrypt.encryptWithMD5(newPassword);
-            confirmPassword = (confirmPassword == null || confirmPassword.isEmpty()) ? null : encrypt.encryptWithMD5(confirmPassword);
+            confirmPassword = (confirmPassword == null || confirmPassword.isEmpty()) ? newPassword : encrypt.encryptWithMD5(confirmPassword);
             userControllerBean.actualizarDatosUsuario(fname, lname, email, password, newPassword, confirmPassword);
             HttpSession session = request.getSession();
             Usuario userRegistered = sessionControllerBean.isUserRegistered(email, newPassword);
@@ -56,6 +56,7 @@ public class UpdateUser extends HttpServlet {
             request.removeAttribute("message-error-update-user");
             response.sendRedirect("user-home.jsp");
         } catch (Exception ex) {
+            System.out.println(ex);
             request.setAttribute("message-error-update-user", ex.getMessage());
             request.getRequestDispatcher("user-home.jsp").forward(request, response);
         }
