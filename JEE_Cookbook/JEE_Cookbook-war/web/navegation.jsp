@@ -44,7 +44,13 @@
                                 <nav id="nav-wrap">
                                     <ul id="topnav" class="sf-menu">
                                         <li><a href="index.jsp">Home</a></li>
+                                            <%
+                                                if (usuario == null) {
+                                            %>
                                         <li><a href="register.jsp">Register</a></li>
+                                            <%
+                                                }
+                                            %>
                                         <li><a href="about.jsp">About Us</a></li>
                                         <li><a href="menu.jsp">Our Menus</a></li>
                                         <li><a href="gallery.jsp">Gallery</a></li>
@@ -58,6 +64,7 @@
                                                 if (isAdmin) {
                                             %>
                                             <ul>    
+                                                <li><a href='admin-manag-user.jsp'>Managmente-User</a></li>
                                                 <li><a href='user-control.jsp'>User-Control</a></li>
                                             </ul>
                                             <%
