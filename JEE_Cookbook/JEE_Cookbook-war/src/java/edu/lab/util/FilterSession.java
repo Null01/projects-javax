@@ -51,7 +51,7 @@ public class FilterSession implements Filter {
         }
 
         String generics[] = {"index", "contact", "gallery", "register", "menu", "about"};
-        String onlyJpsAdmin[] = {"user-control", "admin-home"};
+        String onlyJpsAdmin[] = {"admin-manag-user", "user-control", "admin-home"};
         String onlyJpsUser[] = {"user-home"};
 
         Set<String> setGenerics = new TreeSet<String>(Arrays.asList(generics));

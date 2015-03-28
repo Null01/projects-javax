@@ -69,7 +69,7 @@
                             <section class="content">
                                 <div class="six columns">
                                     <h1>Form Register</h1>
-                                    <p> afpergerpweferoigdf sdpoigw sdfpowefwkefw wpeo wepfokwepfwe f wepojwefqofrm </p>
+                                    <p>  </p>
                                     <div id="contactform">
                                         <form action="Register" method="post">
                                             <fieldset>
